@@ -21,7 +21,7 @@ class _registerPageState extends State<registerPage> {
   final formKey = GlobalKey<FormState>();
   Profile profile = Profile();
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
-  CollectionReference _notgoogleprofileCollection =
+  CollectionReference emailLogin =
       FirebaseFirestore.instance.collection("Profile");
 
   @override
@@ -112,9 +112,7 @@ class _registerPageState extends State<registerPage> {
                                   return 'โปรดยืนยันรหัสผ่าน';
                                 } else if (password2.length < 8) {
                                   return 'รหัสผ่านต้องยาวกว่า 8 ตัวอักษร';
-                                } /*else if (profile.password != password2) {
-                                  return 'รหัสผ่านไม่ตรงกัน';
-                                }*/
+                                }
                               }),
                               onSaved: (password2) {
                                 profile.conpassword = password2;
@@ -143,7 +141,7 @@ class _registerPageState extends State<registerPage> {
                                             .createUserWithEmailAndPassword(
                                                 email: profile.email,
                                                 password: profile.password);
-                                        await _notgoogleprofileCollection.add({
+                                        await emailLogin.add({
                                           "Username": profile.username,
                                           "Email": profile.email,
                                           "password": profile.password,
