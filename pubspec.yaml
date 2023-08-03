@@ -23,7 +23,6 @@ dependencies:
   google_fonts: ^4.0.4
   google_sign_in: ^6.1.4
   http: ^0.13.6
-  page_transition: ^2.0.9
   shared_preferences: ^2.2.0
   translator: ^0.1.7
 

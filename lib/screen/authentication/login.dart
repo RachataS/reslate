@@ -6,7 +6,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:reslate/screen/bottomBar.dart';
-import 'package:reslate/screen/translate/Translate.dart';
+import 'package:reslate/screen/Translate.dart';
 import 'package:reslate/screen/authentication/registerPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

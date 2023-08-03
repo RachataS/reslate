@@ -350,12 +350,6 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "page_transition",
-      "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/page_transition-2.0.9",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "path",
       "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
@@ -560,7 +554,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-08-03T10:44:43.472886Z",
+  "generated": "2023-08-03T12:57:18.021822Z",
   "generator": "pub",
   "generatorVersion": "3.0.5"
 }

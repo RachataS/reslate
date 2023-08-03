@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:reslate/screen/menu.dart';
-import 'package:reslate/screen/quize.dart';
-import 'package:reslate/screen/translate/Translate.dart';
+import 'package:reslate/screen/review.dart';
+import 'package:reslate/screen/Translate.dart';
 
 import '../model/profile.dart';
 
@@ -20,10 +20,9 @@ class _bottombarState extends State<bottombar> {
   Profile profile = Profile();
   translate_screen home = translate_screen();
   final auth = FirebaseAuth.instance;
-  //select screen
   final screens = [
     translate_screen(),
-    quizePage(),
+    reviewPage(),
     menuPage(),
   ];
 
@@ -32,13 +31,13 @@ class _bottombarState extends State<bottombar> {
     return Scaffold(
       body: screens[currentIndex],
       bottomNavigationBar: ConvexAppBar(
-        backgroundColor: Colors.blueGrey, // Customize the background color
-        activeColor: Colors.white, // Customize the active item color
-        color: Colors.white, // Customize the inactive item color
+        backgroundColor: Colors.blueGrey,
+        activeColor: Colors.white,
+        color: Colors.white,
         style: TabStyle.react,
         items: [
-          TabItem(icon: Icons.translate, title: 'Home'),
-          TabItem(icon: Icons.quiz_outlined, title: 'Search'),
+          TabItem(icon: Icons.translate, title: 'translate'),
+          TabItem(icon: Icons.rate_review_sharp, title: 'Review'),
           TabItem(icon: Icons.menu, title: 'Menu'),
         ],
         initialActiveIndex: currentIndex,
