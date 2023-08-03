@@ -40,13 +40,16 @@ class _translate_screenState extends State<translate_screen> {
               language.input = 'th';
               language.output = 'en';
               language.label = "ไทย (TH)";
+              language.inbox = "โปรดป้อนข้อความ";
+              language.outbox = 'Translated';
             } else {
               language.input = 'en';
               language.output = 'th';
               language.label = "English (EN)";
+              language.inbox = "Enter text";
+              language.outbox = 'คำแปล';
             }
             changeLanguage();
-            setState(() {});
           },
         ),
       ),
@@ -119,14 +122,20 @@ class _translate_screenState extends State<translate_screen> {
   }
 
   changeLanguage() {
+    formKey.currentState?.reset();
     if (inputLanguage == null) {
       inputLanguage = 'en';
       outputLanguage = 'th';
       label = "English (EN)";
+      inputbox = "Enter text";
+      outputbox = "คำแปล";
     } else {
       inputLanguage = language.input;
       outputLanguage = language.output;
       label = language.label;
+      inputbox = language.inbox;
+      outputbox = language.outbox;
     }
+    setState(() {});
   }
 }
