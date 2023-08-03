@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:reslate/screen/authentication/login.dart';
 
 import '../../../model/profile.dart';
@@ -41,18 +42,32 @@ class _registerPageState extends State<registerPage> {
           );
         } else if (snapshot.connectionState == ConnectionState.done) {
           return Scaffold(
-            appBar: AppBar(
-              title: Text("Register"),
-              centerTitle: true,
-            ),
             body: Container(
               child: Form(
                 key: formKey,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  padding: const EdgeInsets.fromLTRB(10, 100, 10, 10),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 200, 20),
+                          child: Text(
+                            'Raslate',
+                            style: GoogleFonts.josefinSans(
+                                textStyle: TextStyle(
+                                    fontSize: 50, color: Colors.blueGrey)),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 200, 20),
+                          child: Text(
+                            'Register\nyour account',
+                            style: GoogleFonts.josefinSans(
+                                textStyle: TextStyle(
+                                    fontSize: 30, color: Colors.blueGrey)),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
                           child: TextFormField(
@@ -178,6 +193,17 @@ class _registerPageState extends State<registerPage> {
                                 label: Text("Register")),
                           ),
                         ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return loginPage();
+                              }));
+                            },
+                            child: Text(
+                              "Already have an account? Sign in now",
+                              style: btTextStyle.nameOfTextStyle,
+                            )),
                       ],
                     ),
                   ),

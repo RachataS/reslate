@@ -5,7 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:reslate/screen/Translate.dart';
+import 'package:reslate/screen/bottomBar.dart';
+import 'package:reslate/screen/translate/Translate.dart';
 import 'package:reslate/screen/authentication/registerPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,7 +56,7 @@ class _loginPageState extends State<loginPage> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 15, 200, 20),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 200, 20),
                           child: Text(
                             'Login\nyour account',
                             style: GoogleFonts.josefinSans(
@@ -130,7 +131,7 @@ class _loginPageState extends State<loginPage> {
                                   gravity: ToastGravity.TOP);
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return translate_screen();
+                                return bottombar();
                               }));
                             });
                           } catch (e) {
@@ -198,7 +199,7 @@ class _loginPageState extends State<loginPage> {
           Fluttertoast.showToast(
               msg: "เข้าสู่ระบบสำเร็จ", gravity: ToastGravity.TOP);
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return translate_screen();
+            return bottombar();
           }));
           saveLoginStatus(true);
         });

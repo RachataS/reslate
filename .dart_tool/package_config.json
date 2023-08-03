@@ -92,6 +92,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "convex_bottom_bar",
+      "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/convex_bottom_bar-3.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "crypto",
       "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/crypto-3.0.3",
       "packageUri": "lib/",
@@ -554,7 +560,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-08-03T08:36:16.140462Z",
+  "generated": "2023-08-03T10:10:33.652291Z",
   "generator": "pub",
   "generatorVersion": "3.0.5"
 }
