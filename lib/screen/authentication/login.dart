@@ -146,11 +146,10 @@ class _loginPageState extends State<loginPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               Container(
-                                  child:
-                                      // Image.asset(
-                                      //     'assets/images/Glogo.png',
-                                      //     fit: BoxFit.cover)
-                                      Icon(Icons.apple)),
+                                  child: Image.asset('assets/images/Glogo.png',
+                                      fit: BoxFit.cover)
+                                  //Icon(Icons.apple)
+                                  ),
                             ],
                           ),
                         ),
