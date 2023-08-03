@@ -7,8 +7,23 @@ environment:
   sdk: '>=3.0.5 <4.0.0'
 
 dependencies:
+  auto_size_text: ^3.0.0
+  cloud_firestore: ^4.8.4
+  cupertino_icons: ^1.0.5
+  firebase_analytics: ^10.4.4
+  firebase_auth: ^4.7.2
+  firebase_core: ^2.15.0
   flutter:
     sdk: flutter
+  flutter_html: ^3.0.0-beta.2
+  flutter_launcher_icons: ^0.13.1
+  fluttertoast: ^8.2.2
+  form_field_validator: ^1.1.0
+  google_sign_in: ^6.1.4
+  http: ^0.13.6
+  page_transition: ^2.0.9
+  shared_preferences: ^2.2.0
+  translator: ^0.1.7
 
 dev_dependencies:
   flutter_test:
