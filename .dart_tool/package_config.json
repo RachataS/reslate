@@ -230,6 +230,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "google_fonts",
+      "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/google_fonts-4.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
       "name": "google_identity_services_web",
       "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/google_identity_services_web-0.2.1",
       "packageUri": "lib/",
@@ -348,6 +354,24 @@
       "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "path_provider",
+      "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/path_provider-2.0.15",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "path_provider_android",
+      "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/path_provider_android-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "path_provider_foundation",
+      "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/path_provider_foundation-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_linux",
@@ -530,7 +554,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-08-03T06:48:51.141543Z",
+  "generated": "2023-08-03T08:36:16.140462Z",
   "generator": "pub",
   "generatorVersion": "3.0.5"
 }

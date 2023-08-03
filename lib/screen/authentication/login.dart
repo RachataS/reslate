@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:reslate/screen/Translate.dart';
 import 'package:reslate/screen/authentication/registerPage.dart';
@@ -35,130 +36,146 @@ class _loginPageState extends State<loginPage> {
           );
         } else if (snapshot.connectionState == ConnectionState.done) {
           return Scaffold(
-            body: Container(
-              child: Form(
-                key: formKey,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 170, 10, 20),
-                  child: SingleChildScrollView(
-                    child: Column(
+              body: Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 100, 10, 20),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Column(
                       children: [
-                        Text('Raslate'),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-                          child: TextFormField(
-                              validator: MultiValidator([
-                                RequiredValidator(errorText: 'กรุณากรอก Email'),
-                                EmailValidator(
-                                    errorText:
-                                        'รูปแบบ Email ไม่ถูกต้อง กรุณากรอกอีกครั้ง')
-                              ]),
-                              onSaved: (var email) {
-                                profile.email = email;
-                              },
-                              keyboardType: TextInputType.emailAddress,
-                              decoration: const InputDecoration(
-                                border: UnderlineInputBorder(),
-                                labelText: 'Enter Email',
-                              )),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-                          child: TextFormField(
-                              validator: ((password1) {
-                                if (password1!.isEmpty) {
-                                  return 'โปรดกรอกรหัสผ่าน';
-                                } else if (password1.length < 8) {
-                                  return 'รหัสผ่านต้องยาวกว่า 8 ตัวอักษร';
-                                }
-                              }),
-                              onSaved: (password1) {
-                                profile.password = password1;
-                              },
-                              obscureText: true,
-                              decoration: const InputDecoration(
-                                border: UnderlineInputBorder(),
-                                labelText: 'Password',
-                              )),
-                        ),
-                        Center(
-                          child: SizedBox(
-                            width: 300,
-                            child: ElevatedButton.icon(
-                                onPressed: () {
-                                  handleLogin();
-                                },
-                                icon: Icon(Icons.login),
-                                label: Text("Login")),
-                          ),
-                        ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(15, 30, 15, 15),
-                            child: Text("OR"),
+                          padding: const EdgeInsets.fromLTRB(0, 20, 200, 20),
+                          child: Text(
+                            'Raslate',
+                            style: GoogleFonts.josefinSans(
+                                textStyle: TextStyle(
+                                    fontSize: 50, color: Colors.blueGrey)),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              try {
-                                GooglesignInProvider()
-                                    .googleLogin()
-                                    .then((value) {
-                                  Fluttertoast.showToast(
-                                      msg: "เข้าสู่ระบบสำเร็จ",
-                                      gravity: ToastGravity.TOP);
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return translate_screen();
-                                  }));
-                                });
-                              } catch (e) {
-                                Fluttertoast.showToast(
-                                    msg: "เข้าสู่ระบบด้วย google ไม่สำเร็จ",
-                                    gravity: ToastGravity.TOP);
-                              }
-                            },
-                            child: Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Container(
-                                      child:
-                                          // Image.asset(
-                                          //     'assets/images/Glogo.png',
-                                          //     fit: BoxFit.cover)
-                                          Icon(Icons.apple)),
-                                ],
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
-                              shape: CircleBorder(),
-                              padding: EdgeInsets.all(20),
-                            ),
+                          padding: const EdgeInsets.fromLTRB(0, 15, 200, 20),
+                          child: Text(
+                            'Login\nyour account',
+                            style: GoogleFonts.josefinSans(
+                                textStyle: TextStyle(
+                                    fontSize: 30, color: Colors.blueGrey)),
                           ),
                         ),
-                        TextButton(
-                            onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return registerPage();
-                              }));
-                            },
-                            child: Text(
-                              "Don't have an account? Register now!",
-                              style: btTextStyle.nameOfTextStyle,
-                            ))
                       ],
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+                      child: TextFormField(
+                          validator: MultiValidator([
+                            RequiredValidator(errorText: 'กรุณากรอก Email'),
+                            EmailValidator(
+                                errorText:
+                                    'รูปแบบ Email ไม่ถูกต้อง กรุณากรอกอีกครั้ง')
+                          ]),
+                          onSaved: (var email) {
+                            profile.email = email;
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Enter Email',
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+                      child: TextFormField(
+                          validator: ((password1) {
+                            if (password1!.isEmpty) {
+                              return 'โปรดกรอกรหัสผ่าน';
+                            } else if (password1.length < 8) {
+                              return 'รหัสผ่านต้องยาวกว่า 8 ตัวอักษร';
+                            }
+                          }),
+                          onSaved: (password1) {
+                            profile.password = password1;
+                          },
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(),
+                            labelText: 'Password',
+                          )),
+                    ),
+                    Center(
+                      child: SizedBox(
+                        width: 300,
+                        child: ElevatedButton.icon(
+                            onPressed: () {
+                              handleLogin();
+                            },
+                            icon: Icon(Icons.login),
+                            label: Text("Login")),
+                      ),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 30, 15, 15),
+                        child: Text("OR"),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          try {
+                            GooglesignInProvider().googleLogin().then((value) {
+                              Fluttertoast.showToast(
+                                  msg: "เข้าสู่ระบบสำเร็จ",
+                                  gravity: ToastGravity.TOP);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return translate_screen();
+                              }));
+                            });
+                          } catch (e) {
+                            Fluttertoast.showToast(
+                                msg: "เข้าสู่ระบบด้วย google ไม่สำเร็จ",
+                                gravity: ToastGravity.TOP);
+                          }
+                        },
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Container(
+                                  child:
+                                      // Image.asset(
+                                      //     'assets/images/Glogo.png',
+                                      //     fit: BoxFit.cover)
+                                      Icon(Icons.apple)),
+                            ],
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(20),
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return registerPage();
+                          }));
+                        },
+                        child: Text(
+                          "Don't have an account? Register now!",
+                          style: btTextStyle.nameOfTextStyle,
+                        ))
+                  ],
                 ),
               ),
             ),
-          );
+          ));
         }
         return Scaffold(
           body: Center(
