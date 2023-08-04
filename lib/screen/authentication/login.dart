@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -126,9 +127,16 @@ class _loginPageState extends State<loginPage> {
                         onPressed: () {
                           try {
                             GooglesignInProvider().googleLogin().then((value) {
+                              try {
+                                var user = FirebaseAuth.instance.currentUser!;
+                                googleRegister(user.displayName, user.email);
+                              } catch (e) {
+                                print("can't get user data");
+                              }
                               Fluttertoast.showToast(
                                   msg: "เข้าสู่ระบบสำเร็จ",
                                   gravity: ToastGravity.TOP);
+
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return bottombar();
@@ -184,6 +192,20 @@ class _loginPageState extends State<loginPage> {
         );
       },
     );
+  }
+
+  googleRegister(
+    username,
+    email,
+  ) async {
+    CollectionReference googleAccount =
+        FirebaseFirestore.instance.collection("Profile");
+    String password = 'SocialLogin';
+    await googleAccount.add({
+      "Username": username,
+      "Email": email,
+      "password": password,
+    });
   }
 
   Future<void> handleLogin() async {
