@@ -129,7 +129,6 @@ class _loginPageState extends State<loginPage> {
                             GooglesignInProvider().googleLogin().then((value) {
                               try {
                                 var user = FirebaseAuth.instance.currentUser!;
-                                googleRegister(user.displayName, user.email);
                               } catch (e) {
                                 print("can't get user data");
                               }
@@ -194,10 +193,7 @@ class _loginPageState extends State<loginPage> {
     );
   }
 
-  googleRegister(
-    username,
-    email,
-  ) async {
+  Future<void> googleRegister(String username, String email) async {
     CollectionReference googleAccount =
         FirebaseFirestore.instance.collection("Profile");
     String password = 'SocialLogin';
@@ -252,6 +248,8 @@ class GooglesignInProvider extends ChangeNotifier {
 
   GoogleSignInAccount get user => _user!;
 
+  _loginPageState login = _loginPageState();
+
   Future googleLogin() async {
     final googleUser = await GoogleSignIn().signIn();
     if (googleUser == null) return;
@@ -263,7 +261,14 @@ class GooglesignInProvider extends ChangeNotifier {
       accessToken: googleAutn.accessToken,
       idToken: googleAutn.idToken,
     );
-    await FirebaseAuth.instance.signInWithCredential(credential);
+    var userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    if (userCredential.additionalUserInfo!.isNewUser) {
+      await login.googleRegister(googleUser!.displayName!, googleUser!.email!);
+    } else {
+      print('this google account already used');
+    }
 
     notifyListeners();
     saveLoginStatus(true);
