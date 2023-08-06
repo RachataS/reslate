@@ -25,7 +25,6 @@ class _loginPageState extends State<loginPage> {
   final formKey = GlobalKey<FormState>();
   Profile profile = Profile();
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
-  firebaseDoc fireDoc = firebaseDoc();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -112,7 +111,6 @@ class _loginPageState extends State<loginPage> {
                         child: ElevatedButton.icon(
                             onPressed: () {
                               handleLogin();
-                              fireDoc.getDocumentId();
                             },
                             icon: Icon(Icons.login),
                             label: Text("Login")),
@@ -132,7 +130,6 @@ class _loginPageState extends State<loginPage> {
                             GooglesignInProvider().googleLogin().then((value) {
                               try {
                                 var user = FirebaseAuth.instance.currentUser!;
-                                fireDoc.getDocumentId();
                               } catch (e) {
                                 print("can't get user data");
                               }

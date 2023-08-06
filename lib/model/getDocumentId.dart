@@ -40,7 +40,7 @@ class firebaseDoc {
         }
       }
       profile.docID = userId;
-      print(profile.docID);
+      return userId;
     } catch (e) {
       print('Error getting document ID: $e');
       return null;
