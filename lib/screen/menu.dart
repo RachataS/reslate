@@ -18,22 +18,19 @@ class _menuPageState extends State<menuPage> {
   final GoogleSignIn googleSignIn = new GoogleSignIn();
 
   late DocumentReference firebaseDoc;
-  Profile profile = Profile();
   signOut signout = signOut();
 
   void initState() {
     super.initState();
     // Get the current user ID or a random ID
-    String? docID;
-
+    var docID;
+    print('Document ID = ${docID}');
     // ดึงข้อมูลได้แต่ยังเอา document id มาที่หน้า menu ไม่ได้
     if (docID == null) {
       firebaseDoc = FirebaseFirestore.instance.collection('Profile').doc();
     } else {
       firebaseDoc = FirebaseFirestore.instance.collection('Profile').doc(docID);
     }
-
-    print('Document ID = ${docID}');
     getDocumentData();
   }
 
