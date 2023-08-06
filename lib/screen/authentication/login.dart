@@ -24,6 +24,7 @@ class _loginPageState extends State<loginPage> {
   final formKey = GlobalKey<FormState>();
   Profile profile = Profile();
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
+  firebaseDoc fireDoc = firebaseDoc();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -110,6 +111,7 @@ class _loginPageState extends State<loginPage> {
                         child: ElevatedButton.icon(
                             onPressed: () {
                               handleLogin();
+                              fireDoc.getDocumentId();
                             },
                             icon: Icon(Icons.login),
                             label: Text("Login")),
@@ -129,6 +131,7 @@ class _loginPageState extends State<loginPage> {
                             GooglesignInProvider().googleLogin().then((value) {
                               try {
                                 var user = FirebaseAuth.instance.currentUser!;
+                                fireDoc.getDocumentId();
                               } catch (e) {
                                 print("can't get user data");
                               }
@@ -272,5 +275,50 @@ class GooglesignInProvider extends ChangeNotifier {
 
     notifyListeners();
     saveLoginStatus(true);
+  }
+}
+
+class firebaseDoc {
+  // For email login
+  var userEmail = FirebaseAuth.instance.currentUser?.email;
+
+// For Google sign-in
+  var userUID = FirebaseAuth.instance.currentUser?.uid;
+
+  Future<String?> getDocumentId() async {
+    try {
+      String? userId;
+      String? userEmail = FirebaseAuth.instance.currentUser?.email;
+      String? userUID = FirebaseAuth.instance.currentUser?.uid;
+
+      if (userEmail != null) {
+        // Query the collection for the user with the specified email
+        var querySnapshot = await FirebaseFirestore.instance
+            .collection('Profile')
+            .where('Email', isEqualTo: userEmail)
+            .get();
+
+        if (querySnapshot.docs.isNotEmpty) {
+          // If the user with the specified email exists, get their document ID
+          userId = querySnapshot.docs.first.id;
+        }
+      } else if (userUID != null) {
+        // Query the collection for the user with the specified UID
+        var querySnapshot = await FirebaseFirestore.instance
+            .collection('Profile')
+            .where('Email', isEqualTo: userEmail)
+            .get();
+
+        if (querySnapshot.docs.isNotEmpty) {
+          // If the user with the specified UID exists, get their document ID
+          userId = querySnapshot.docs.first.id;
+        }
+      }
+      print('userID = $userId\nemail = $userEmail \ngoogle = $userUID');
+      return userId;
+    } catch (e) {
+      print('Error getting document ID: $e');
+      return null;
+    }
   }
 }
