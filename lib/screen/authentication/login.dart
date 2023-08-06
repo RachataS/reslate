@@ -279,6 +279,7 @@ class GooglesignInProvider extends ChangeNotifier {
 }
 
 class firebaseDoc {
+  Profile profile = Profile();
   // For email login
   var userEmail = FirebaseAuth.instance.currentUser?.email;
 
@@ -314,8 +315,8 @@ class firebaseDoc {
           userId = querySnapshot.docs.first.id;
         }
       }
-      print('userID = $userId\nemail = $userEmail \ngoogle = $userUID');
-      return userId;
+      profile.docID = userId;
+      print(profile.docID);
     } catch (e) {
       print('Error getting document ID: $e');
       return null;
