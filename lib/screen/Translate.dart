@@ -31,10 +31,17 @@ class _translate_screenState extends State<translate_screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Translate"),
+        title: Text(
+          "Translate",
+          style: TextStyle(color: Colors.blueGrey),
+        ),
         centerTitle: true,
+        backgroundColor: Colors.grey.shade50,
         leading: IconButton(
-          icon: Icon(Icons.translate_sharp),
+          icon: Icon(
+            Icons.translate_sharp,
+            color: Colors.blueGrey,
+          ),
           onPressed: () {
             if (inputLanguage == 'en' || inputLanguage == null) {
               language.input = 'th';
