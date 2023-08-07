@@ -25,6 +25,7 @@ class _loginPageState extends State<loginPage> {
   final formKey = GlobalKey<FormState>();
   Profile profile = Profile();
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -200,6 +201,7 @@ class _loginPageState extends State<loginPage> {
       "Username": username,
       "Email": email,
       "password": password,
+      "words": 0
     });
   }
 

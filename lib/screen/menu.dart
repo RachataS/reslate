@@ -9,7 +9,8 @@ import 'package:reslate/screen/authentication/login.dart';
 import '../model/getDocument.dart';
 
 class menuPage extends StatefulWidget {
-  const menuPage({super.key});
+  final Profile profile;
+  const menuPage({required this.profile, Key? key}) : super(key: key);
 
   @override
   State<menuPage> createState() => _menuPageState();
@@ -23,50 +24,55 @@ class _menuPageState extends State<menuPage> {
   late DocumentReference firebaseDocument;
   signOut signout = signOut();
 
-  var username, email;
+  // void initState() {
+  //   super.initState();
+  //   getProfile();
+  //   print('profile.data = ${profile.data}');
+  // }
 
-  void initState() {
-    super.initState();
-    getProfile();
-  }
+  // Future<void> getProfile() async {
+  //   try {
+  //     var docID = await firebasedoc.getDocumentId();
+  //     if (docID == null) {
+  //       firebaseDocument =
+  //           await FirebaseFirestore.instance.collection('Profile').doc();
+  //     } else {
+  //       firebaseDocument = await FirebaseFirestore.instance
+  //           .collection('Profile')
+  //           .doc('$docID');
+  //     }
+  //     getDocumentData();
+  //   } catch (e) {
+  //     print('Error initializing page: $e');
+  //   }
+  // }
 
-  Future<void> getProfile() async {
-    try {
-      var docID = await firebasedoc.getDocumentId();
-      if (docID == null) {
-        firebaseDocument =
-            await FirebaseFirestore.instance.collection('Profile').doc();
-      } else {
-        firebaseDocument = await FirebaseFirestore.instance
-            .collection('Profile')
-            .doc('$docID');
-      }
-      getDocumentData();
-    } catch (e) {
-      print('Error initializing page: $e');
-    }
-  }
+  // void getDocumentData() async {
+  //   DocumentSnapshot documentSnapshot = await firebaseDocument.get();
+  //   if (documentSnapshot.exists) {
+  //     Map<String, dynamic>? data =
+  //         await documentSnapshot.data() as Map<String, dynamic>?;
 
-  void getDocumentData() async {
-    DocumentSnapshot documentSnapshot = await firebaseDocument.get();
-    if (documentSnapshot.exists) {
-      Map<String, dynamic>? data =
-          await documentSnapshot.data() as Map<String, dynamic>?;
-
-      if (data != null) {
-        username = await data['Username'];
-        email = await data['Email'];
-        print(data);
-      } else {
-        print('Data is null or not a Map<String, dynamic>');
-      }
-    } else {
-      print('Document does not exist');
-    }
-  }
+  //     if (data != null) {
+  //       username = await data['Username'];
+  //       email = await data['Email'];
+  //       words = await data['words'];
+  //       print(data);
+  //     } else {
+  //       print('Data is null or not a Map<String, dynamic>');
+  //     }
+  //   } else {
+  //     print('Document does not exist');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic>? data = widget.profile.data;
+    var username = data?['Username'];
+    var email = data?['Email'];
+    var words = data?['words'];
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(30, 120, 10, 20),
@@ -74,19 +80,21 @@ class _menuPageState extends State<menuPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CircleAvatar(
-              backgroundColor: Colors.blueGrey,
-              child: Text(
-                '10',
-                style: TextStyle(fontSize: 25),
-              ),
-              radius: 30,
-            ),
+            Builder(builder: (context) {
+              return CircleAvatar(
+                backgroundColor: Colors.blueGrey,
+                radius: 30,
+                child: Text(
+                  '${words ?? '0'}',
+                  style: TextStyle(fontSize: 25),
+                ),
+              );
+            }),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Text(
-                  'Username : ${username ?? ''}\nEmail : ${email ?? ''}',
+                  'Username : ${username ?? 'Loading...'}\nEmail : ${email ?? 'Loading...'}',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
