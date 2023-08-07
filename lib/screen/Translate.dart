@@ -19,7 +19,6 @@ class _translate_screenState extends State<translate_screen> {
   GoogleTranslator translator = GoogleTranslator();
   languageChange language = languageChange();
   String translated = "คำแปล";
-  var save_engtxt, save_thtxt;
   var raw;
   var inputLanguage = 'en';
   var outputLanguage = 'th';
@@ -39,7 +38,7 @@ class _translate_screenState extends State<translate_screen> {
         backgroundColor: Colors.grey.shade50,
         leading: IconButton(
           icon: Icon(
-            Icons.translate_sharp,
+            Icons.translate,
             color: Colors.blueGrey,
           ),
           onPressed: () {
@@ -114,13 +113,13 @@ class _translate_screenState extends State<translate_screen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          try {
-            save_engtxt = translated;
-            save_thtxt = rawtxt.text;
-            print(save_thtxt);
-            print(save_engtxt);
-          } catch (e) {
-            print(e);
+          if (rawtxt.text != '' &&
+              translated != "คำแปล" &&
+              translated != "Translated") {
+            print(rawtxt.text);
+            print(translated);
+          } else {
+            print('fail');
           }
         },
         child: Icon(Icons.save_alt_outlined),
@@ -141,8 +140,9 @@ class _translate_screenState extends State<translate_screen> {
       outputLanguage = language.output;
       label = language.label;
       inputbox = language.inbox;
-      outputbox = language.outbox;
+      translated = language.outbox;
     }
     setState(() {});
+    rawtxt.clear();
   }
 }

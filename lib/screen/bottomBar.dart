@@ -95,7 +95,7 @@ class _bottombarState extends State<bottombar> {
               color: Colors.white,
               style: TabStyle.react,
               items: [
-                TabItem(icon: Icons.translate, title: 'translate'),
+                TabItem(icon: Icons.g_translate_outlined, title: 'Translate'),
                 TabItem(icon: Icons.rate_review_sharp, title: 'Review'),
                 TabItem(icon: Icons.menu, title: 'Menu'),
               ],
