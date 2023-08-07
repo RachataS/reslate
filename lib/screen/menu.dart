@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:reslate/model/getDocumentId.dart';
 import 'package:reslate/model/profile.dart';
 import 'package:reslate/model/signOut.dart';
 import 'package:reslate/screen/authentication/login.dart';
+
+import '../model/getDocument.dart';
 
 class menuPage extends StatefulWidget {
   const menuPage({super.key});
@@ -31,9 +32,7 @@ class _menuPageState extends State<menuPage> {
 
   Future<void> getProfile() async {
     try {
-      // Get the current user ID or a random ID
       var docID = await firebasedoc.getDocumentId();
-      // ดึงข้อมูลได้แต่ยังเอา document id มาที่หน้า menu ไม่ได้
       if (docID == null) {
         firebaseDocument =
             await FirebaseFirestore.instance.collection('Profile').doc();
@@ -55,7 +54,6 @@ class _menuPageState extends State<menuPage> {
           await documentSnapshot.data() as Map<String, dynamic>?;
 
       if (data != null) {
-        // Access specific fields by their keys
         username = await data['Username'];
         email = await data['Email'];
         print(data);
@@ -88,7 +86,7 @@ class _menuPageState extends State<menuPage> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                 child: Text(
-                  'Username : ${username}\nEmail : ${email}',
+                  'Username : ${username ?? ''}\nEmail : ${email ?? ''}',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
