@@ -26,6 +26,7 @@ class _bottombarState extends State<bottombar> {
   translate_screen home = translate_screen();
   late List<Widget> screens = []; // Initialize as an empty list
   bool isLoading = true;
+  var docID;
 
   @override
   void initState() {
@@ -35,7 +36,7 @@ class _bottombarState extends State<bottombar> {
 
   Future<void> getProfile() async {
     try {
-      var docID = await firebasedoc.getDocumentId();
+      docID = await firebasedoc.getDocumentId();
       if (docID == null) {
         firebaseDocument =
             await FirebaseFirestore.instance.collection('Profile').doc();
@@ -67,7 +68,7 @@ class _bottombarState extends State<bottombar> {
     }
     setState(() {
       screens = [
-        translate_screen(),
+        translate_screen(docID: firebaseDocument.id),
         reviewPage(),
         menuPage(profile: profile),
       ];

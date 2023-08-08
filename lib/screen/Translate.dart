@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -8,7 +10,9 @@ import 'package:translator/translator.dart';
 import 'dart:convert';
 
 class translate_screen extends StatefulWidget {
-  const translate_screen({super.key});
+  final String? docID; // Add the docID as a parameter to the constructor
+
+  translate_screen({this.docID});
 
   @override
   State<translate_screen> createState() => _translate_screenState();
@@ -26,8 +30,14 @@ class _translate_screenState extends State<translate_screen> {
   String inputbox = "Enter text";
   String outputbox = "คำแปล";
   final rawtxt = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final Future<FirebaseApp> firebase = Firebase.initializeApp();
+    DocumentReference<Map<String, dynamic>> userDocumentRef =
+        FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
+    CollectionReference<Map<String, dynamic>> savedWordsCollectionRef =
+        userDocumentRef.collection("savedWords");
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -113,13 +123,20 @@ class _translate_screenState extends State<translate_screen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          if (rawtxt.text != '' &&
-              translated != "คำแปล" &&
-              translated != "Translated") {
-            print(rawtxt.text);
-            print(translated);
-          } else {
-            print('fail');
+          try {
+            if (rawtxt.text.isNotEmpty &&
+                translated != "คำแปล" &&
+                translated != "Translated") {
+              await savedWordsCollectionRef.add({
+                'Eng': rawtxt.text,
+                'Thai': translated,
+              });
+              print('Data added successfully');
+            } else {
+              print('Data not added: Incomplete or invalid data');
+            }
+          } catch (e) {
+            print(e);
           }
         },
         child: Icon(Icons.save_alt_outlined),
