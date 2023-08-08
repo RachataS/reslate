@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:reslate/model/languageChange.dart';
 import 'package:translator/translator.dart';
@@ -36,6 +37,7 @@ class _translate_screenState extends State<translate_screen> {
     final Future<FirebaseApp> firebase = Firebase.initializeApp();
     DocumentReference<Map<String, dynamic>> userDocumentRef =
         FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
+
     CollectionReference<Map<String, dynamic>> savedWordsCollectionRef =
         userDocumentRef.collection("savedWords");
     return Scaffold(
@@ -123,17 +125,39 @@ class _translate_screenState extends State<translate_screen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          int wordCount = 1;
           try {
             if (rawtxt.text.isNotEmpty &&
                 translated != "คำแปล" &&
                 translated != "Translated") {
-              await savedWordsCollectionRef.add({
-                'Eng': rawtxt.text,
-                'Thai': translated,
-              });
-              print('Data added successfully');
+              // await savedWordsCollectionRef.add({
+              //   'Eng': rawtxt.text,
+              //   'Thai': translated,
+              // });
+              try {
+                await userDocumentRef.update({
+                  'words':
+                      FieldValue.arrayUnion(["${rawtxt.text},$translated"]),
+                });
+                DocumentSnapshot<Map<String, dynamic>> userDoc =
+                    await userDocumentRef.get();
+                // Map<String, dynamic>? data =
+                //     userDoc.data() as Map<String, dynamic>?;
+                // var wordLength = data?['words'];
+                // print(wordLength);
+                int currentWordLength = userDoc.data()?['wordLength'] ?? 0;
+                int newWordLength = currentWordLength + 1;
+                await userDocumentRef.update({'wordLength': newWordLength});
+              } catch (e) {
+                print(e);
+              }
+              ;
+              Fluttertoast.showToast(
+                  msg: "บันทึกคำศัพท์เรียบร้อย", gravity: ToastGravity.TOP);
             } else {
-              print('Data not added: Incomplete or invalid data');
+              Fluttertoast.showToast(
+                  msg: "กรุณาป้อนคำศัพท์เพื่อบันทึก",
+                  gravity: ToastGravity.TOP);
             }
           } catch (e) {
             print(e);

@@ -160,7 +160,7 @@ class _registerPageState extends State<registerPage> {
                                           "Username": profile.username,
                                           "Email": profile.email,
                                           "password": profile.password,
-                                          "words": 0
+                                          "wordLength": 0
                                         });
                                         Fluttertoast.showToast(
                                             msg: "สร้างบัญชีผู้ใช้สำเร็จ",

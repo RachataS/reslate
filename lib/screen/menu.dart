@@ -71,7 +71,7 @@ class _menuPageState extends State<menuPage> {
     Map<String, dynamic>? data = widget.profile.data;
     var username = data?['Username'];
     var email = data?['Email'];
-    var words = data?['words'];
+    var words = data?['wordLength'];
 
     return Scaffold(
       body: Padding(
