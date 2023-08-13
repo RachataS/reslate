@@ -24,7 +24,7 @@ class _translate_screenState extends State<translate_screen> {
   GoogleTranslator translator = GoogleTranslator();
   languageChange language = languageChange();
   String translated = "คำแปล";
-  var raw;
+  var raw, words;
   var inputLanguage = 'en';
   var outputLanguage = 'th';
   String label = "English (EN)";
@@ -141,10 +141,6 @@ class _translate_screenState extends State<translate_screen> {
                 });
                 DocumentSnapshot<Map<String, dynamic>> userDoc =
                     await userDocumentRef.get();
-                // Map<String, dynamic>? data =
-                //     userDoc.data() as Map<String, dynamic>?;
-                // var wordLength = data?['words'];
-                // print(wordLength);
                 int currentWordLength = userDoc.data()?['wordLength'] ?? 0;
                 int newWordLength = currentWordLength + 1;
                 await userDocumentRef.update({'wordLength': newWordLength});
@@ -163,7 +159,7 @@ class _translate_screenState extends State<translate_screen> {
             print(e);
           }
         },
-        child: Icon(Icons.save_alt_outlined),
+        child: Icon(Icons.upload),
       ),
     );
   }
