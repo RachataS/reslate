@@ -219,7 +219,6 @@ class _loginPageState extends State<loginPage> {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return bottombar();
           }));
-          saveLoginStatus(true);
         });
       } on FirebaseAuthException catch (e) {
         Fluttertoast.showToast(msg: e.code, gravity: ToastGravity.TOP);
@@ -227,12 +226,6 @@ class _loginPageState extends State<loginPage> {
       formKey.currentState?.reset();
     }
   }
-}
-
-Future<void> saveLoginStatus(bool isLoggedIn) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool('isLoggedIn', isLoggedIn);
-  print(isLoggedIn);
 }
 
 class btTextStyle {
@@ -270,7 +263,5 @@ class GooglesignInProvider extends ChangeNotifier {
     } else {
       print('this google account already used');
     }
-
-    saveLoginStatus(true);
   }
 }

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:reslate/screen/authentication/login.dart';
 import 'package:reslate/screen/menu.dart';
 import 'package:reslate/screen/review.dart';
 import 'package:reslate/screen/Translate.dart';
@@ -64,7 +65,9 @@ class _bottombarState extends State<bottombar> {
         print('Data is null or not a Map<String, dynamic>');
       }
     } else {
-      print('Document does not exist');
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return loginPage();
+      }));
     }
     setState(() {
       screens = [
