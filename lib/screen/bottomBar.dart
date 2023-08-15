@@ -24,7 +24,6 @@ class _bottombarState extends State<bottombar> {
 
   int currentIndex = 0;
   Profile profile = Profile();
-  //translate_screen home = translate_screen();
   late List<Widget> screens = [];
   bool isLoading = true;
   var docID;
