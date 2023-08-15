@@ -7,13 +7,16 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:reslate/model/languageChange.dart';
+import 'package:reslate/model/profile.dart';
+import 'package:reslate/screen/menu.dart';
 import 'package:translator/translator.dart';
 import 'dart:convert';
 
 class translate_screen extends StatefulWidget {
-  final String? docID; // Add the docID as a parameter to the constructor
+  final String? docID;
+  final Function(Map<String, dynamic>) sendData;
 
-  translate_screen({this.docID});
+  translate_screen({required this.docID, required this.sendData});
 
   @override
   State<translate_screen> createState() => _translate_screenState();
@@ -24,6 +27,7 @@ class _translate_screenState extends State<translate_screen> {
   GoogleTranslator translator = GoogleTranslator();
   languageChange language = languageChange();
   String translated = "คำแปล";
+  Profile profile = Profile();
   var raw, words;
   var inputLanguage = 'en';
   var outputLanguage = 'th';
@@ -37,9 +41,6 @@ class _translate_screenState extends State<translate_screen> {
     final Future<FirebaseApp> firebase = Firebase.initializeApp();
     DocumentReference<Map<String, dynamic>> userDocumentRef =
         FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
-
-    CollectionReference<Map<String, dynamic>> savedWordsCollectionRef =
-        userDocumentRef.collection("savedWords");
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -125,15 +126,10 @@ class _translate_screenState extends State<translate_screen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          int wordCount = 1;
           try {
             if (rawtxt.text.isNotEmpty &&
                 translated != "คำแปล" &&
                 translated != "Translated") {
-              // await savedWordsCollectionRef.add({
-              //   'Eng': rawtxt.text,
-              //   'Thai': translated,
-              // });
               try {
                 await userDocumentRef.update({
                   'words':
@@ -141,9 +137,20 @@ class _translate_screenState extends State<translate_screen> {
                 });
                 DocumentSnapshot<Map<String, dynamic>> userDoc =
                     await userDocumentRef.get();
+
                 int currentWordLength = userDoc.data()?['wordLength'] ?? 0;
                 int newWordLength = currentWordLength + 1;
                 await userDocumentRef.update({'wordLength': newWordLength});
+
+                DocumentSnapshot documentSnapshot = await userDocumentRef.get();
+                Map<String, dynamic>? data =
+                    documentSnapshot.data() as Map<String, dynamic>?;
+                if (data != null) {
+                  profile.data = data;
+                  widget.sendData(data);
+                } else {
+                  print('Data is null or not a Map<String, dynamic>');
+                }
               } catch (e) {
                 print(e);
               }

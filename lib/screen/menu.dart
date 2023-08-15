@@ -24,48 +24,6 @@ class _menuPageState extends State<menuPage> {
   late DocumentReference firebaseDocument;
   signOut signout = signOut();
 
-  // void initState() {
-  //   super.initState();
-  //   getProfile();
-  //   print('profile.data = ${profile.data}');
-  // }
-
-  // Future<void> getProfile() async {
-  //   try {
-  //     var docID = await firebasedoc.getDocumentId();
-  //     if (docID == null) {
-  //       firebaseDocument =
-  //           await FirebaseFirestore.instance.collection('Profile').doc();
-  //     } else {
-  //       firebaseDocument = await FirebaseFirestore.instance
-  //           .collection('Profile')
-  //           .doc('$docID');
-  //     }
-  //     getDocumentData();
-  //   } catch (e) {
-  //     print('Error initializing page: $e');
-  //   }
-  // }
-
-  // void getDocumentData() async {
-  //   DocumentSnapshot documentSnapshot = await firebaseDocument.get();
-  //   if (documentSnapshot.exists) {
-  //     Map<String, dynamic>? data =
-  //         await documentSnapshot.data() as Map<String, dynamic>?;
-
-  //     if (data != null) {
-  //       username = await data['Username'];
-  //       email = await data['Email'];
-  //       words = await data['words'];
-  //       print(data);
-  //     } else {
-  //       print('Data is null or not a Map<String, dynamic>');
-  //     }
-  //   } else {
-  //     print('Document does not exist');
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     Map<String, dynamic>? data = widget.profile.data;

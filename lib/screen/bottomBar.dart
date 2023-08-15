@@ -24,8 +24,8 @@ class _bottombarState extends State<bottombar> {
 
   int currentIndex = 0;
   Profile profile = Profile();
-  translate_screen home = translate_screen();
-  late List<Widget> screens = []; // Initialize as an empty list
+  //translate_screen home = translate_screen();
+  late List<Widget> screens = [];
   bool isLoading = true;
   var docID;
 
@@ -71,27 +71,31 @@ class _bottombarState extends State<bottombar> {
     }
     setState(() {
       screens = [
-        translate_screen(docID: firebaseDocument.id),
+        translate_screen(
+            docID: firebaseDocument.id,
+            sendData: (data) {
+              setState(() {
+                profile.data = data;
+              });
+            }),
         reviewPage(),
         menuPage(profile: profile),
       ];
-      isLoading = false; // Set isLoading to false when the data is ready
+      isLoading = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isLoading // Check if data is loading
+      body: isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
-          : screens.isNotEmpty // Check if screens list is not empty
+          : screens.isNotEmpty
               ? screens[currentIndex]
               : Container(),
-      bottomNavigationBar: isLoading ||
-              screens
-                  .isEmpty // Hide bottom navigation bar when loading or screens list is empty
+      bottomNavigationBar: isLoading || screens.isEmpty
           ? null
           : ConvexAppBar(
               backgroundColor: Colors.blueGrey,
