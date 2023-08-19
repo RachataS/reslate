@@ -112,9 +112,3 @@ class _bottombarState extends State<bottombar> {
     );
   }
 }
-
-//sign out function
-Future<void> logout() async {
-  await GoogleSignIn().signOut();
-  await FirebaseAuth.instance.signOut();
-}
