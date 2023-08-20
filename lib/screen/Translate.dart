@@ -29,12 +29,13 @@ class _translate_screenState extends State<translate_screen> {
   String translated = "คำแปล";
   Profile profile = Profile();
   var raw, words;
+  List<String> wordsList = [];
   var inputLanguage = 'en';
   var outputLanguage = 'th';
   String label = "English (EN)";
   String inputbox = "Enter text";
   String outputbox = "คำแปล";
-  final rawtxt = TextEditingController();
+  var rawtxt = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +75,7 @@ class _translate_screenState extends State<translate_screen> {
       ),
       body: Card(
         key: formKey,
-        margin: const EdgeInsets.fromLTRB(12, 12, 12, 200),
+        margin: const EdgeInsets.fromLTRB(12, 12, 12, 120),
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
@@ -94,6 +95,7 @@ class _translate_screenState extends State<translate_screen> {
               onChanged: (rawtxt) async {
                 if (rawtxt == "") {
                   translated = outputbox;
+                  wordsList.clear();
                 } else {
                   try {
                     formKey.currentState?.save();
@@ -103,6 +105,10 @@ class _translate_screenState extends State<translate_screen> {
                         .then((transaltion) {
                       setState(() {
                         translated = transaltion.toString();
+                        if (rawtxt.contains(' ')) {
+                          wordsList = rawtxt.split(' ');
+                          // wordsList.clear();
+                        }
                       });
                     });
                   } catch (e) {
@@ -120,6 +126,27 @@ class _translate_screenState extends State<translate_screen> {
                   fontSize: 28,
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.bold),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 370, 0, 0),
+              child: Row(
+                children: wordsList.map((word) {
+                  return TextButton(
+                      onPressed: () async {
+                        rawtxt.text = word;
+                        await translator
+                            .translate(rawtxt.text,
+                                from: inputLanguage, to: outputLanguage)
+                            .then((transaltion) {
+                          setState(() {
+                            translated = transaltion.toString();
+                            wordsList.clear();
+                          });
+                        });
+                      },
+                      child: Text(word));
+                }).toList(),
+              ),
             ),
           ],
         ),
