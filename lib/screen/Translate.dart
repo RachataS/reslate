@@ -107,7 +107,6 @@ class _translate_screenState extends State<translate_screen> {
                         translated = transaltion.toString();
                         if (rawtxt.contains(' ')) {
                           wordsList = rawtxt.split(' ');
-                          // wordsList.clear();
                         }
                       });
                     });
