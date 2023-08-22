@@ -127,23 +127,25 @@ class _translate_screenState extends State<translate_screen> {
                   fontWeight: FontWeight.bold),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 370, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 320, 0, 0),
               child: Row(
                 children: wordsList.map((word) {
-                  return TextButton(
-                      onPressed: () async {
-                        rawtxt.text = word;
-                        await translator
-                            .translate(rawtxt.text,
-                                from: inputLanguage, to: outputLanguage)
-                            .then((transaltion) {
-                          setState(() {
-                            translated = transaltion.toString();
-                            wordsList.clear();
+                  return Flexible(
+                    child: TextButton(
+                        onPressed: () async {
+                          rawtxt.text = word;
+                          await translator
+                              .translate(rawtxt.text,
+                                  from: inputLanguage, to: outputLanguage)
+                              .then((transaltion) {
+                            setState(() {
+                              translated = transaltion.toString();
+                              wordsList.clear();
+                            });
                           });
-                        });
-                      },
-                      child: Text(word));
+                        },
+                        child: Text(word)),
+                  );
                 }).toList(),
               ),
             ),
@@ -214,5 +216,9 @@ class _translate_screenState extends State<translate_screen> {
     }
     setState(() {});
     rawtxt.clear();
+  }
+
+  wordsButton() {
+    do {} while (wordsList.length != 0);
   }
 }
