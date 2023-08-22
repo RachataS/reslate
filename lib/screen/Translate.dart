@@ -127,26 +127,33 @@ class _translate_screenState extends State<translate_screen> {
                   fontWeight: FontWeight.bold),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 320, 0, 0),
-              child: Row(
-                children: wordsList.map((word) {
-                  return Flexible(
-                    child: TextButton(
-                        onPressed: () async {
-                          rawtxt.text = word;
-                          await translator
-                              .translate(rawtxt.text,
-                                  from: inputLanguage, to: outputLanguage)
-                              .then((transaltion) {
-                            setState(() {
-                              translated = transaltion.toString();
-                              wordsList.clear();
-                            });
-                          });
-                        },
-                        child: Text(word)),
-                  );
-                }).toList(),
+              padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+              child: Column(
+                children: [
+                  for (int i = 0; i < wordsList.length; i += 5)
+                    Row(
+                      children: [
+                        for (int j = i; j < i + 5 && j < wordsList.length; j++)
+                          Flexible(
+                            child: TextButton(
+                              onPressed: () async {
+                                rawtxt.text = wordsList[j];
+                                await translator
+                                    .translate(rawtxt.text,
+                                        from: inputLanguage, to: outputLanguage)
+                                    .then((translation) {
+                                  setState(() {
+                                    translated = translation.toString();
+                                    wordsList.clear();
+                                  });
+                                });
+                              },
+                              child: Text(wordsList[j]),
+                            ),
+                          ),
+                      ],
+                    ),
+                ],
               ),
             ),
           ],
@@ -216,9 +223,5 @@ class _translate_screenState extends State<translate_screen> {
     }
     setState(() {});
     rawtxt.clear();
-  }
-
-  wordsButton() {
-    do {} while (wordsList.length != 0);
   }
 }
