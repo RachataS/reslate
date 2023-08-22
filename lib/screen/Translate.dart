@@ -159,49 +159,53 @@ class _translate_screenState extends State<translate_screen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          try {
-            if (rawtxt.text.isNotEmpty &&
-                translated != "คำแปล" &&
-                translated != "Translated") {
-              try {
-                await userDocumentRef.update({
-                  'words':
-                      FieldValue.arrayUnion(["${rawtxt.text},$translated"]),
-                });
-                DocumentSnapshot<Map<String, dynamic>> userDoc =
-                    await userDocumentRef.get();
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
+        child: FloatingActionButton(
+          onPressed: () async {
+            try {
+              if (rawtxt.text.isNotEmpty &&
+                  translated != "คำแปล" &&
+                  translated != "Translated") {
+                try {
+                  await userDocumentRef.update({
+                    'words':
+                        FieldValue.arrayUnion(["${rawtxt.text},$translated"]),
+                  });
+                  DocumentSnapshot<Map<String, dynamic>> userDoc =
+                      await userDocumentRef.get();
 
-                int currentWordLength = userDoc.data()?['wordLength'] ?? 0;
-                int newWordLength = currentWordLength + 1;
-                await userDocumentRef.update({'wordLength': newWordLength});
+                  int currentWordLength = userDoc.data()?['wordLength'] ?? 0;
+                  int newWordLength = currentWordLength + 1;
+                  await userDocumentRef.update({'wordLength': newWordLength});
 
-                DocumentSnapshot documentSnapshot = await userDocumentRef.get();
-                Map<String, dynamic>? data =
-                    documentSnapshot.data() as Map<String, dynamic>?;
-                if (data != null) {
-                  profile.data = data;
-                  widget.sendData(data);
-                } else {
-                  print('Data is null or not a Map<String, dynamic>');
+                  DocumentSnapshot documentSnapshot =
+                      await userDocumentRef.get();
+                  Map<String, dynamic>? data =
+                      documentSnapshot.data() as Map<String, dynamic>?;
+                  if (data != null) {
+                    profile.data = data;
+                    widget.sendData(data);
+                  } else {
+                    print('Data is null or not a Map<String, dynamic>');
+                  }
+                } catch (e) {
+                  print(e);
                 }
-              } catch (e) {
-                print(e);
+                ;
+                Fluttertoast.showToast(
+                    msg: "บันทึกคำศัพท์เรียบร้อย", gravity: ToastGravity.TOP);
+              } else {
+                Fluttertoast.showToast(
+                    msg: "กรุณาป้อนคำศัพท์เพื่อบันทึก",
+                    gravity: ToastGravity.TOP);
               }
-              ;
-              Fluttertoast.showToast(
-                  msg: "บันทึกคำศัพท์เรียบร้อย", gravity: ToastGravity.TOP);
-            } else {
-              Fluttertoast.showToast(
-                  msg: "กรุณาป้อนคำศัพท์เพื่อบันทึก",
-                  gravity: ToastGravity.TOP);
+            } catch (e) {
+              print(e);
             }
-          } catch (e) {
-            print(e);
-          }
-        },
-        child: Icon(Icons.upload),
+          },
+          child: Icon(Icons.upload),
+        ),
       ),
     );
   }

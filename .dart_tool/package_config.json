@@ -8,6 +8,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "animated_notch_bottom_bar",
+      "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/animated_notch_bottom_bar-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "archive",
       "rootUri": "file:///Users/rachatasupanurak/.pub-cache/hosted/pub.dev/archive-3.3.7",
       "packageUri": "lib/",
@@ -560,7 +566,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-08-20T08:39:52.373595Z",
+  "generated": "2023-08-22T07:14:21.143785Z",
   "generator": "pub",
   "generatorVersion": "3.1.0"
 }

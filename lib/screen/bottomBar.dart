@@ -1,3 +1,4 @@
+import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,9 @@ class _bottombarState extends State<bottombar> {
   late List<Widget> screens = [];
   bool isLoading = true;
   var docID;
+
+  final _pageController = PageController(initialPage: 0);
+  final _controller = NotchBottomBarController(index: 0);
 
   @override
   void initState() {
@@ -59,9 +63,6 @@ class _bottombarState extends State<bottombar> {
 
       if (data != null) {
         profile.data = data;
-        print(profile.data);
-      } else {
-        print('Data is null or not a Map<String, dynamic>');
       }
     } else {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -92,25 +93,83 @@ class _bottombarState extends State<bottombar> {
               child: CircularProgressIndicator(),
             )
           : screens.isNotEmpty
-              ? screens[currentIndex]
-              : Container(),
+              ? Scaffold(
+                  body: screens[currentIndex],
+                )
+              : PageView(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children:
+                      List.generate(screens.length, (index) => screens[index]),
+                ),
+      extendBody: true,
       bottomNavigationBar: isLoading || screens.isEmpty
           ? null
-          : ConvexAppBar(
-              backgroundColor: Colors.blueGrey,
-              activeColor: Colors.white,
-              color: Colors.white,
-              style: TabStyle.react,
-              top: -20,
-              curveSize: 100,
-              items: [
-                TabItem(icon: Icons.g_translate_outlined, title: 'Translate'),
-                TabItem(icon: Icons.rate_review_sharp, title: 'Review'),
-                TabItem(icon: Icons.menu, title: 'Menu'),
+          : AnimatedNotchBottomBar(
+              notchBottomBarController: _controller,
+              color: Colors.blueGrey,
+              showLabel: true,
+              itemLabelStyle: TextStyle(color: Colors.white, fontSize: 13),
+              notchColor: Colors.white,
+              removeMargins: false,
+              bottomBarWidth: 400,
+              durationInMilliSeconds: 100,
+              bottomBarItems: [
+                const BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.g_translate_outlined,
+                    color: Colors.white,
+                  ),
+                  activeItem: Icon(
+                    Icons.g_translate_outlined,
+                    color: Colors.blueGrey,
+                  ),
+                  itemLabel: 'Translate',
+                ),
+                const BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.rate_review_sharp,
+                    color: Colors.white,
+                  ),
+                  activeItem: Icon(
+                    Icons.rate_review_sharp,
+                    color: Colors.blueGrey,
+                  ),
+                  itemLabel: 'Review',
+                ),
+                const BottomBarItem(
+                  inActiveItem: Icon(
+                    Icons.menu,
+                    color: Colors.white,
+                  ),
+                  activeItem: Icon(
+                    Icons.menu,
+                    color: Colors.blueGrey,
+                  ),
+                  itemLabel: 'Menu',
+                ),
               ],
-              initialActiveIndex: currentIndex,
-              onTap: (index) => setState(() => currentIndex = index),
+              onTap: (index) {
+                setState(() => currentIndex = index);
+                _controller.index = index;
+              },
             ),
+
+      // ConvexAppBar(
+      //     backgroundColor: Colors.blueGrey,
+      //     activeColor: Colors.white,
+      //     color: Colors.white,
+      //     style: TabStyle.react,
+      //     top: -20,
+      //     curveSize: 100,
+      //     items: [
+      //       TabItem(icon: Icons.g_translate_outlined, title: 'Translate'),
+      //       TabItem(icon: Icons.rate_review_sharp, title: 'Review'),
+      //       TabItem(icon: Icons.menu, title: 'Menu'),
+      //     ],
+      //     initialActiveIndex: currentIndex,
+      //     onTap: (index) => setState(() => currentIndex = index),
+      //   ),
     );
   }
 }

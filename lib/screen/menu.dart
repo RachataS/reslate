@@ -60,18 +60,21 @@ class _menuPageState extends State<menuPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          try {
-            logOut();
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
-              return loginPage();
-            }));
-          } catch (e) {
-            print(e);
-          }
-        },
-        child: Icon(Icons.logout),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
+        child: FloatingActionButton(
+          onPressed: () async {
+            try {
+              logOut();
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return loginPage();
+              }));
+            } catch (e) {
+              print(e);
+            }
+          },
+          child: Icon(Icons.logout),
+        ),
       ),
     );
   }
