@@ -2,7 +2,6 @@ import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_not
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:reslate/screen/authentication/login.dart';
 import 'package:reslate/screen/menu.dart';
@@ -128,11 +127,11 @@ class _bottombarState extends State<bottombar> {
                 ),
                 const BottomBarItem(
                   inActiveItem: Icon(
-                    Icons.rate_review_sharp,
+                    Icons.gamepad,
                     color: Colors.white,
                   ),
                   activeItem: Icon(
-                    Icons.rate_review_sharp,
+                    Icons.gamepad,
                     color: Colors.blueGrey,
                   ),
                   itemLabel: 'Review',
@@ -154,22 +153,6 @@ class _bottombarState extends State<bottombar> {
                 _controller.index = index;
               },
             ),
-
-      // ConvexAppBar(
-      //     backgroundColor: Colors.blueGrey,
-      //     activeColor: Colors.white,
-      //     color: Colors.white,
-      //     style: TabStyle.react,
-      //     top: -20,
-      //     curveSize: 100,
-      //     items: [
-      //       TabItem(icon: Icons.g_translate_outlined, title: 'Translate'),
-      //       TabItem(icon: Icons.rate_review_sharp, title: 'Review'),
-      //       TabItem(icon: Icons.menu, title: 'Menu'),
-      //     ],
-      //     initialActiveIndex: currentIndex,
-      //     onTap: (index) => setState(() => currentIndex = index),
-      //   ),
     );
   }
 }

@@ -70,6 +70,7 @@ class _translate_screenState extends State<translate_screen> {
               language.outbox = 'คำแปล';
             }
             changeLanguage();
+            wordsList.clear();
           },
         ),
       ),
@@ -127,7 +128,7 @@ class _translate_screenState extends State<translate_screen> {
                   fontWeight: FontWeight.bold),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
               child: Column(
                 children: [
                   for (int i = 0; i < wordsList.length; i += 5)
