@@ -1,4 +1,4 @@
-#Sun Aug 20 15:54:47 ICT 2023
+#Fri Aug 25 22:08:36 ICT 2023
 base.0=/Users/rachatasupanurak/my_task/reslate/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 base.1=/Users/rachatasupanurak/my_task/reslate/build/app/intermediates/dex/debug/mergeDexDebug/classes2.dex
 base.2=/Users/rachatasupanurak/my_task/reslate/build/app/intermediates/dex/debug/mergeDexDebug/classes3.dex
