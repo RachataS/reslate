@@ -1,0 +1,4 @@
+dependencies: \
+  /Users/rachatasupanurak/my_task/reslate/build/macos/Build/Intermediates.noindex/Pods.build/Debug/nanopb.build/module.modulemap \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/Target\ Support\ Files/nanopb/nanopb-dummy.m \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/Target\ Support\ Files/nanopb/nanopb-prefix.pch

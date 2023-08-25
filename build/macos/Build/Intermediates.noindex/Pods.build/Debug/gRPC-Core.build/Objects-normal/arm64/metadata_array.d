@@ -1,0 +1,36 @@
+dependencies: \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/src/core/lib/surface/metadata_array.cc \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/Target\ Support\ Files/gRPC-Core/gRPC-Core-prefix.pch \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/support/port_platform.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/port_platform.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/grpc.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/byte_buffer.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/byte_buffer.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/grpc_types.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/compression_types.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/gpr_types.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/slice.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/gpr_slice.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/status.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/slice_buffer.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/slice.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/support/sync.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/sync.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/sync_generic.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/atm.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/atm_gcc_atomic.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/sync_posix.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/connectivity_state.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/propagation_bits.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/status.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/support/time.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/support/alloc.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/src/core/lib/debug/trace.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/src/core/lib/gprpp/global_config.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/src/core/lib/gprpp/global_config_custom.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/src/core/lib/gprpp/global_config_env.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/src/core/lib/gprpp/global_config_generic.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/src/core/lib/gprpp/memory.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/src/core/lib/surface/api_trace.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/support/log.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/gRPC-Core/include/grpc/impl/codegen/log.h

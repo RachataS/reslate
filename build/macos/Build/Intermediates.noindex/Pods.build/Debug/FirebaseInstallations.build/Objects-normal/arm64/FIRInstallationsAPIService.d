@@ -1,0 +1,51 @@
+dependencies: \
+  /Users/rachatasupanurak/my_task/reslate/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseInstallations.build/module.modulemap \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseInstallations/Source/Library/InstallationsAPI/FIRInstallationsAPIService.m \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseInstallations/Source/Library/InstallationsAPI/FIRInstallationsAPIService.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromises.h \
+  /Users/rachatasupanurak/my_task/reslate/build/macos/Build/Intermediates.noindex/Pods.build/Debug/PromisesObjC.build/module.modulemap \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/Target\ Support\ Files/PromisesObjC/PromisesObjC-umbrella.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+All.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromiseError.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Always.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Any.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Async.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Await.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Catch.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Delay.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Do.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Race.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Recover.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Reduce.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Retry.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Testing.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Then.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Timeout.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Validate.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/PromisesObjC/Sources/FBLPromises/include/FBLPromise+Wrap.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseCore/Extension/FirebaseCoreInternal.h \
+  /Users/rachatasupanurak/my_task/reslate/build/macos/Build/Intermediates.noindex/Pods.build/Debug/FirebaseCore.build/module.modulemap \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/Target\ Support\ Files/FirebaseCore/FirebaseCore-umbrella.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseCore/FirebaseCore/Sources/Public/FirebaseCore/FIRApp.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseCore/FirebaseCore/Sources/Public/FirebaseCore/FIRConfiguration.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseCore/FirebaseCore/Sources/Public/FirebaseCore/FIRLoggerLevel.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseCore/FirebaseCore/Sources/Public/FirebaseCore/FirebaseCore.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseCore/FirebaseCore/Sources/Public/FirebaseCore/FIROptions.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseCore/FirebaseCore/Sources/Public/FirebaseCore/FIRVersion.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseCore/Extension/FIRAppInternal.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseCore/Extension/FIRComponent.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseCore/Extension/FIRComponentContainer.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseCore/Extension/FIRComponentType.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseCore/Extension/FIRDependency.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseCore/Extension/FIRHeartbeatLogger.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseCore/Extension/FIRLibrary.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseCore/Extension/FIRLogger.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseCore/Extension/FIROptionsInternal.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseInstallations/Source/Library/Errors/FIRInstallationsErrorUtil.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseInstallations/Source/Library/Public/FirebaseInstallations/FIRInstallationsErrors.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseInstallations/Source/Library/Errors/FIRInstallationsHTTPError.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseInstallations/Source/Library/FIRInstallationsLogger.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseInstallations/Source/Library/InstallationsAPI/FIRInstallationsItem+RegisterInstallationAPI.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseInstallations/Source/Library/FIRInstallationsItem.h \
+  /Users/rachatasupanurak/my_task/reslate/macos/Pods/FirebaseInstallations/FirebaseInstallations/Source/Library/InstallationsIDController/FIRInstallationsStatus.h
