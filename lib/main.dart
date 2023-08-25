@@ -15,21 +15,36 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final customBlueColor = MaterialColor(
+      0xFF2196F3, // Primary value
+      <int, Color>{
+        50: Color(0xFFE3F2FD),
+        100: Color(0xFFBBDEFB),
+        200: Color(0xFF90CAF9),
+        300: Color(0xFF64B5F6),
+        400: Color(0xFF42A5F5), // The shade you want
+        500: Color(0xFF2196F3),
+        600: Color(0xFF1E88E5),
+        700: Color(0xFF1976D2),
+        800: Color(0xFF1565C0),
+        900: Color(0xFF0D47A1),
+      },
+    );
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //tion
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blueGrey,
-      ),
+          // This is the theme of your application.
+          //tion
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: customBlueColor),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

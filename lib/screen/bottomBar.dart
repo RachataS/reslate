@@ -106,7 +106,7 @@ class _bottombarState extends State<bottombar> {
           ? null
           : AnimatedNotchBottomBar(
               notchBottomBarController: _controller,
-              color: Colors.blueGrey,
+              color: Colors.blue[400]!,
               showLabel: true,
               itemLabelStyle: TextStyle(color: Colors.white, fontSize: 13),
               notchColor: Colors.white,
@@ -121,7 +121,7 @@ class _bottombarState extends State<bottombar> {
                   ),
                   activeItem: Icon(
                     Icons.g_translate_outlined,
-                    color: Colors.blueGrey,
+                    color: Colors.blue,
                   ),
                   itemLabel: 'Translate',
                 ),
@@ -132,7 +132,7 @@ class _bottombarState extends State<bottombar> {
                   ),
                   activeItem: Icon(
                     Icons.gamepad,
-                    color: Colors.blueGrey,
+                    color: Colors.blue,
                   ),
                   itemLabel: 'Review',
                 ),
@@ -143,7 +143,7 @@ class _bottombarState extends State<bottombar> {
                   ),
                   activeItem: Icon(
                     Icons.menu,
-                    color: Colors.blueGrey,
+                    color: Colors.blue,
                   ),
                   itemLabel: 'Menu',
                 ),

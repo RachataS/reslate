@@ -44,9 +44,9 @@ class _loginPageState extends State<loginPage> {
             width: double.infinity,
             decoration: BoxDecoration(
               gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-                Colors.blueGrey[800]!,
-                Colors.blueGrey[600]!,
-                Colors.blueGrey[400]!,
+                Colors.blue[600]!,
+                Colors.blue[300]!,
+                Colors.blue[100]!,
               ]),
             ),
             child: Form(
@@ -81,6 +81,12 @@ class _loginPageState extends State<loginPage> {
                   Expanded(
                       child: Container(
                     decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.blue[900]!,
+                              blurRadius: 30,
+                              offset: Offset(0, 10))
+                        ],
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(60),
@@ -97,8 +103,8 @@ class _loginPageState extends State<loginPage> {
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
-                                        color: Colors.blueGrey,
-                                        blurRadius: 20,
+                                        color: Colors.blue[400]!,
+                                        blurRadius: 30,
                                         offset: Offset(0, 10))
                                   ]),
                               child: Column(children: [
@@ -152,7 +158,7 @@ class _loginPageState extends State<loginPage> {
                                 width: 300,
                                 child: ElevatedButton.icon(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.blueGrey,
+                                        backgroundColor: Colors.blue[400],
                                         fixedSize: const Size(300, 50),
                                         shape: RoundedRectangleBorder(
                                             borderRadius:

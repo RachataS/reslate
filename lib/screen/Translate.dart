@@ -46,14 +46,14 @@ class _translate_screenState extends State<translate_screen> {
       appBar: AppBar(
         title: Text(
           "Translate",
-          style: TextStyle(color: Colors.blueGrey),
+          style: TextStyle(color: Colors.blue),
         ),
         centerTitle: true,
         backgroundColor: Colors.grey.shade50,
         leading: IconButton(
           icon: Icon(
             Icons.translate,
-            color: Colors.blueGrey,
+            color: Colors.blue,
           ),
           onPressed: () {
             if (inputLanguage == 'en' || inputLanguage == null) {
@@ -90,6 +90,7 @@ class _translate_screenState extends State<translate_screen> {
                 fontWeight: FontWeight.bold,
               ),
               decoration: InputDecoration(
+                border: InputBorder.none,
                 hintText: inputbox,
               ),
               controller: rawtxt,

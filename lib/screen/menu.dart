@@ -40,11 +40,11 @@ class _menuPageState extends State<menuPage> {
           children: [
             Builder(builder: (context) {
               return CircleAvatar(
-                backgroundColor: Colors.blueGrey,
+                backgroundColor: Colors.blue[400],
                 radius: 30,
                 child: Text(
                   '${words ?? '0'}',
-                  style: TextStyle(fontSize: 25),
+                  style: TextStyle(fontSize: 25, color: Colors.white),
                 ),
               );
             }),
