@@ -125,7 +125,7 @@ class _translate_screenState extends State<translate_screen> {
               translated,
               style: const TextStyle(
                   fontSize: 28,
-                  color: Colors.blueGrey,
+                  color: Colors.black54,
                   fontWeight: FontWeight.bold),
             ),
             Padding(
@@ -150,7 +150,10 @@ class _translate_screenState extends State<translate_screen> {
                                   });
                                 });
                               },
-                              child: Text(wordsList[j]),
+                              child: Text(
+                                wordsList[j],
+                                style: TextStyle(color: Colors.black54),
+                              ),
                             ),
                           ),
                       ],
