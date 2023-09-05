@@ -95,16 +95,19 @@ class _translate_screenState extends State<translate_screen> {
               ),
               controller: rawtxt,
               onChanged: (rawtxt) async {
-                if (rawtxt == "") {
-                  translated = outputbox;
+                if (rawtxt == null || rawtxt == '') {
+                  setState(() {
+                    translated = outputbox;
+                  });
                   wordsList.clear();
                 } else {
                   try {
                     formKey.currentState?.save();
                     await translator
-                        .translate(rawtxt,
+                        .translate('${rawtxt}',
                             from: inputLanguage, to: outputLanguage)
                         .then((transaltion) {
+                      print('${rawtxt}\n${translated}');
                       setState(() {
                         translated = transaltion.toString();
                         if (rawtxt.contains(' ')) {
