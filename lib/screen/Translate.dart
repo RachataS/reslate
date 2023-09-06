@@ -185,19 +185,35 @@ class _translate_screenState extends State<translate_screen> {
                   //       FieldValue.arrayUnion(["${rawtxt.text},$translated"]),
                   // });
 
-                  String newDocumentId = rawtxt.text;
-                  DocumentReference<Map<String, dynamic>> newDocumentRef =
-                      userCollection
-                          .doc(widget.docID)
-                          .collection("savedWords")
-                          .doc(newDocumentId);
-                  Map<String, dynamic> dataToStore = {
-                    'inputText': rawtxt.text,
-                    'translatedText': translated,
-                    'beQuestion': 0,
-                    'answerWrong': 0,
-                  };
-                  await newDocumentRef.set(dataToStore);
+                  if (RegExp(r'[^a-zA-Z]').hasMatch(rawtxt.text)) {
+                    String newDocumentId = translated;
+                    DocumentReference<Map<String, dynamic>> newDocumentRef =
+                        userCollection
+                            .doc(widget.docID)
+                            .collection("savedWords")
+                            .doc(newDocumentId);
+                    Map<String, dynamic> dataToStore = {
+                      'eng': translated,
+                      'thai': rawtxt.text,
+                      'beQuestion': 0,
+                      'answerWrong': 0,
+                    };
+                    await newDocumentRef.set(dataToStore);
+                  } else {
+                    String newDocumentId = rawtxt.text;
+                    DocumentReference<Map<String, dynamic>> newDocumentRef =
+                        userCollection
+                            .doc(widget.docID)
+                            .collection("savedWords")
+                            .doc(newDocumentId);
+                    Map<String, dynamic> dataToStore = {
+                      'eng': rawtxt.text,
+                      'thai': translated,
+                      'beQuestion': 0,
+                      'answerWrong': 0,
+                    };
+                    await newDocumentRef.set(dataToStore);
+                  }
 
                   DocumentSnapshot<Map<String, dynamic>> userDoc =
                       await userDocumentRef.get();
