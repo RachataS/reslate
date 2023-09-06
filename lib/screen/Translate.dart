@@ -106,13 +106,14 @@ class _translate_screenState extends State<translate_screen> {
                     await translator
                         .translate('${rawtxt}',
                             from: inputLanguage, to: outputLanguage)
-                        .then((transaltion) {
-                      print('${rawtxt}\n${translated}');
-                      setState(() {
-                        translated = transaltion.toString();
-                        if (rawtxt.contains(' ')) {
-                          wordsList = rawtxt.split(' ');
-                        }
+                        .then((translation) {
+                      Future.delayed(Duration(seconds: 1), () {
+                        setState(() {
+                          translated = translation.toString();
+                          if (rawtxt.contains(' ')) {
+                            wordsList = rawtxt.split(' ');
+                          }
+                        });
                       });
                     });
                   } catch (e) {
