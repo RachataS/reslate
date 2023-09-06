@@ -195,9 +195,9 @@ class _loginPageState extends State<loginPage> {
                                       } catch (e) {
                                         print("can't get user data");
                                       }
-                                      Fluttertoast.showToast(
-                                          msg: "เข้าสู่ระบบสำเร็จ",
-                                          gravity: ToastGravity.TOP);
+                                      // Fluttertoast.showToast(
+                                      //     msg: "เข้าสู่ระบบสำเร็จ",
+                                      //     gravity: ToastGravity.TOP);
 
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context) {
