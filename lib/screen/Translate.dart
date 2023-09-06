@@ -32,7 +32,7 @@ class _translate_screenState extends State<translate_screen> {
   List<String> wordsList = [];
   var inputLanguage = 'en';
   var outputLanguage = 'th';
-  String label = "English (EN)";
+  String label = "English";
   String inputbox = "Enter text";
   String outputbox = "คำแปล";
   var rawtxt = TextEditingController();
@@ -40,6 +40,8 @@ class _translate_screenState extends State<translate_screen> {
   @override
   Widget build(BuildContext context) {
     final Future<FirebaseApp> firebase = Firebase.initializeApp();
+    CollectionReference<Map<String, dynamic>> userCollection =
+        FirebaseFirestore.instance.collection("Profile");
     DocumentReference<Map<String, dynamic>> userDocumentRef =
         FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
     return Scaffold(
@@ -59,13 +61,13 @@ class _translate_screenState extends State<translate_screen> {
             if (inputLanguage == 'en' || inputLanguage == null) {
               language.input = 'th';
               language.output = 'en';
-              language.label = "ไทย (TH)";
+              language.label = "ภาษาไทย";
               language.inbox = "โปรดป้อนข้อความ";
               language.outbox = 'Translated';
             } else {
               language.input = 'en';
               language.output = 'th';
-              language.label = "English (EN)";
+              language.label = "English";
               language.inbox = "Enter text";
               language.outbox = 'คำแปล';
             }
@@ -94,6 +96,7 @@ class _translate_screenState extends State<translate_screen> {
                 hintText: inputbox,
               ),
               controller: rawtxt,
+              maxLines: null,
               onChanged: (rawtxt) async {
                 if (rawtxt == null || rawtxt == '') {
                   setState(() {
@@ -107,13 +110,13 @@ class _translate_screenState extends State<translate_screen> {
                         .translate('${rawtxt}',
                             from: inputLanguage, to: outputLanguage)
                         .then((translation) {
-                      Future.delayed(Duration(seconds: 1), () {
-                        setState(() {
-                          translated = translation.toString();
-                          if (rawtxt.contains(' ')) {
-                            wordsList = rawtxt.split(' ');
-                          }
-                        });
+                      // Future.delayed(Duration(milliseconds: 500), () {
+                      setState(() {
+                        translated = translation.toString();
+                        if (rawtxt.contains(' ')) {
+                          wordsList = rawtxt.split(' ');
+                        }
+                        // });
                       });
                     });
                   } catch (e) {
@@ -177,10 +180,25 @@ class _translate_screenState extends State<translate_screen> {
                   translated != "คำแปล" &&
                   translated != "Translated") {
                 try {
-                  await userDocumentRef.update({
-                    'words':
-                        FieldValue.arrayUnion(["${rawtxt.text},$translated"]),
-                  });
+                  // await userDocumentRef.update({
+                  //   'words':
+                  //       FieldValue.arrayUnion(["${rawtxt.text},$translated"]),
+                  // });
+
+                  String newDocumentId = rawtxt.text;
+                  DocumentReference<Map<String, dynamic>> newDocumentRef =
+                      userCollection
+                          .doc(widget.docID)
+                          .collection("savedWords")
+                          .doc(newDocumentId);
+                  Map<String, dynamic> dataToStore = {
+                    'inputText': rawtxt.text,
+                    'translatedText': translated,
+                    'beQuestion': 0,
+                    'answerWrong': 0,
+                  };
+                  await newDocumentRef.set(dataToStore);
+
                   DocumentSnapshot<Map<String, dynamic>> userDoc =
                       await userDocumentRef.get();
 
@@ -224,7 +242,7 @@ class _translate_screenState extends State<translate_screen> {
     if (inputLanguage == null) {
       inputLanguage = 'en';
       outputLanguage = 'th';
-      label = "English (EN)";
+      label = "English";
       inputbox = "Enter text";
       outputbox = "คำแปล";
     } else {
