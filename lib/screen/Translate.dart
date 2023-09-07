@@ -28,7 +28,6 @@ class _translate_screenState extends State<translate_screen> {
   languageChange language = languageChange();
   String translated = "คำแปล";
   Profile profile = Profile();
-  var raw, words;
   List<String> wordsList = [];
   var inputLanguage = 'en';
   var outputLanguage = 'th';
@@ -146,14 +145,15 @@ class _translate_screenState extends State<translate_screen> {
                           Flexible(
                             child: TextButton(
                               onPressed: () async {
-                                rawtxt.text = wordsList[j];
+                                // rawtxt.text = wordsList[j];
+                                String seclecttxt = wordsList[j];
                                 await translator
-                                    .translate(rawtxt.text,
+                                    .translate(seclecttxt,
                                         from: inputLanguage, to: outputLanguage)
                                     .then((translation) {
                                   setState(() {
                                     translated = translation.toString();
-                                    wordsList.clear();
+                                    // wordsList.clear();
                                   });
                                 });
                               },
@@ -197,6 +197,7 @@ class _translate_screenState extends State<translate_screen> {
                       'thai': rawtxt.text,
                       'beQuestion': 0,
                       'answerWrong': 0,
+                      'answerCorrect': 0,
                     };
                     await newDocumentRef.set(dataToStore);
                   } else {
@@ -211,6 +212,7 @@ class _translate_screenState extends State<translate_screen> {
                       'thai': translated,
                       'beQuestion': 0,
                       'answerWrong': 0,
+                      'answerCorrect': 0,
                     };
                     await newDocumentRef.set(dataToStore);
                   }
