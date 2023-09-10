@@ -87,6 +87,7 @@ class _bottombarState extends State<bottombar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: isLoading
           ? Center(
               child: CircularProgressIndicator(),
