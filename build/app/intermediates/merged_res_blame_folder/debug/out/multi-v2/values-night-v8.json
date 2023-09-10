@@ -4,7 +4,7 @@
             "outputFile": "com.example.reslate.app-mergeDebugResources-15:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Users/rachatasupanurak/my_task/reslate/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/Users/rachatasupanurak/myTask/reslate/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

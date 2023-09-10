@@ -34,15 +34,13 @@ class _translate_screenState extends State<translate_screen> {
   String label = "English";
   String inputbox = "Enter text";
   String outputbox = "คำแปล";
+  late String seclecttxt, seclecttranslated;
   var rawtxt = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final Future<FirebaseApp> firebase = Firebase.initializeApp();
-    CollectionReference<Map<String, dynamic>> userCollection =
-        FirebaseFirestore.instance.collection("Profile");
-    DocumentReference<Map<String, dynamic>> userDocumentRef =
-        FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -146,16 +144,79 @@ class _translate_screenState extends State<translate_screen> {
                             child: TextButton(
                               onPressed: () async {
                                 // rawtxt.text = wordsList[j];
-                                String seclecttxt = wordsList[j];
+                                seclecttxt = wordsList[j];
                                 await translator
                                     .translate(seclecttxt,
                                         from: inputLanguage, to: outputLanguage)
                                     .then((translation) {
                                   setState(() {
-                                    translated = translation.toString();
-                                    // wordsList.clear();
+                                    seclecttranslated = translation.toString();
                                   });
                                 });
+                                Dialog saveWordsDialog = Dialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
+                                  child: Container(
+                                    width: 350,
+                                    height: 250,
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 60, 10, 10),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            seclecttxt,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 30),
+                                          ),
+                                          SizedBox(
+                                            height: 30,
+                                          ),
+                                          Text(
+                                            seclecttranslated,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                  style: TextButton.styleFrom(
+                                                    textStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .labelLarge,
+                                                  ),
+                                                  child: Text('Close')),
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                    saveWords(seclecttxt,
+                                                        seclecttranslated);
+                                                  },
+                                                  style: TextButton.styleFrom(
+                                                    textStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .labelLarge,
+                                                  ),
+                                                  child: Text('Save')),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        saveWordsDialog);
                               },
                               child: Text(
                                 wordsList[j],
@@ -174,80 +235,8 @@ class _translate_screenState extends State<translate_screen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
         child: FloatingActionButton(
-          onPressed: () async {
-            try {
-              if (rawtxt.text.isNotEmpty &&
-                  translated != "คำแปล" &&
-                  translated != "Translated") {
-                try {
-                  // await userDocumentRef.update({
-                  //   'words':
-                  //       FieldValue.arrayUnion(["${rawtxt.text},$translated"]),
-                  // });
-
-                  if (RegExp(r'[^a-zA-Z]').hasMatch(rawtxt.text)) {
-                    String newDocumentId = translated;
-                    DocumentReference<Map<String, dynamic>> newDocumentRef =
-                        userCollection
-                            .doc(widget.docID)
-                            .collection("savedWords")
-                            .doc(newDocumentId);
-                    Map<String, dynamic> dataToStore = {
-                      'eng': translated,
-                      'thai': rawtxt.text,
-                      'beQuestion': 0,
-                      'answerWrong': 0,
-                      'answerCorrect': 0,
-                    };
-                    await newDocumentRef.set(dataToStore);
-                  } else {
-                    String newDocumentId = rawtxt.text;
-                    DocumentReference<Map<String, dynamic>> newDocumentRef =
-                        userCollection
-                            .doc(widget.docID)
-                            .collection("savedWords")
-                            .doc(newDocumentId);
-                    Map<String, dynamic> dataToStore = {
-                      'eng': rawtxt.text,
-                      'thai': translated,
-                      'beQuestion': 0,
-                      'answerWrong': 0,
-                      'answerCorrect': 0,
-                    };
-                    await newDocumentRef.set(dataToStore);
-                  }
-
-                  DocumentSnapshot<Map<String, dynamic>> userDoc =
-                      await userDocumentRef.get();
-
-                  int currentWordLength = userDoc.data()?['wordLength'] ?? 0;
-                  int newWordLength = currentWordLength + 1;
-                  await userDocumentRef.update({'wordLength': newWordLength});
-
-                  DocumentSnapshot documentSnapshot =
-                      await userDocumentRef.get();
-                  Map<String, dynamic>? data =
-                      documentSnapshot.data() as Map<String, dynamic>?;
-                  if (data != null) {
-                    profile.data = data;
-                    widget.sendData(data);
-                  } else {
-                    print('Data is null or not a Map<String, dynamic>');
-                  }
-                } catch (e) {
-                  print(e);
-                }
-                ;
-                Fluttertoast.showToast(
-                    msg: "บันทึกคำศัพท์เรียบร้อย", gravity: ToastGravity.TOP);
-              } else {
-                Fluttertoast.showToast(
-                    msg: "กรุณาป้อนคำศัพท์เพื่อบันทึก",
-                    gravity: ToastGravity.TOP);
-              }
-            } catch (e) {
-              print(e);
-            }
+          onPressed: () {
+            saveWords(rawtxt.text, translated);
           },
           child: Icon(Icons.upload),
         ),
@@ -272,5 +261,81 @@ class _translate_screenState extends State<translate_screen> {
     }
     setState(() {});
     rawtxt.clear();
+  }
+
+  Future<void> saveWords(eng, thai) async {
+    CollectionReference<Map<String, dynamic>> userCollection =
+        FirebaseFirestore.instance.collection("Profile");
+    DocumentReference<Map<String, dynamic>> userDocumentRef =
+        FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
+    try {
+      if (rawtxt.text.isNotEmpty &&
+          translated != "คำแปล" &&
+          translated != "Translated") {
+        try {
+          // await userDocumentRef.update({
+          //   'words':
+          //       FieldValue.arrayUnion(["${rawtxt.text},$translated"]),
+          // });
+
+          if (RegExp(r'[^a-zA-Z]').hasMatch(rawtxt.text)) {
+            String newDocumentId = eng;
+            DocumentReference<Map<String, dynamic>> newDocumentRef =
+                userCollection
+                    .doc(widget.docID)
+                    .collection("savedWords")
+                    .doc(newDocumentId);
+            Map<String, dynamic> dataToStore = {
+              'eng': eng,
+              'thai': thai,
+              'answerWrong': 0,
+              'answerCorrect': 0,
+            };
+            await newDocumentRef.set(dataToStore);
+          } else {
+            String newDocumentId = rawtxt.text;
+            DocumentReference<Map<String, dynamic>> newDocumentRef =
+                userCollection
+                    .doc(widget.docID)
+                    .collection("savedWords")
+                    .doc(newDocumentId);
+            Map<String, dynamic> dataToStore = {
+              'eng': eng,
+              'thai': thai,
+              'answerWrong': 0,
+              'answerCorrect': 0,
+            };
+            await newDocumentRef.set(dataToStore);
+          }
+
+          DocumentSnapshot<Map<String, dynamic>> userDoc =
+              await userDocumentRef.get();
+
+          int currentWordLength = userDoc.data()?['wordLength'] ?? 0;
+          int newWordLength = currentWordLength + 1;
+          await userDocumentRef.update({'wordLength': newWordLength});
+
+          DocumentSnapshot documentSnapshot = await userDocumentRef.get();
+          Map<String, dynamic>? data =
+              documentSnapshot.data() as Map<String, dynamic>?;
+          if (data != null) {
+            profile.data = data;
+            widget.sendData(data);
+          } else {
+            print('Data is null or not a Map<String, dynamic>');
+          }
+        } catch (e) {
+          print(e);
+        }
+        ;
+        Fluttertoast.showToast(
+            msg: "บันทึกคำศัพท์เรียบร้อย", gravity: ToastGravity.TOP);
+      } else {
+        Fluttertoast.showToast(
+            msg: "กรุณาป้อนคำศัพท์เพื่อบันทึก", gravity: ToastGravity.TOP);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

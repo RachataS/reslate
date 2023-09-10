@@ -1,14 +1,14 @@
 -- Merging decision tree log ---
 application
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml:2:5-32:19
-MERGED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-19:19
-MERGED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-19:19
-MERGED from [:firebase_auth] /Users/rachatasupanurak/my_task/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
-MERGED from [:firebase_auth] /Users/rachatasupanurak/my_task/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
-MERGED from [:cloud_firestore] /Users/rachatasupanurak/my_task/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
-MERGED from [:cloud_firestore] /Users/rachatasupanurak/my_task/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
-MERGED from [:firebase_core] /Users/rachatasupanurak/my_task/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
-MERGED from [:firebase_core] /Users/rachatasupanurak/my_task/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml:2:5-32:19
+MERGED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-19:19
+MERGED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:13:5-19:19
+MERGED from [:firebase_auth] /Users/rachatasupanurak/myTask/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
+MERGED from [:firebase_auth] /Users/rachatasupanurak/myTask/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
+MERGED from [:cloud_firestore] /Users/rachatasupanurak/myTask/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
+MERGED from [:cloud_firestore] /Users/rachatasupanurak/myTask/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
+MERGED from [:firebase_core] /Users/rachatasupanurak/myTask/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
+MERGED from [:firebase_core] /Users/rachatasupanurak/myTask/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-15:19
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/rachatasupanurak/.gradle/caches/transforms-3/43bc8ed9b6db7f25db0bc2b571e801e5/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:24:5-31:19
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/rachatasupanurak/.gradle/caches/transforms-3/43bc8ed9b6db7f25db0bc2b571e801e5/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:24:5-31:19
 MERGED from [com.google.firebase:firebase-auth:22.1.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/5d9111ccb6f59e79b8d51b2d42f0097b/transformed/jetified-firebase-auth-22.1.0/AndroidManifest.xml:28:5-73:19
@@ -60,21 +60,21 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/rach
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.6.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/6d3237bc319e7b967918f32c402a8d45/transformed/core-1.6.0/AndroidManifest.xml:24:18-86
 	android:name
-		INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml
 manifest
-ADDED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
-MERGED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
-MERGED from [:shared_preferences_android] /Users/rachatasupanurak/my_task/reslate/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
-MERGED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-21:12
-MERGED from [:firebase_auth] /Users/rachatasupanurak/my_task/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-17:12
-MERGED from [:cloud_firestore] /Users/rachatasupanurak/my_task/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-17:12
-MERGED from [:firebase_core] /Users/rachatasupanurak/my_task/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-17:12
-MERGED from [:fluttertoast] /Users/rachatasupanurak/my_task/reslate/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
-MERGED from [:path_provider_android] /Users/rachatasupanurak/my_task/reslate/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
-MERGED from [:google_sign_in_android] /Users/rachatasupanurak/my_task/reslate/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-11:12
+ADDED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
+MERGED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
+MERGED from [:shared_preferences_android] /Users/rachatasupanurak/myTask/reslate/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-21:12
+MERGED from [:firebase_auth] /Users/rachatasupanurak/myTask/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-17:12
+MERGED from [:cloud_firestore] /Users/rachatasupanurak/myTask/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-17:12
+MERGED from [:firebase_core] /Users/rachatasupanurak/myTask/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-17:12
+MERGED from [:fluttertoast] /Users/rachatasupanurak/myTask/reslate/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:path_provider_android] /Users/rachatasupanurak/myTask/reslate/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:google_sign_in_android] /Users/rachatasupanurak/myTask/reslate/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/7ff7efc73225d031a22de8594b12c055/transformed/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/rachatasupanurak/.gradle/caches/transforms-3/29517b5ba912f9689907c39dbb352d3a/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:17:1-23:12
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/rachatasupanurak/.gradle/caches/transforms-3/43bc8ed9b6db7f25db0bc2b571e801e5/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:17:1-33:12
@@ -129,43 +129,43 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/rachatasupanurak/.
 MERGED from [io.grpc:grpc-android:1.52.1] /Users/rachatasupanurak/.gradle/caches/transforms-3/d375fe8e4282d63d313449a747fee5ad/transformed/jetified-grpc-android-1.52.1/AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/f0ced427c4d770421a04aafb9ab9aa25/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/0701e3d37ebeb5cbe47ca72ff6558287/transformed/jetified-protolite-well-known-types-18.0.0/AndroidManifest.xml:2:1-11:12
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml:1:1-7:12
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml:1:1-7:12
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml:1:1-7:12
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml:1:1-7:12
 	package
-		INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
-		INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
+		INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml
 	android:versionName
-		INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
-		INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
+		INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml
 	android:versionCode
-		INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
-		INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml:1:1-33:12
+		INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml:1:11-69
+		ADDED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml:1:11-69
 uses-sdk
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml
-MERGED from [:shared_preferences_android] /Users/rachatasupanurak/my_task/reslate/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:shared_preferences_android] /Users/rachatasupanurak/my_task/reslate/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:firebase_auth] /Users/rachatasupanurak/my_task/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:firebase_auth] /Users/rachatasupanurak/my_task/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:cloud_firestore] /Users/rachatasupanurak/my_task/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:cloud_firestore] /Users/rachatasupanurak/my_task/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:firebase_core] /Users/rachatasupanurak/my_task/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:firebase_core] /Users/rachatasupanurak/my_task/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:fluttertoast] /Users/rachatasupanurak/my_task/reslate/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:fluttertoast] /Users/rachatasupanurak/my_task/reslate/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:path_provider_android] /Users/rachatasupanurak/my_task/reslate/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:path_provider_android] /Users/rachatasupanurak/my_task/reslate/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:google_sign_in_android] /Users/rachatasupanurak/my_task/reslate/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
-MERGED from [:google_sign_in_android] /Users/rachatasupanurak/my_task/reslate/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml
+MERGED from [:shared_preferences_android] /Users/rachatasupanurak/myTask/reslate/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:shared_preferences_android] /Users/rachatasupanurak/myTask/reslate/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:firebase_auth] /Users/rachatasupanurak/myTask/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:firebase_auth] /Users/rachatasupanurak/myTask/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:cloud_firestore] /Users/rachatasupanurak/myTask/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:cloud_firestore] /Users/rachatasupanurak/myTask/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:firebase_core] /Users/rachatasupanurak/myTask/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:firebase_core] /Users/rachatasupanurak/myTask/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:fluttertoast] /Users/rachatasupanurak/myTask/reslate/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:fluttertoast] /Users/rachatasupanurak/myTask/reslate/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:path_provider_android] /Users/rachatasupanurak/myTask/reslate/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:path_provider_android] /Users/rachatasupanurak/myTask/reslate/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:google_sign_in_android] /Users/rachatasupanurak/myTask/reslate/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:google_sign_in_android] /Users/rachatasupanurak/myTask/reslate/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/7ff7efc73225d031a22de8594b12c055/transformed/multidex-2.0.0/AndroidManifest.xml:20:5-43
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/7ff7efc73225d031a22de8594b12c055/transformed/multidex-2.0.0/AndroidManifest.xml:20:5-43
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/rachatasupanurak/.gradle/caches/transforms-3/29517b5ba912f9689907c39dbb352d3a/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:19:5-21:41
@@ -274,22 +274,22 @@ MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/rachatasu
 MERGED from [androidx.annotation:annotation-experimental:1.1.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/f0ced427c4d770421a04aafb9ab9aa25/transformed/jetified-annotation-experimental-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/0701e3d37ebeb5cbe47ca72ff6558287/transformed/jetified-protolite-well-known-types-18.0.0/AndroidManifest.xml:7:5-9:41
 MERGED from [com.google.firebase:protolite-well-known-types:18.0.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/0701e3d37ebeb5cbe47ca72ff6558287/transformed/jetified-protolite-well-known-types-18.0.0/AndroidManifest.xml:7:5-9:41
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml
-INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml
+INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml
 	tools:overrideLibrary
 		ADDED from [com.google.firebase:firebase-auth:22.1.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/5d9111ccb6f59e79b8d51b2d42f0097b/transformed/jetified-firebase-auth-22.1.0/AndroidManifest.xml:23:9-61
 	android:targetSdkVersion
-		INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml
-		INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/main/AndroidManifest.xml
-		INJECTED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml
+		INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml
 uses-permission#android.permission.INTERNET
-ADDED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml:6:5-66
-MERGED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-67
-MERGED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-67
-MERGED from [:google_sign_in_android] /Users/rachatasupanurak/my_task/reslate/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-67
-MERGED from [:google_sign_in_android] /Users/rachatasupanurak/my_task/reslate/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-67
+ADDED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml:6:5-66
+MERGED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-67
+MERGED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-67
+MERGED from [:google_sign_in_android] /Users/rachatasupanurak/myTask/reslate/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-67
+MERGED from [:google_sign_in_android] /Users/rachatasupanurak/myTask/reslate/build/google_sign_in_android/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-67
 MERGED from [com.google.firebase:firebase-auth:22.1.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/5d9111ccb6f59e79b8d51b2d42f0097b/transformed/jetified-firebase-auth-22.1.0/AndroidManifest.xml:25:5-67
 MERGED from [com.google.firebase:firebase-auth:22.1.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/5d9111ccb6f59e79b8d51b2d42f0097b/transformed/jetified-firebase-auth-22.1.0/AndroidManifest.xml:25:5-67
 MERGED from [com.google.android.recaptcha:recaptcha:18.1.2] /Users/rachatasupanurak/.gradle/caches/transforms-3/458e0778392bf2d47327ba95da0f5ed2/transformed/jetified-recaptcha-18.1.2/AndroidManifest.xml:7:5-67
@@ -307,9 +307,9 @@ MERGED from [com.google.android.gms:play-services-measurement-impl:21.3.0] /User
 MERGED from [com.google.android.gms:play-services-measurement-sdk-api:21.3.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/aca241e320300ca93a2b0c8676097075/transformed/jetified-play-services-measurement-sdk-api-21.3.0/AndroidManifest.xml:23:5-67
 MERGED from [com.google.android.gms:play-services-measurement-sdk-api:21.3.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/aca241e320300ca93a2b0c8676097075/transformed/jetified-play-services-measurement-sdk-api-21.3.0/AndroidManifest.xml:23:5-67
 	android:name
-		ADDED from /Users/rachatasupanurak/my_task/reslate/android/app/src/debug/AndroidManifest.xml:6:22-64
+		ADDED from /Users/rachatasupanurak/myTask/reslate/android/app/src/debug/AndroidManifest.xml:6:22-64
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-79
+ADDED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-79
 MERGED from [com.google.firebase:firebase-auth:22.1.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/5d9111ccb6f59e79b8d51b2d42f0097b/transformed/jetified-firebase-auth-22.1.0/AndroidManifest.xml:26:5-79
 MERGED from [com.google.firebase:firebase-auth:22.1.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/5d9111ccb6f59e79b8d51b2d42f0097b/transformed/jetified-firebase-auth-22.1.0/AndroidManifest.xml:26:5-79
 MERGED from [com.google.android.recaptcha:recaptcha:18.1.2] /Users/rachatasupanurak/.gradle/caches/transforms-3/458e0778392bf2d47327ba95da0f5ed2/transformed/jetified-recaptcha-18.1.2/AndroidManifest.xml:8:5-79
@@ -329,9 +329,9 @@ MERGED from [com.google.android.gms:play-services-measurement-sdk-api:21.3.0] /U
 MERGED from [io.grpc:grpc-android:1.52.1] /Users/rachatasupanurak/.gradle/caches/transforms-3/d375fe8e4282d63d313449a747fee5ad/transformed/jetified-grpc-android-1.52.1/AndroidManifest.xml:9:5-79
 MERGED from [io.grpc:grpc-android:1.52.1] /Users/rachatasupanurak/.gradle/caches/transforms-3/d375fe8e4282d63d313449a747fee5ad/transformed/jetified-grpc-android-1.52.1/AndroidManifest.xml:9:5-79
 	android:name
-		ADDED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-76
+		ADDED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-76
 uses-permission#android.permission.WAKE_LOCK
-ADDED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-68
+ADDED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:11:5-68
 MERGED from [com.google.android.gms:play-services-measurement-api:21.3.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/9e731b399e2ba3f697ad3e602a121507/transformed/jetified-play-services-measurement-api-21.3.0/AndroidManifest.xml:24:5-68
 MERGED from [com.google.android.gms:play-services-measurement-api:21.3.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/9e731b399e2ba3f697ad3e602a121507/transformed/jetified-play-services-measurement-api-21.3.0/AndroidManifest.xml:24:5-68
 MERGED from [com.google.android.gms:play-services-measurement:21.3.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/04bdd0d3c20e66a052b9713e90275e09/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:25:5-68
@@ -341,15 +341,15 @@ MERGED from [com.google.android.gms:play-services-measurement-impl:21.3.0] /User
 MERGED from [com.google.android.gms:play-services-measurement-sdk-api:21.3.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/aca241e320300ca93a2b0c8676097075/transformed/jetified-play-services-measurement-sdk-api-21.3.0/AndroidManifest.xml:25:5-68
 MERGED from [com.google.android.gms:play-services-measurement-sdk-api:21.3.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/aca241e320300ca93a2b0c8676097075/transformed/jetified-play-services-measurement-sdk-api-21.3.0/AndroidManifest.xml:25:5-68
 	android:name
-		ADDED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:11:22-65
+		ADDED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:11:22-65
 service#com.google.firebase.components.ComponentDiscoveryService
-ADDED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:14:9-18:19
-MERGED from [:firebase_auth] /Users/rachatasupanurak/my_task/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
-MERGED from [:firebase_auth] /Users/rachatasupanurak/my_task/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
-MERGED from [:cloud_firestore] /Users/rachatasupanurak/my_task/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
-MERGED from [:cloud_firestore] /Users/rachatasupanurak/my_task/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
-MERGED from [:firebase_core] /Users/rachatasupanurak/my_task/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
-MERGED from [:firebase_core] /Users/rachatasupanurak/my_task/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
+ADDED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:14:9-18:19
+MERGED from [:firebase_auth] /Users/rachatasupanurak/myTask/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
+MERGED from [:firebase_auth] /Users/rachatasupanurak/myTask/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
+MERGED from [:cloud_firestore] /Users/rachatasupanurak/myTask/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
+MERGED from [:cloud_firestore] /Users/rachatasupanurak/myTask/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
+MERGED from [:firebase_core] /Users/rachatasupanurak/myTask/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
+MERGED from [:firebase_core] /Users/rachatasupanurak/myTask/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
 MERGED from [com.google.firebase:firebase-auth:22.1.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/5d9111ccb6f59e79b8d51b2d42f0097b/transformed/jetified-firebase-auth-22.1.0/AndroidManifest.xml:66:9-72:19
 MERGED from [com.google.firebase:firebase-auth:22.1.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/5d9111ccb6f59e79b8d51b2d42f0097b/transformed/jetified-firebase-auth-22.1.0/AndroidManifest.xml:66:9-72:19
 MERGED from [com.google.firebase:firebase-firestore:24.7.0] /Users/rachatasupanurak/.gradle/caches/transforms-3/7bccba9beb0ed444671f3f964d73aa50/transformed/jetified-firebase-firestore-24.7.0/AndroidManifest.xml:16:9-22:19
@@ -367,31 +367,31 @@ MERGED from [com.google.firebase:firebase-common:20.3.3] /Users/rachatasupanurak
 	android:directBootAware
 		ADDED from [com.google.firebase:firebase-common:20.3.3] /Users/rachatasupanurak/.gradle/caches/transforms-3/cdee480617d8040e445d3cb851e491ba/transformed/jetified-firebase-common-20.3.3/AndroidManifest.xml:34:13-43
 	android:name
-		ADDED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:14:18-89
+		ADDED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:14:18-89
 meta-data#com.google.firebase.components:io.flutter.plugins.firebase.analytics.FlutterFirebaseAppRegistrar
-ADDED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-17:85
+ADDED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:15:13-17:85
 	android:value
-		ADDED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:17:17-82
+		ADDED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:17:17-82
 	android:name
-		ADDED from [:firebase_analytics] /Users/rachatasupanurak/my_task/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:16:17-128
+		ADDED from [:firebase_analytics] /Users/rachatasupanurak/myTask/reslate/build/firebase_analytics/intermediates/merged_manifest/debug/AndroidManifest.xml:16:17-128
 meta-data#com.google.firebase.components:io.flutter.plugins.firebase.auth.FlutterFirebaseAuthRegistrar
-ADDED from [:firebase_auth] /Users/rachatasupanurak/my_task/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
+ADDED from [:firebase_auth] /Users/rachatasupanurak/myTask/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
 	android:value
-		ADDED from [:firebase_auth] /Users/rachatasupanurak/my_task/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
+		ADDED from [:firebase_auth] /Users/rachatasupanurak/myTask/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
 	android:name
-		ADDED from [:firebase_auth] /Users/rachatasupanurak/my_task/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-124
+		ADDED from [:firebase_auth] /Users/rachatasupanurak/myTask/reslate/build/firebase_auth/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-124
 meta-data#com.google.firebase.components:io.flutter.plugins.firebase.firestore.FlutterFirebaseFirestoreRegistrar
-ADDED from [:cloud_firestore] /Users/rachatasupanurak/my_task/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
+ADDED from [:cloud_firestore] /Users/rachatasupanurak/myTask/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
 	android:value
-		ADDED from [:cloud_firestore] /Users/rachatasupanurak/my_task/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
+		ADDED from [:cloud_firestore] /Users/rachatasupanurak/myTask/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
 	android:name
-		ADDED from [:cloud_firestore] /Users/rachatasupanurak/my_task/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-134
+		ADDED from [:cloud_firestore] /Users/rachatasupanurak/myTask/reslate/build/cloud_firestore/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-134
 meta-data#com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar
-ADDED from [:firebase_core] /Users/rachatasupanurak/my_task/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
+ADDED from [:firebase_core] /Users/rachatasupanurak/myTask/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
 	android:value
-		ADDED from [:firebase_core] /Users/rachatasupanurak/my_task/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
+		ADDED from [:firebase_core] /Users/rachatasupanurak/myTask/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
 	android:name
-		ADDED from [:firebase_core] /Users/rachatasupanurak/my_task/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-124
+		ADDED from [:firebase_core] /Users/rachatasupanurak/myTask/reslate/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-124
 uses-library#androidx.window.extensions
 ADDED from [androidx.window:window:1.0.0-beta04] /Users/rachatasupanurak/.gradle/caches/transforms-3/43bc8ed9b6db7f25db0bc2b571e801e5/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
 	android:required
