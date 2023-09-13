@@ -34,7 +34,8 @@ class _translate_screenState extends State<translate_screen> {
   String label = "English";
   String inputbox = "Enter text";
   String outputbox = "คำแปล";
-  late String seclecttxt, seclecttranslated;
+  List<String> seclecttxt = [];
+  List<String> seclecttranslated = [];
   var rawtxt = TextEditingController();
 
   @override
@@ -143,84 +144,21 @@ class _translate_screenState extends State<translate_screen> {
                           Flexible(
                             child: TextButton(
                               onPressed: () async {
-                                // rawtxt.text = wordsList[j];
-                                seclecttxt = wordsList[j];
-                                await translator
-                                    .translate(seclecttxt,
-                                        from: inputLanguage, to: outputLanguage)
-                                    .then((translation) {
-                                  setState(() {
-                                    seclecttranslated = translation.toString();
-                                  });
+                                setState(() {
+                                  if (seclecttxt.contains(wordsList[j])) {
+                                    seclecttxt.remove(wordsList[j]);
+                                  } else {
+                                    seclecttxt.add(wordsList[j]);
+                                  }
                                 });
-                                Dialog saveWordsDialog = Dialog(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: Container(
-                                    width: 350,
-                                    height: 250,
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 60, 10, 10),
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            seclecttxt,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 30),
-                                          ),
-                                          SizedBox(
-                                            height: 30,
-                                          ),
-                                          Text(
-                                            seclecttranslated,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 20),
-                                          ),
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  style: TextButton.styleFrom(
-                                                    textStyle: Theme.of(context)
-                                                        .textTheme
-                                                        .labelLarge,
-                                                  ),
-                                                  child: Text('Close')),
-                                              TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                    saveWords(seclecttxt,
-                                                        seclecttranslated);
-                                                  },
-                                                  style: TextButton.styleFrom(
-                                                    textStyle: Theme.of(context)
-                                                        .textTheme
-                                                        .labelLarge,
-                                                  ),
-                                                  child: Text('Save')),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        saveWordsDialog);
                               },
                               child: Text(
                                 wordsList[j],
-                                style: TextStyle(color: Colors.black54),
+                                style: TextStyle(
+                                  color: seclecttxt.contains(wordsList[j])
+                                      ? Colors.blue[400]
+                                      : Colors.black54,
+                                ),
                               ),
                             ),
                           ),
@@ -236,9 +174,20 @@ class _translate_screenState extends State<translate_screen> {
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
         child: FloatingActionButton(
           onPressed: () {
-            saveWords(rawtxt.text, translated);
+            if (seclecttxt.length > 0) {
+              for (int i = 0; i < seclecttxt.length; i++) {
+                print(seclecttxt[i]);
+              }
+              setState(() {
+                seclecttxt.clear();
+              });
+            } else {
+              saveWords(rawtxt.text, translated);
+            }
           },
-          child: Icon(Icons.upload),
+          child: Icon(
+            seclecttxt.isNotEmpty ? Icons.translate : Icons.upload,
+          ),
         ),
       ),
     );
@@ -337,5 +286,71 @@ class _translate_screenState extends State<translate_screen> {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> dialogTranslate(inputtxt, outputtxt) async {
+    await translator
+        .translate(inputtxt, from: inputLanguage, to: outputLanguage)
+        .then((translation) {
+      setState(() {
+        outputtxt = translation.toString();
+      });
+    });
+    Dialog saveWordsDialog = Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Container(
+        width: 350,
+        height: 250,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 60, 10, 10),
+          child: Column(
+            children: [
+              Text(
+                outputtxt,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 30),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                outputtxt,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: TextButton.styleFrom(
+                        textStyle: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      child: Text('Close')),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        saveWords(inputtxt, outputtxt);
+                        seclecttxt.clear();
+                        seclecttranslated.clear();
+                      },
+                      style: TextButton.styleFrom(
+                        textStyle: Theme.of(context).textTheme.labelLarge,
+                      ),
+                      child: Text('Save')),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+    showDialog(
+        context: context, builder: (BuildContext context) => saveWordsDialog);
   }
 }
