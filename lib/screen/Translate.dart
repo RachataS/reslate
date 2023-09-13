@@ -52,7 +52,7 @@ class _translate_screenState extends State<translate_screen> {
         backgroundColor: Colors.grey.shade50,
         leading: IconButton(
           icon: Icon(
-            Icons.translate,
+            Icons.change_circle_outlined,
             color: Colors.blue,
           ),
           onPressed: () {
@@ -175,12 +175,7 @@ class _translate_screenState extends State<translate_screen> {
         child: FloatingActionButton(
           onPressed: () {
             if (seclecttxt.length > 0) {
-              for (int i = 0; i < seclecttxt.length; i++) {
-                print(seclecttxt[i]);
-              }
-              setState(() {
-                seclecttxt.clear();
-              });
+              dialogTranslate();
             } else {
               saveWords(rawtxt.text, translated);
             }
@@ -288,44 +283,45 @@ class _translate_screenState extends State<translate_screen> {
     }
   }
 
-  Future<void> dialogTranslate(inputtxt, outputtxt) async {
-    await translator
-        .translate(inputtxt, from: inputLanguage, to: outputLanguage)
-        .then((translation) {
-      setState(() {
-        outputtxt = translation.toString();
+  Future<void> dialogTranslate() async {
+    double dialogHeight = 100;
+    String outputtxt = "";
+    for (int i = 0; i < seclecttxt.length; i++) {
+      await translator
+          .translate(seclecttxt[i], from: inputLanguage, to: outputLanguage)
+          .then((translation) {
+        setState(() {
+          seclecttranslated.add(seclecttxt[i] + " = " + translation.toString());
+          dialogHeight += 50;
+        });
       });
-    });
+    }
+
     Dialog saveWordsDialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(
-        width: 350,
-        height: 250,
+        width: 400,
+        height: dialogHeight,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 60, 10, 10),
+          padding: const EdgeInsets.all(10),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                outputtxt,
+                '${seclecttranslated.join("\n")}',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 30),
               ),
               SizedBox(
                 height: 30,
               ),
-              Text(
-                outputtxt,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 20),
-              ),
-              SizedBox(
-                height: 20,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
                       onPressed: () {
+                        seclecttxt.clear();
+                        seclecttranslated.clear();
                         Navigator.of(context).pop();
                       },
                       style: TextButton.styleFrom(
@@ -335,7 +331,7 @@ class _translate_screenState extends State<translate_screen> {
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
-                        saveWords(inputtxt, outputtxt);
+                        // saveWords(inputtxt, outputtxt);
                         seclecttxt.clear();
                         seclecttranslated.clear();
                       },
