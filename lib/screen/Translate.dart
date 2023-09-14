@@ -46,60 +46,80 @@ class _translate_screenState extends State<translate_screen> {
     final Future<FirebaseApp> firebase = Firebase.initializeApp();
 
     return Scaffold(
+      // backgroundColor: Colors.blue,
       appBar: AppBar(
         backgroundColor: Colors.grey.shade50,
-        // elevation: 0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              alignment: Alignment.center,
-              width: 120,
-              child: Text(
-                appbarInput,
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
-            IconButton(
-              icon: Icon(
-                Icons.swap_horiz_outlined,
-                color: Colors.blue,
-              ),
-              iconSize: 35,
-              onPressed: () {
-                if (inputLanguage == 'en' || inputLanguage == null) {
-                  language.input = 'th';
-                  language.output = 'en';
-                  language.label = "ภาษาไทย";
-                  language.inbox = "โปรดป้อนข้อความ";
-                  language.outbox = 'Translated';
-                  language.appbarInput = "Thai";
-                  language.appberOutput = "English";
-                } else {
-                  language.input = 'en';
-                  language.output = 'th';
-                  language.label = "English";
-                  language.inbox = "Enter text";
-                  language.outbox = 'คำแปล';
-                  language.appbarInput = "English";
-                  language.appberOutput = "Thai";
-                }
-                changeLanguage();
-                wordsList.clear();
-                wordsListWithoutDuplicates.clear();
-              },
-            ),
-            Container(
-              alignment: Alignment.center,
-              width: 120,
-              child: Text(
-                appbarOutput,
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
-          ],
-        ),
+        elevation: 0,
         centerTitle: true,
+        automaticallyImplyLeading: false,
+        title: Expanded(
+            child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.blue[400]!,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(60),
+                        topRight: Radius.circular(60),
+                        bottomLeft: Radius.circular(60),
+                        bottomRight: Radius.circular(60))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      width: 120,
+                      child: Text(
+                        appbarInput,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(60),
+                              topRight: Radius.circular(60),
+                              bottomLeft: Radius.circular(60),
+                              bottomRight: Radius.circular(60))),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.swap_horiz_outlined,
+                          color: Colors.blue[400]!,
+                        ),
+                        iconSize: 35,
+                        onPressed: () {
+                          if (inputLanguage == 'en' || inputLanguage == null) {
+                            language.input = 'th';
+                            language.output = 'en';
+                            language.label = "ภาษาไทย";
+                            language.inbox = "โปรดป้อนข้อความ";
+                            language.outbox = 'Translated';
+                            language.appbarInput = "Thai";
+                            language.appberOutput = "English";
+                          } else {
+                            language.input = 'en';
+                            language.output = 'th';
+                            language.label = "English";
+                            language.inbox = "Enter text";
+                            language.outbox = 'คำแปล';
+                            language.appbarInput = "English";
+                            language.appberOutput = "Thai";
+                          }
+                          changeLanguage();
+                          wordsList.clear();
+                          wordsListWithoutDuplicates.clear();
+                        },
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      width: 120,
+                      child: Text(
+                        appbarOutput,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ))),
       ),
       body: Card(
         key: formKey,
