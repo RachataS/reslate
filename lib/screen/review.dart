@@ -18,8 +18,8 @@ class _reviewPageState extends State<reviewPage> {
             Padding(
               padding: const EdgeInsets.all(15),
               child: SizedBox(
-                width: 180,
-                height: 180,
+                width: 150,
+                height: 150,
                 child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue[400],
@@ -34,8 +34,8 @@ class _reviewPageState extends State<reviewPage> {
             Padding(
               padding: const EdgeInsets.all(15),
               child: SizedBox(
-                width: 180,
-                height: 180,
+                width: 150,
+                height: 150,
                 child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue[400],

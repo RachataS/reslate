@@ -54,7 +54,7 @@ class _translate_screenState extends State<translate_screen> {
           children: [
             Container(
               alignment: Alignment.center,
-              width: 150,
+              width: 120,
               child: Text(
                 appbarInput,
                 style: TextStyle(color: Colors.blue),
@@ -91,7 +91,7 @@ class _translate_screenState extends State<translate_screen> {
             ),
             Container(
               alignment: Alignment.center,
-              width: 150,
+              width: 120,
               child: Text(
                 appbarOutput,
                 style: TextStyle(color: Colors.blue),
@@ -99,7 +99,7 @@ class _translate_screenState extends State<translate_screen> {
             ),
           ],
         ),
-        centerTitle: false,
+        centerTitle: true,
       ),
       body: Card(
         key: formKey,
@@ -258,22 +258,22 @@ class _translate_screenState extends State<translate_screen> {
           translated != "คำแปล" &&
           translated != "Translated") {
         try {
-          if (RegExp(r'[^a-zA-Z]').hasMatch(rawtxt.text)) {
-            String newDocumentId = eng;
+          if (RegExp(r'[^a-zA-Z]').hasMatch(eng)) {
+            String newDocumentId = thai;
             DocumentReference<Map<String, dynamic>> newDocumentRef =
                 userCollection
                     .doc(widget.docID)
                     .collection("savedWords")
                     .doc(newDocumentId);
             Map<String, dynamic> dataToStore = {
-              'eng': eng,
-              'thai': thai,
+              'eng': thai,
+              'thai': eng,
               'answerWrong': 0,
               'answerCorrect': 0,
             };
             await newDocumentRef.set(dataToStore);
           } else {
-            String newDocumentId = rawtxt.text;
+            String newDocumentId = eng;
             DocumentReference<Map<String, dynamic>> newDocumentRef =
                 userCollection
                     .doc(widget.docID)
