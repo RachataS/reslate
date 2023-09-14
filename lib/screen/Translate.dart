@@ -46,11 +46,18 @@ class _translate_screenState extends State<translate_screen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Align(
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(
-              appbarInput,
-              style: TextStyle(color: Colors.blue),
+        backgroundColor: Colors.grey.shade50,
+        // elevation: 0,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              alignment: Alignment.center,
+              width: 170,
+              child: Text(
+                appbarInput,
+                style: TextStyle(color: Colors.blue),
+              ),
             ),
             IconButton(
               icon: Icon(
@@ -79,15 +86,17 @@ class _translate_screenState extends State<translate_screen> {
                 wordsList.clear();
               },
             ),
-            Text(
-              appbarOutput,
-              style: TextStyle(color: Colors.blue),
+            Container(
+              alignment: Alignment.center,
+              width: 170,
+              child: Text(
+                appbarOutput,
+                style: TextStyle(color: Colors.blue),
+              ),
             ),
-          ]),
+          ],
         ),
-        centerTitle: true,
-        backgroundColor: Colors.grey.shade50,
-        elevation: 0,
+        centerTitle: false,
       ),
       body: Card(
         key: formKey,
