@@ -34,8 +34,8 @@ class _translate_screenState extends State<translate_screen> {
   String label = "English";
   String inputbox = "Enter text";
   String outputbox = "คำแปล";
-  List<String> seclecttxt = [];
-  List<String> seclecttranslated = [];
+  List<String> selecttxt = [];
+  List<String> selecttranslated = [];
   var rawtxt = TextEditingController();
   var appbarInput = "English";
   var appbarOutput = "Thai";
@@ -170,17 +170,17 @@ class _translate_screenState extends State<translate_screen> {
                             child: TextButton(
                               onPressed: () async {
                                 setState(() {
-                                  if (seclecttxt.contains(wordsList[j])) {
-                                    seclecttxt.remove(wordsList[j]);
+                                  if (selecttxt.contains(wordsList[j])) {
+                                    selecttxt.remove(wordsList[j]);
                                   } else {
-                                    seclecttxt.add(wordsList[j]);
+                                    selecttxt.add(wordsList[j]);
                                   }
                                 });
                               },
                               child: Text(
                                 wordsList[j],
                                 style: TextStyle(
-                                  color: seclecttxt.contains(wordsList[j])
+                                  color: selecttxt.contains(wordsList[j])
                                       ? Colors.blue[400]
                                       : Colors.black54,
                                 ),
@@ -199,14 +199,14 @@ class _translate_screenState extends State<translate_screen> {
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
         child: FloatingActionButton(
           onPressed: () {
-            if (seclecttxt.length > 0) {
+            if (selecttxt.length > 0) {
               dialogTranslate();
             } else {
               saveWords(rawtxt.text, translated);
             }
           },
           child: Icon(
-            seclecttxt.isNotEmpty ? Icons.translate : Icons.upload,
+            selecttxt.isNotEmpty ? Icons.translate : Icons.upload,
           ),
         ),
       ),
@@ -314,23 +314,34 @@ class _translate_screenState extends State<translate_screen> {
   }
 
   Future<void> dialogTranslate() async {
+    double dialogWidth = 400;
     double dialogHeight = 200;
     String outputtxt = "";
-    for (int i = 0; i < seclecttxt.length; i++) {
+    for (int i = 0; i < selecttxt.length; i++) {
       await translator
-          .translate(seclecttxt[i], from: inputLanguage, to: outputLanguage)
+          .translate(selecttxt[i], from: inputLanguage, to: outputLanguage)
           .then((translation) {
         setState(() {
-          seclecttranslated.add(seclecttxt[i] + " = " + translation.toString());
-          dialogHeight += 40;
+          selecttranslated.add(selecttxt[i] + " = " + translation.toString());
+          dialogHeight += 30;
         });
+      });
+    }
+    print(dialogHeight);
+    if (dialogHeight > 800) {
+      setState(() {
+        selecttxt.clear();
+        selecttranslated.clear();
+        selecttranslated.add("Please select fewer than 20 words!");
+        dialogWidth = 300;
+        dialogHeight = 300;
       });
     }
 
     Dialog saveWordsDialog = Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(
-        width: 400,
+        width: dialogWidth,
         height: dialogHeight,
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -338,7 +349,7 @@ class _translate_screenState extends State<translate_screen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '${seclecttranslated.join("\n")}',
+                '${selecttranslated.join("\n")}',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 25),
               ),
@@ -351,8 +362,8 @@ class _translate_screenState extends State<translate_screen> {
                   TextButton(
                       onPressed: () {
                         setState(() {
-                          seclecttxt.clear();
-                          seclecttranslated.clear();
+                          selecttxt.clear();
+                          selecttranslated.clear();
                         });
                         Navigator.of(context).pop();
                       },
@@ -363,8 +374,8 @@ class _translate_screenState extends State<translate_screen> {
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
-                        for (int i = 0; i < seclecttranslated.length; i++) {
-                          String translation = seclecttranslated[i];
+                        for (int i = 0; i < selecttranslated.length; i++) {
+                          String translation = selecttranslated[i];
                           List<String> parts = translation.split('=');
 
                           if (parts.length == 2) {
@@ -376,8 +387,8 @@ class _translate_screenState extends State<translate_screen> {
                         }
 
                         setState(() {
-                          seclecttxt.clear();
-                          seclecttranslated.clear();
+                          selecttxt.clear();
+                          selecttranslated.clear();
                         });
                       },
                       style: TextButton.styleFrom(
