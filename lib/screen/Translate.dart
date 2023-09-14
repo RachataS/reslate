@@ -39,6 +39,7 @@ class _translate_screenState extends State<translate_screen> {
   var rawtxt = TextEditingController();
   var appbarInput = "English";
   var appbarOutput = "Thai";
+  List<String> wordsListWithoutDuplicates = [];
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +86,7 @@ class _translate_screenState extends State<translate_screen> {
                 }
                 changeLanguage();
                 wordsList.clear();
+                wordsListWithoutDuplicates.clear();
               },
             ),
             Container(
@@ -126,6 +128,7 @@ class _translate_screenState extends State<translate_screen> {
                     translated = outputbox;
                   });
                   wordsList.clear();
+                  wordsListWithoutDuplicates.clear();
                 } else {
                   try {
                     formKey.currentState?.save();
@@ -146,6 +149,8 @@ class _translate_screenState extends State<translate_screen> {
                     print(e);
                   }
                 }
+                wordsListWithoutDuplicates =
+                    List<String>.from(wordsList.toSet());
               },
             ),
             const Divider(
@@ -162,25 +167,31 @@ class _translate_screenState extends State<translate_screen> {
               padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
               child: Column(
                 children: [
-                  for (int i = 0; i < wordsList.length; i += 5)
+                  for (int i = 0; i < wordsListWithoutDuplicates.length; i += 5)
                     Row(
                       children: [
-                        for (int j = i; j < i + 5 && j < wordsList.length; j++)
+                        for (int j = i;
+                            j < i + 5 && j < wordsListWithoutDuplicates.length;
+                            j++)
                           Flexible(
                             child: TextButton(
                               onPressed: () async {
                                 setState(() {
-                                  if (selecttxt.contains(wordsList[j])) {
-                                    selecttxt.remove(wordsList[j]);
+                                  if (selecttxt.contains(
+                                      wordsListWithoutDuplicates[j])) {
+                                    selecttxt
+                                        .remove(wordsListWithoutDuplicates[j]);
                                   } else {
-                                    selecttxt.add(wordsList[j]);
+                                    selecttxt
+                                        .add(wordsListWithoutDuplicates[j]);
                                   }
                                 });
                               },
                               child: Text(
-                                wordsList[j],
+                                wordsListWithoutDuplicates[j],
                                 style: TextStyle(
-                                  color: selecttxt.contains(wordsList[j])
+                                  color: selecttxt.contains(
+                                          wordsListWithoutDuplicates[j])
                                       ? Colors.blue[400]
                                       : Colors.black54,
                                 ),
@@ -327,7 +338,7 @@ class _translate_screenState extends State<translate_screen> {
         });
       });
     }
-    print(dialogHeight);
+
     if (dialogHeight > 800) {
       setState(() {
         selecttxt.clear();
