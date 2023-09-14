@@ -53,7 +53,7 @@ class _translate_screenState extends State<translate_screen> {
           children: [
             Container(
               alignment: Alignment.center,
-              width: 170,
+              width: 150,
               child: Text(
                 appbarInput,
                 style: TextStyle(color: Colors.blue),
@@ -61,9 +61,10 @@ class _translate_screenState extends State<translate_screen> {
             ),
             IconButton(
               icon: Icon(
-                Icons.change_circle_outlined,
+                Icons.swap_horiz_outlined,
                 color: Colors.blue,
               ),
+              iconSize: 35,
               onPressed: () {
                 if (inputLanguage == 'en' || inputLanguage == null) {
                   language.input = 'th';
@@ -88,7 +89,7 @@ class _translate_screenState extends State<translate_screen> {
             ),
             Container(
               alignment: Alignment.center,
-              width: 170,
+              width: 150,
               child: Text(
                 appbarOutput,
                 style: TextStyle(color: Colors.blue),
@@ -240,16 +241,12 @@ class _translate_screenState extends State<translate_screen> {
         FirebaseFirestore.instance.collection("Profile");
     DocumentReference<Map<String, dynamic>> userDocumentRef =
         FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
+
     try {
       if (rawtxt.text.isNotEmpty &&
           translated != "คำแปล" &&
           translated != "Translated") {
         try {
-          // await userDocumentRef.update({
-          //   'words':
-          //       FieldValue.arrayUnion(["${rawtxt.text},$translated"]),
-          // });
-
           if (RegExp(r'[^a-zA-Z]').hasMatch(rawtxt.text)) {
             String newDocumentId = eng;
             DocumentReference<Map<String, dynamic>> newDocumentRef =
@@ -280,16 +277,21 @@ class _translate_screenState extends State<translate_screen> {
             await newDocumentRef.set(dataToStore);
           }
 
+          QuerySnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
+              await userCollection
+                  .doc(widget.docID)
+                  .collection("savedWords")
+                  .get();
+
+          int newWordLength = savedWordsQuerySnapshot.size;
+
+          await userDocumentRef.update({'wordLength': newWordLength});
+
           DocumentSnapshot<Map<String, dynamic>> userDoc =
               await userDocumentRef.get();
 
-          int currentWordLength = userDoc.data()?['wordLength'] ?? 0;
-          int newWordLength = currentWordLength + 1;
-          await userDocumentRef.update({'wordLength': newWordLength});
+          Map<String, dynamic>? data = userDoc.data() as Map<String, dynamic>?;
 
-          DocumentSnapshot documentSnapshot = await userDocumentRef.get();
-          Map<String, dynamic>? data =
-              documentSnapshot.data() as Map<String, dynamic>?;
           if (data != null) {
             profile.data = data;
             widget.sendData(data);
@@ -299,7 +301,7 @@ class _translate_screenState extends State<translate_screen> {
         } catch (e) {
           print(e);
         }
-        ;
+
         Fluttertoast.showToast(
             msg: "บันทึกคำศัพท์เรียบร้อย", gravity: ToastGravity.TOP);
       } else {
@@ -312,7 +314,7 @@ class _translate_screenState extends State<translate_screen> {
   }
 
   Future<void> dialogTranslate() async {
-    double dialogHeight = 100;
+    double dialogHeight = 200;
     String outputtxt = "";
     for (int i = 0; i < seclecttxt.length; i++) {
       await translator
@@ -320,7 +322,7 @@ class _translate_screenState extends State<translate_screen> {
           .then((translation) {
         setState(() {
           seclecttranslated.add(seclecttxt[i] + " = " + translation.toString());
-          dialogHeight += 50;
+          dialogHeight += 40;
         });
       });
     }
@@ -338,18 +340,20 @@ class _translate_screenState extends State<translate_screen> {
               Text(
                 '${seclecttranslated.join("\n")}',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 25),
               ),
               SizedBox(
-                height: 30,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
                       onPressed: () {
-                        seclecttxt.clear();
-                        seclecttranslated.clear();
+                        setState(() {
+                          seclecttxt.clear();
+                          seclecttranslated.clear();
+                        });
                         Navigator.of(context).pop();
                       },
                       style: TextButton.styleFrom(
@@ -359,9 +363,22 @@ class _translate_screenState extends State<translate_screen> {
                   TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
-                        // saveWords(inputtxt, outputtxt);
-                        seclecttxt.clear();
-                        seclecttranslated.clear();
+                        for (int i = 0; i < seclecttranslated.length; i++) {
+                          String translation = seclecttranslated[i];
+                          List<String> parts = translation.split('=');
+
+                          if (parts.length == 2) {
+                            String eng = parts[0].trim();
+                            String thai = parts[1].trim();
+
+                            saveWords(eng, thai);
+                          }
+                        }
+
+                        setState(() {
+                          seclecttxt.clear();
+                          seclecttranslated.clear();
+                        });
                       },
                       style: TextButton.styleFrom(
                         textStyle: Theme.of(context).textTheme.labelLarge,
