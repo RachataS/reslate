@@ -37,6 +37,8 @@ class _translate_screenState extends State<translate_screen> {
   List<String> seclecttxt = [];
   List<String> seclecttranslated = [];
   var rawtxt = TextEditingController();
+  var appbarInput = "English";
+  var appbarOutput = "Thai";
 
   @override
   Widget build(BuildContext context) {
@@ -44,35 +46,48 @@ class _translate_screenState extends State<translate_screen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Translate",
-          style: TextStyle(color: Colors.blue),
+        title: Align(
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text(
+              appbarInput,
+              style: TextStyle(color: Colors.blue),
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.change_circle_outlined,
+                color: Colors.blue,
+              ),
+              onPressed: () {
+                if (inputLanguage == 'en' || inputLanguage == null) {
+                  language.input = 'th';
+                  language.output = 'en';
+                  language.label = "ภาษาไทย";
+                  language.inbox = "โปรดป้อนข้อความ";
+                  language.outbox = 'Translated';
+                  language.appbarInput = "Thai";
+                  language.appberOutput = "English";
+                } else {
+                  language.input = 'en';
+                  language.output = 'th';
+                  language.label = "English";
+                  language.inbox = "Enter text";
+                  language.outbox = 'คำแปล';
+                  language.appbarInput = "English";
+                  language.appberOutput = "Thai";
+                }
+                changeLanguage();
+                wordsList.clear();
+              },
+            ),
+            Text(
+              appbarOutput,
+              style: TextStyle(color: Colors.blue),
+            ),
+          ]),
         ),
         centerTitle: true,
         backgroundColor: Colors.grey.shade50,
-        leading: IconButton(
-          icon: Icon(
-            Icons.change_circle_outlined,
-            color: Colors.blue,
-          ),
-          onPressed: () {
-            if (inputLanguage == 'en' || inputLanguage == null) {
-              language.input = 'th';
-              language.output = 'en';
-              language.label = "ภาษาไทย";
-              language.inbox = "โปรดป้อนข้อความ";
-              language.outbox = 'Translated';
-            } else {
-              language.input = 'en';
-              language.output = 'th';
-              language.label = "English";
-              language.inbox = "Enter text";
-              language.outbox = 'คำแปล';
-            }
-            changeLanguage();
-            wordsList.clear();
-          },
-        ),
+        elevation: 0,
       ),
       body: Card(
         key: formKey,
@@ -196,12 +211,16 @@ class _translate_screenState extends State<translate_screen> {
       label = "English";
       inputbox = "Enter text";
       outputbox = "คำแปล";
+      appbarInput = "English";
+      appbarOutput = "Thai";
     } else {
       inputLanguage = language.input;
       outputLanguage = language.output;
       label = language.label;
       inputbox = language.inbox;
       translated = language.outbox;
+      appbarInput = language.appbarInput;
+      appbarOutput = language.appberOutput;
     }
     setState(() {});
     rawtxt.clear();
