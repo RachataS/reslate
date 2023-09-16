@@ -219,13 +219,13 @@ class _loginPageState extends State<loginPage> {
                                     }
                                   },
                                   child: SizedBox(
-                                      width: 25,
-                                      height: 25,
+                                      width: 30,
+                                      height: 30,
                                       child: Logo(Logos.google)),
                                   style: ElevatedButton.styleFrom(
                                     primary: Colors.white,
                                     shape: CircleBorder(),
-                                    padding: EdgeInsets.all(20),
+                                    padding: EdgeInsets.all(15),
                                   ),
                                 ),
                               ),

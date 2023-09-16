@@ -71,39 +71,36 @@ class _translate_screenState extends State<translate_screen> {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                CircleAvatar(
-                  radius: 27,
-                  backgroundColor: Colors.white,
-                  child: IconButton(
-                    splashRadius: 10,
-                    icon: Icon(
-                      Icons.swap_horiz_outlined,
-                      color: Colors.blue[400]!,
-                    ),
-                    iconSize: 35,
-                    onPressed: () {
-                      if (inputLanguage == 'en' || inputLanguage == null) {
-                        language.input = 'th';
-                        language.output = 'en';
-                        language.label = "ภาษาไทย";
-                        language.inbox = "โปรดป้อนข้อความ";
-                        language.outbox = 'Translated';
-                        language.appbarInput = "Thai";
-                        language.appberOutput = "English";
-                      } else {
-                        language.input = 'en';
-                        language.output = 'th';
-                        language.label = "English";
-                        language.inbox = "Enter text";
-                        language.outbox = 'คำแปล';
-                        language.appbarInput = "English";
-                        language.appberOutput = "Thai";
-                      }
-                      changeLanguage();
-                      wordsList.clear();
-                      wordsListWithoutDuplicates.clear();
-                    },
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(shape: CircleBorder()),
+                  child: CircleAvatar(
+                    radius: 25,
+                    backgroundColor: Colors.white,
+                    child: Icon(Icons.swap_horiz_outlined,
+                        color: Colors.blue[400]!),
                   ),
+                  onPressed: () {
+                    if (inputLanguage == 'en' || inputLanguage == null) {
+                      language.input = 'th';
+                      language.output = 'en';
+                      language.label = "ภาษาไทย";
+                      language.inbox = "โปรดป้อนข้อความ";
+                      language.outbox = 'Translated';
+                      language.appbarInput = "Thai";
+                      language.appberOutput = "English";
+                    } else {
+                      language.input = 'en';
+                      language.output = 'th';
+                      language.label = "English";
+                      language.inbox = "Enter text";
+                      language.outbox = 'คำแปล';
+                      language.appbarInput = "English";
+                      language.appberOutput = "Thai";
+                    }
+                    changeLanguage();
+                    wordsList.clear();
+                    wordsListWithoutDuplicates.clear();
+                  },
                 ),
                 Container(
                   alignment: Alignment.center,
