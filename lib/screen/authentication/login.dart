@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:reslate/model/getDocument.dart';
 import 'package:reslate/screen/bottomBar.dart';
 import 'package:reslate/screen/Translate.dart';
@@ -195,7 +196,10 @@ class _loginPageState extends State<loginPage> {
                                           var user = FirebaseAuth
                                               .instance.currentUser!;
                                         } catch (e) {
-                                          print("can't get user data");
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "ไม่สามารถรับข้อมูลผู้ใช้ได้",
+                                              gravity: ToastGravity.TOP);
                                         }
                                         // Fluttertoast.showToast(
                                         //     msg: "เข้าสู่ระบบสำเร็จ",
@@ -214,19 +218,10 @@ class _loginPageState extends State<loginPage> {
                                           gravity: ToastGravity.TOP);
                                     }
                                   },
-                                  child: Container(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Container(
-                                            child: Image.asset(
-                                                'assets/images/Glogo.png',
-                                                fit: BoxFit.cover)),
-                                      ],
-                                    ),
-                                  ),
+                                  child: SizedBox(
+                                      width: 25,
+                                      height: 25,
+                                      child: Logo(Logos.google)),
                                   style: ElevatedButton.styleFrom(
                                     primary: Colors.white,
                                     shape: CircleBorder(),
