@@ -12,14 +12,14 @@ class _reviewPageState extends State<reviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
               padding: const EdgeInsets.all(15),
               child: SizedBox(
-                width: 150,
-                height: 150,
+                width: 200,
+                height: 200,
                 child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue[400],
@@ -34,8 +34,8 @@ class _reviewPageState extends State<reviewPage> {
             Padding(
               padding: const EdgeInsets.all(15),
               child: SizedBox(
-                width: 150,
-                height: 150,
+                width: 200,
+                height: 200,
                 child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue[400],
@@ -43,7 +43,7 @@ class _reviewPageState extends State<reviewPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50))),
                     onPressed: () {},
-                    icon: Icon(Icons.abc),
+                    icon: Icon(Icons.apps_rounded),
                     label: Text(" Match Card")),
               ),
             ),
