@@ -77,7 +77,9 @@ class _bottombarState extends State<bottombar> {
                 profile.data = data;
               });
             }),
-        reviewPage(),
+        reviewPage(
+          docID: firebaseDocument.id,
+        ),
         menuPage(profile: profile),
       ];
       isLoading = false;

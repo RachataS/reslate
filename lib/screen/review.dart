@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class reviewPage extends StatefulWidget {
-  const reviewPage({super.key});
+  final String? docID;
+
+  reviewPage({required this.docID});
 
   @override
   State<reviewPage> createState() => _reviewPageState();
@@ -91,7 +96,10 @@ class _reviewPageState extends State<reviewPage> {
               child: SizedBox(
                 width: 250,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    SystemSound.play(SystemSoundType.click);
+                    getSavedWords();
+                  },
                   child: Text("Saved words"),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue[400],
@@ -106,7 +114,9 @@ class _reviewPageState extends State<reviewPage> {
               child: SizedBox(
                 width: 250,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    SystemSound.play(SystemSoundType.click);
+                  },
                   child: Text("Wrong answer"),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue[400],
@@ -121,5 +131,23 @@ class _reviewPageState extends State<reviewPage> {
       ),
     );
     showDialog(context: context, builder: (BuildContext context) => wordSelect);
+  }
+
+  Future<void> getSavedWords() async {
+    List<Map<String, dynamic>> savedWords = [];
+
+    DocumentReference<Map<String, dynamic>> userDocumentRef =
+        FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
+    QuerySnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
+        await userDocumentRef.collection("savedWords").get();
+
+    // Iterate through the documents in the QuerySnapshot and print their data
+    savedWordsQuerySnapshot.docs
+        .forEach((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
+      Map<String, dynamic> data = doc.data();
+
+      savedWords.add(data);
+    });
+    print(savedWords);
   }
 }
