@@ -1,9 +1,7 @@
-import 'dart:convert';
-
-import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:math';
 
 class reviewPage extends StatefulWidget {
   final String? docID;
@@ -148,6 +146,68 @@ class _reviewPageState extends State<reviewPage> {
 
       savedWords.add(data);
     });
-    print(savedWords);
+
+    // Check if there are savedWords
+    if (savedWords.isNotEmpty) {
+      Random random = Random();
+      List<String> randomThaiKeys = [];
+
+      // Randomly select a Thai key and an English key from savedWords
+      int randomIndex = random.nextInt(savedWords.length);
+      Map<String, dynamic> randomWord = savedWords[randomIndex];
+
+      String thaiKey = randomWord['thai'];
+      String engKey = randomWord['eng'];
+      String thaiKey1, thaiKey2, thaiKey3;
+
+      print('Random Thai Key: $thaiKey');
+      print('Random English Key: $engKey');
+
+      // Randomly select a Thai key from other words in the list
+      for (int i = 0; i < 3; i++) {
+        int randomIndex;
+        do {
+          randomIndex = random.nextInt(savedWords.length);
+        } while (randomThaiKeys.contains(savedWords[randomIndex]['thai']));
+
+        randomThaiKeys.add(savedWords[randomIndex]['thai']);
+      }
+
+      thaiKey1 = randomThaiKeys[0];
+      thaiKey2 = randomThaiKeys[1];
+      thaiKey3 = randomThaiKeys[2];
+      saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
+    } else {
+      print('No savedWords available.');
+    }
+  }
+
+  Future<void> saveChoice(
+      question, correctAnswer, answer1, answer2, answer3) async {
+    CollectionReference<Map<String, dynamic>> userCollection =
+        FirebaseFirestore.instance.collection("Profile");
+    DocumentReference<Map<String, dynamic>> userDocumentRef =
+        FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
+
+    try {
+      String newDocumentId = question;
+      DocumentReference<Map<String, dynamic>> newDocumentRef = userCollection
+          .doc(widget.docID)
+          .collection("review")
+          .doc(newDocumentId);
+      Map<String, dynamic> dataToStore = {
+        "question": question,
+        "correctAnswer": correctAnswer,
+        "anwser1": answer1,
+        "answer2": answer2,
+        "answer3": answer3
+      };
+      await newDocumentRef.set(dataToStore);
+
+      QuerySnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
+          await userCollection.doc(widget.docID).collection("review").get();
+    } catch (e) {
+      print(e);
+    }
   }
 }

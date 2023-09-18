@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -80,6 +81,7 @@ class _translate_screenState extends State<translate_screen> {
                         color: Colors.blue[400]!),
                   ),
                   onPressed: () {
+                    SystemSound.play(SystemSoundType.click);
                     if (inputLanguage == 'en' || inputLanguage == null) {
                       language.input = 'th';
                       language.output = 'en';
