@@ -139,7 +139,6 @@ class _reviewPageState extends State<reviewPage> {
     QuerySnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
         await userDocumentRef.collection("savedWords").get();
 
-    // Iterate through the documents in the QuerySnapshot and print their data
     savedWordsQuerySnapshot.docs
         .forEach((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
       Map<String, dynamic> data = doc.data();
@@ -147,65 +146,81 @@ class _reviewPageState extends State<reviewPage> {
       savedWords.add(data);
     });
 
-    // Check if there are savedWords
     if (savedWords.isNotEmpty) {
-      Random random = Random();
-      List<String> randomThaiKeys = [];
+      var wordLength;
+      await userDocumentRef
+          .get()
+          .then((DocumentSnapshot<Map<String, dynamic>> document) {
+        if (document.exists) {
+          Map<String, dynamic> data = document.data()!;
 
-      // Randomly select a Thai key and an English key from savedWords
-      int randomIndex = random.nextInt(savedWords.length);
-      Map<String, dynamic> randomWord = savedWords[randomIndex];
+          wordLength = data["wordLength"];
+        }
+      }).catchError((error) {
+        print("Error getting document: $error");
+      });
 
-      String thaiKey = randomWord['thai'];
-      String engKey = randomWord['eng'];
-      String thaiKey1, thaiKey2, thaiKey3;
+      for (int a = 0; a <= wordLength; a++) {
+        Random random = Random();
+        List<String> randomThaiKeys = [];
 
-      print('Random Thai Key: $thaiKey');
-      print('Random English Key: $engKey');
+        int randomIndex = random.nextInt(savedWords.length);
+        Map<String, dynamic> randomWord = savedWords[randomIndex];
 
-      // Randomly select a Thai key from other words in the list
-      for (int i = 0; i < 3; i++) {
-        int randomIndex;
-        do {
-          randomIndex = random.nextInt(savedWords.length);
-        } while (randomThaiKeys.contains(savedWords[randomIndex]['thai']));
+        String thaiKey = randomWord['thai'];
+        String engKey = randomWord['eng'];
+        String thaiKey1, thaiKey2, thaiKey3;
 
-        randomThaiKeys.add(savedWords[randomIndex]['thai']);
+        for (int i = 0; i < 3; i++) {
+          int randomIndex;
+          do {
+            randomIndex = random.nextInt(savedWords.length);
+          } while (randomThaiKeys.contains(savedWords[randomIndex]['thai']) &&
+              savedWords[randomIndex]['thai'] != thaiKey);
+
+          randomThaiKeys.add(savedWords[randomIndex]['thai']);
+        }
+
+        thaiKey1 = randomThaiKeys[0];
+        thaiKey2 = randomThaiKeys[1];
+        thaiKey3 = randomThaiKeys[2];
+        await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
       }
-
-      thaiKey1 = randomThaiKeys[0];
-      thaiKey2 = randomThaiKeys[1];
-      thaiKey3 = randomThaiKeys[2];
-      saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
     } else {
       print('No savedWords available.');
     }
   }
 
   Future<void> saveChoice(
-      question, correctAnswer, answer1, answer2, answer3) async {
+    question,
+    correctAnswer,
+    answer1,
+    answer2,
+    answer3,
+  ) async {
     CollectionReference<Map<String, dynamic>> userCollection =
         FirebaseFirestore.instance.collection("Profile");
-    DocumentReference<Map<String, dynamic>> userDocumentRef =
-        FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
 
     try {
       String newDocumentId = question;
       DocumentReference<Map<String, dynamic>> newDocumentRef = userCollection
           .doc(widget.docID)
-          .collection("review")
-          .doc(newDocumentId);
-      Map<String, dynamic> dataToStore = {
-        "question": question,
-        "correctAnswer": correctAnswer,
-        "anwser1": answer1,
-        "answer2": answer2,
-        "answer3": answer3
-      };
-      await newDocumentRef.set(dataToStore);
+          .collection("savedWords")
+          .doc(question);
 
-      QuerySnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
-          await userCollection.doc(widget.docID).collection("review").get();
+      List<String> answerArray = [
+        question,
+        correctAnswer,
+        answer1,
+        answer2,
+        answer3,
+      ];
+
+      Map<String, dynamic> dataToStore = {
+        "review": answerArray,
+      };
+
+      await newDocumentRef.set(dataToStore, SetOptions(merge: true));
     } catch (e) {
       print(e);
     }
