@@ -142,7 +142,6 @@ class _reviewPageState extends State<reviewPage> {
     savedWordsQuerySnapshot.docs
         .forEach((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
       Map<String, dynamic> data = doc.data();
-
       savedWords.add(data);
     });
 
@@ -153,20 +152,24 @@ class _reviewPageState extends State<reviewPage> {
           .then((DocumentSnapshot<Map<String, dynamic>> document) {
         if (document.exists) {
           Map<String, dynamic> data = document.data()!;
-
           wordLength = data["wordLength"];
         }
       }).catchError((error) {
         print("Error getting document: $error");
       });
 
-      for (int a = 0; a <= wordLength; a++) {
-        Random random = Random();
-        List<String> randomThaiKeys = [];
+      Random random = Random();
+      List<int> usedIndices = [];
+      List<String> randomThaiKeys = [];
 
-        int randomIndex = random.nextInt(savedWords.length);
+      for (int a = 0; a < wordLength; a++) {
+        int randomIndex;
+        do {
+          randomIndex = random.nextInt(savedWords.length);
+        } while (usedIndices.contains(randomIndex));
+
+        usedIndices.add(randomIndex);
         Map<String, dynamic> randomWord = savedWords[randomIndex];
-
         String thaiKey = randomWord['thai'];
         String engKey = randomWord['eng'];
         String thaiKey1, thaiKey2, thaiKey3;
@@ -184,6 +187,8 @@ class _reviewPageState extends State<reviewPage> {
         thaiKey1 = randomThaiKeys[0];
         thaiKey2 = randomThaiKeys[1];
         thaiKey3 = randomThaiKeys[2];
+        // print(engKey);
+
         await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
       }
     } else {
@@ -219,8 +224,16 @@ class _reviewPageState extends State<reviewPage> {
       Map<String, dynamic> dataToStore = {
         "review": answerArray,
       };
-
       await newDocumentRef.set(dataToStore, SetOptions(merge: true));
+
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await userCollection
+              .doc(widget.docID)
+              .collection("savedWords")
+              .doc(question)
+              .get();
+      Map<String, dynamic>? data = documentSnapshot.data();
+      print(data);
     } catch (e) {
       print(e);
     }
