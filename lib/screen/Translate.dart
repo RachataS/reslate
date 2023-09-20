@@ -285,6 +285,7 @@ class _translate_screenState extends State<translate_screen> {
               'thai': eng,
               'answerWrong': 0,
               'answerCorrect': 0,
+              "review": []
             };
             await newDocumentRef.set(dataToStore);
           } else {
@@ -299,6 +300,7 @@ class _translate_screenState extends State<translate_screen> {
               'thai': thai,
               'answerWrong': 0,
               'answerCorrect': 0,
+              "review": []
             };
             await newDocumentRef.set(dataToStore);
           }
