@@ -104,7 +104,7 @@ class _reviewPageState extends State<reviewPage> {
                       getSavedWords(true, false);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return multipleChoice();
+                        return multipleChoice(docID: widget.docID);
                       }));
                     }
                     if (card == true) {
@@ -135,7 +135,9 @@ class _reviewPageState extends State<reviewPage> {
                       getSavedWords(false, true);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return multipleChoice();
+                        return multipleChoice(
+                          docID: widget.docID,
+                        );
                       }));
                     }
                     if (card == true) {
@@ -174,7 +176,6 @@ class _reviewPageState extends State<reviewPage> {
         .forEach((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
       Map<String, dynamic> data = doc.data();
       savedWords.add(data);
-      print(data);
     });
 
     if (savedWords.isNotEmpty) {
@@ -219,7 +220,6 @@ class _reviewPageState extends State<reviewPage> {
         thaiKey1 = randomThaiKeys[0];
         thaiKey2 = randomThaiKeys[1];
         thaiKey3 = randomThaiKeys[2];
-        // print(engKey);
 
         await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
       }
@@ -257,15 +257,6 @@ class _reviewPageState extends State<reviewPage> {
         "review": answerArray,
       };
       await newDocumentRef.set(dataToStore, SetOptions(merge: true));
-
-      // DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-      //     await userCollection
-      //         .doc(widget.docID)
-      //         .collection("savedWords")
-      //         .doc(question)
-      //         .get();
-      // Map<String, dynamic>? data = documentSnapshot.data();
-      // print(data);
     } catch (e) {
       print(e);
     }
