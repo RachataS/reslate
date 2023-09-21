@@ -88,79 +88,82 @@ class _bottombarState extends State<bottombar> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: isLoading
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : screens.isNotEmpty
-                ? Scaffold(
-                    body: screens[currentIndex],
+    return WillPopScope(
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
                   )
-                : PageView(
-                    controller: _pageController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: List.generate(
-                        screens.length, (index) => screens[index]),
+                : screens.isNotEmpty
+                    ? Scaffold(
+                        body: screens[currentIndex],
+                      )
+                    : PageView(
+                        controller: _pageController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: List.generate(
+                            screens.length, (index) => screens[index]),
+                      ),
+            extendBody: true,
+            bottomNavigationBar: isLoading || screens.isEmpty
+                ? null
+                : AnimatedNotchBottomBar(
+                    notchBottomBarController: _controller,
+                    color: Colors.blue[400]!,
+                    showLabel: true,
+                    itemLabelStyle:
+                        TextStyle(color: Colors.white, fontSize: 13),
+                    notchColor: Colors.white,
+                    removeMargins: false,
+                    bottomBarWidth: 400,
+                    durationInMilliSeconds: 100,
+                    bottomBarItems: [
+                      const BottomBarItem(
+                        inActiveItem: Icon(
+                          Icons.g_translate_outlined,
+                          color: Colors.white,
+                        ),
+                        activeItem: Icon(
+                          Icons.g_translate_outlined,
+                          color: Colors.blue,
+                        ),
+                        itemLabel: 'Translate',
+                      ),
+                      const BottomBarItem(
+                        inActiveItem: Icon(
+                          Icons.api_rounded,
+                          color: Colors.white,
+                        ),
+                        activeItem: Icon(
+                          Icons.api_rounded,
+                          color: Colors.blue,
+                        ),
+                        itemLabel: 'Review',
+                      ),
+                      const BottomBarItem(
+                        inActiveItem: Icon(
+                          Icons.menu,
+                          color: Colors.white,
+                        ),
+                        activeItem: Icon(
+                          Icons.menu,
+                          color: Colors.blue,
+                        ),
+                        itemLabel: 'Menu',
+                      ),
+                    ],
+                    onTap: (index) {
+                      setState(() => currentIndex = index);
+                      _controller.index = index;
+                    },
                   ),
-        extendBody: true,
-        bottomNavigationBar: isLoading || screens.isEmpty
-            ? null
-            : AnimatedNotchBottomBar(
-                notchBottomBarController: _controller,
-                color: Colors.blue[400]!,
-                showLabel: true,
-                itemLabelStyle: TextStyle(color: Colors.white, fontSize: 13),
-                notchColor: Colors.white,
-                removeMargins: false,
-                bottomBarWidth: 400,
-                durationInMilliSeconds: 100,
-                bottomBarItems: [
-                  const BottomBarItem(
-                    inActiveItem: Icon(
-                      Icons.g_translate_outlined,
-                      color: Colors.white,
-                    ),
-                    activeItem: Icon(
-                      Icons.g_translate_outlined,
-                      color: Colors.blue,
-                    ),
-                    itemLabel: 'Translate',
-                  ),
-                  const BottomBarItem(
-                    inActiveItem: Icon(
-                      Icons.api_rounded,
-                      color: Colors.white,
-                    ),
-                    activeItem: Icon(
-                      Icons.api_rounded,
-                      color: Colors.blue,
-                    ),
-                    itemLabel: 'Review',
-                  ),
-                  const BottomBarItem(
-                    inActiveItem: Icon(
-                      Icons.menu,
-                      color: Colors.white,
-                    ),
-                    activeItem: Icon(
-                      Icons.menu,
-                      color: Colors.blue,
-                    ),
-                    itemLabel: 'Menu',
-                  ),
-                ],
-                onTap: (index) {
-                  setState(() => currentIndex = index);
-                  _controller.index = index;
-                },
-              ),
-      ),
-    );
+          ),
+        ),
+        onWillPop: () async => false);
   }
 }

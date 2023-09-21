@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:reslate/screen/review/matchCard.dart';
 import 'dart:math';
+
+import 'package:reslate/screen/review/multipleChoice.dart';
 
 class reviewPage extends StatefulWidget {
   final String? docID;
@@ -17,6 +20,7 @@ class _reviewPageState extends State<reviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         automaticallyImplyLeading: false,
         title: Text(
           "Select Mode",
@@ -96,7 +100,20 @@ class _reviewPageState extends State<reviewPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     SystemSound.play(SystemSoundType.click);
-                    getSavedWords();
+                    if (multiple == true) {
+                      getSavedWords(true, false);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return multipleChoice();
+                      }));
+                    }
+                    if (card == true) {
+                      //match card random method
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return matchCard();
+                      }));
+                    }
                   },
                   child: Text("Saved words"),
                   style: ElevatedButton.styleFrom(
@@ -114,6 +131,20 @@ class _reviewPageState extends State<reviewPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     SystemSound.play(SystemSoundType.click);
+                    if (multiple == true) {
+                      getSavedWords(false, true);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return multipleChoice();
+                      }));
+                    }
+                    if (card == true) {
+                      //match card random method
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return matchCard();
+                      }));
+                    }
                   },
                   child: Text("Wrong answer"),
                   style: ElevatedButton.styleFrom(
@@ -131,7 +162,7 @@ class _reviewPageState extends State<reviewPage> {
     showDialog(context: context, builder: (BuildContext context) => wordSelect);
   }
 
-  Future<void> getSavedWords() async {
+  Future<void> getSavedWords(correct, wrong) async {
     List<Map<String, dynamic>> savedWords = [];
 
     DocumentReference<Map<String, dynamic>> userDocumentRef =
@@ -143,6 +174,7 @@ class _reviewPageState extends State<reviewPage> {
         .forEach((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
       Map<String, dynamic> data = doc.data();
       savedWords.add(data);
+      print(data);
     });
 
     if (savedWords.isNotEmpty) {
@@ -226,14 +258,14 @@ class _reviewPageState extends State<reviewPage> {
       };
       await newDocumentRef.set(dataToStore, SetOptions(merge: true));
 
-      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-          await userCollection
-              .doc(widget.docID)
-              .collection("savedWords")
-              .doc(question)
-              .get();
-      Map<String, dynamic>? data = documentSnapshot.data();
-      print(data);
+      // DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+      //     await userCollection
+      //         .doc(widget.docID)
+      //         .collection("savedWords")
+      //         .doc(question)
+      //         .get();
+      // Map<String, dynamic>? data = documentSnapshot.data();
+      // print(data);
     } catch (e) {
       print(e);
     }

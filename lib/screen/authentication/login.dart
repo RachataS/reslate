@@ -29,235 +29,243 @@ class _loginPageState extends State<loginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: firebase,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Scaffold(
-            appBar: AppBar(title: Text("Error!")),
-            body: Center(
-              child: Text("${snapshot.error}"),
-            ),
-          );
-        } else if (snapshot.connectionState == ConnectionState.done) {
-          return GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: Scaffold(
-                body: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-                  Colors.blue[600]!,
-                  Colors.blue[300]!,
-                  Colors.blue[100]!,
-                ]),
-              ),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 100, 10, 20),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 200, 20),
-                            child: Text(
-                              'Raslate',
-                              style: GoogleFonts.josefinSans(
-                                  textStyle: TextStyle(
-                                      fontSize: 50, color: Colors.white)),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 200, 20),
-                            child: Text(
-                              'Login\nyour account',
-                              style: GoogleFonts.josefinSans(
-                                  textStyle: TextStyle(
-                                      fontSize: 30, color: Colors.white)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                        child: Container(
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.blue[900]!,
-                                blurRadius: 30,
-                                offset: Offset(0, 10))
-                          ],
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(60),
-                              topRight: Radius.circular(60))),
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(30, 50, 30, 20),
+    return WillPopScope(
+        child: FutureBuilder(
+          future: firebase,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Scaffold(
+                appBar: AppBar(title: Text("Error!")),
+                body: Center(
+                  child: Text("${snapshot.error}"),
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              return GestureDetector(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                },
+                child: Scaffold(
+                    body: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient:
+                        LinearGradient(begin: Alignment.topCenter, colors: [
+                      Colors.blue[600]!,
+                      Colors.blue[300]!,
+                      Colors.blue[100]!,
+                    ]),
+                  ),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 100, 10, 20),
                           child: Column(
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.blue[400]!,
-                                          blurRadius: 30,
-                                          offset: Offset(0, 10))
-                                    ]),
-                                child: Column(children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey[200]!))),
-                                    child: TextFormField(
-                                        validator: MultiValidator([
-                                          RequiredValidator(
-                                              errorText: 'กรุณากรอก Email'),
-                                          EmailValidator(
-                                              errorText:
-                                                  'รูปแบบ Email ไม่ถูกต้อง กรุณากรอกอีกครั้ง')
-                                        ]),
-                                        onSaved: (var email) {
-                                          profile.email = email;
-                                        },
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          labelText: 'Enter Email',
-                                        )),
-                                  ),
-                                  Container(
-                                    child: TextFormField(
-                                        validator: ((password1) {
-                                          if (password1!.isEmpty) {
-                                            return 'โปรดกรอกรหัสผ่าน';
-                                          } else if (password1.length < 8) {
-                                            return 'รหัสผ่านต้องยาวกว่า 8 ตัวอักษร';
-                                          }
-                                        }),
-                                        onSaved: (password1) {
-                                          profile.password = password1;
-                                        },
-                                        obscureText: true,
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          labelText: 'Password',
-                                        )),
-                                  ),
-                                ]),
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Center(
-                                child: SizedBox(
-                                  width: 300,
-                                  child: ElevatedButton.icon(
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: Colors.blue[400],
-                                          fixedSize: const Size(300, 50),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50))),
-                                      onPressed: () {
-                                        handleLogin();
-                                      },
-                                      icon: Icon(Icons.login),
-                                      label: Text("Login")),
-                                ),
-                              ),
-                              Center(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(15, 30, 15, 5),
-                                  child: Text("OR"),
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 20, 200, 20),
+                                child: Text(
+                                  'Raslate',
+                                  style: GoogleFonts.josefinSans(
+                                      textStyle: TextStyle(
+                                          fontSize: 50, color: Colors.white)),
                                 ),
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(15, 15, 15, 15),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    try {
-                                      GooglesignInProvider()
-                                          .googleLogin()
-                                          .then((value) {
-                                        try {
-                                          var user = FirebaseAuth
-                                              .instance.currentUser!;
-                                        } catch (e) {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "ไม่สามารถรับข้อมูลผู้ใช้ได้",
-                                              gravity: ToastGravity.TOP);
-                                        }
-                                        // Fluttertoast.showToast(
-                                        //     msg: "เข้าสู่ระบบสำเร็จ",
-                                        //     gravity: ToastGravity.TOP);
-
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return bottombar();
-                                        }));
-                                      });
-                                    } catch (e) {
-                                      Fluttertoast.showToast(
-                                          msg:
-                                              "เข้าสู่ระบบด้วย google ไม่สำเร็จ",
-                                          gravity: ToastGravity.TOP);
-                                    }
-                                  },
-                                  child: SizedBox(
-                                      width: 30,
-                                      height: 30,
-                                      child: Logo(Logos.google)),
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.white,
-                                    shape: CircleBorder(),
-                                    padding: EdgeInsets.all(15),
-                                  ),
+                                    const EdgeInsets.fromLTRB(0, 0, 200, 20),
+                                child: Text(
+                                  'Login\nyour account',
+                                  style: GoogleFonts.josefinSans(
+                                      textStyle: TextStyle(
+                                          fontSize: 30, color: Colors.white)),
                                 ),
                               ),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return registerPage();
-                                    }));
-                                  },
-                                  child: Text(
-                                    "Don't have an account? Register now!",
-                                    style: btTextStyle.nameOfTextStyle,
-                                  ))
                             ],
                           ),
                         ),
-                      ),
-                    )),
-                  ],
-                ),
+                        Expanded(
+                            child: Container(
+                          decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.blue[900]!,
+                                    blurRadius: 30,
+                                    offset: Offset(0, 10))
+                              ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(60),
+                                  topRight: Radius.circular(60))),
+                          child: SingleChildScrollView(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(30, 50, 30, 20),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color: Colors.blue[400]!,
+                                              blurRadius: 30,
+                                              offset: Offset(0, 10))
+                                        ]),
+                                    child: Column(children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: Colors.grey[200]!))),
+                                        child: TextFormField(
+                                            validator: MultiValidator([
+                                              RequiredValidator(
+                                                  errorText: 'กรุณากรอก Email'),
+                                              EmailValidator(
+                                                  errorText:
+                                                      'รูปแบบ Email ไม่ถูกต้อง กรุณากรอกอีกครั้ง')
+                                            ]),
+                                            onSaved: (var email) {
+                                              profile.email = email;
+                                            },
+                                            keyboardType:
+                                                TextInputType.emailAddress,
+                                            decoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                              labelText: 'Enter Email',
+                                            )),
+                                      ),
+                                      Container(
+                                        child: TextFormField(
+                                            validator: ((password1) {
+                                              if (password1!.isEmpty) {
+                                                return 'โปรดกรอกรหัสผ่าน';
+                                              } else if (password1.length < 8) {
+                                                return 'รหัสผ่านต้องยาวกว่า 8 ตัวอักษร';
+                                              }
+                                            }),
+                                            onSaved: (password1) {
+                                              profile.password = password1;
+                                            },
+                                            obscureText: true,
+                                            decoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                              labelText: 'Password',
+                                            )),
+                                      ),
+                                    ]),
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                  ),
+                                  Center(
+                                    child: SizedBox(
+                                      width: 300,
+                                      child: ElevatedButton.icon(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.blue[400],
+                                              fixedSize: const Size(300, 50),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          50))),
+                                          onPressed: () {
+                                            handleLogin();
+                                          },
+                                          icon: Icon(Icons.login),
+                                          label: Text("Login")),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          15, 30, 15, 5),
+                                      child: Text("OR"),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        15, 15, 15, 15),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        try {
+                                          GooglesignInProvider()
+                                              .googleLogin()
+                                              .then((value) {
+                                            try {
+                                              var user = FirebaseAuth
+                                                  .instance.currentUser!;
+                                            } catch (e) {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "ไม่สามารถรับข้อมูลผู้ใช้ได้",
+                                                  gravity: ToastGravity.TOP);
+                                            }
+                                            // Fluttertoast.showToast(
+                                            //     msg: "เข้าสู่ระบบสำเร็จ",
+                                            //     gravity: ToastGravity.TOP);
+
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return bottombar();
+                                            }));
+                                          });
+                                        } catch (e) {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "เข้าสู่ระบบด้วย google ไม่สำเร็จ",
+                                              gravity: ToastGravity.TOP);
+                                        }
+                                      },
+                                      child: SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: Logo(Logos.google)),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: CircleBorder(),
+                                        padding: EdgeInsets.all(15),
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return registerPage();
+                                        }));
+                                      },
+                                      child: Text(
+                                        "Don't have an account? Register now!",
+                                        style: btTextStyle.nameOfTextStyle,
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ),
+                        )),
+                      ],
+                    ),
+                  ),
+                )),
+              );
+            }
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
               ),
-            )),
-          );
-        }
-        return Scaffold(
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
-      },
-    );
+            );
+          },
+        ),
+        onWillPop: () async => false);
   }
 
   Future<void> googleRegister(String username, String email) async {
