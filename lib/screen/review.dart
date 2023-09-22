@@ -98,10 +98,10 @@ class _reviewPageState extends State<reviewPage> {
               child: SizedBox(
                 width: 250,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     SystemSound.play(SystemSoundType.click);
                     if (multiple == true) {
-                      getSavedWords(true, false);
+                      await getSavedWords(true, false);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return multipleChoice(docID: widget.docID);
@@ -129,10 +129,10 @@ class _reviewPageState extends State<reviewPage> {
               child: SizedBox(
                 width: 250,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     SystemSound.play(SystemSoundType.click);
                     if (multiple == true) {
-                      getSavedWords(false, true);
+                      await getSavedWords(false, true);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return multipleChoice(
@@ -196,32 +196,30 @@ class _reviewPageState extends State<reviewPage> {
       List<String> randomThaiKeys = [];
 
       for (int a = 0; a < wordLength; a++) {
-        int randomIndex;
-        do {
-          randomIndex = random.nextInt(savedWords.length);
-        } while (usedIndices.contains(randomIndex));
-
-        usedIndices.add(randomIndex);
-        Map<String, dynamic> randomWord = savedWords[randomIndex];
+        Map<String, dynamic> randomWord = savedWords[a];
         String thaiKey = randomWord['thai'];
         String engKey = randomWord['eng'];
         String thaiKey1, thaiKey2, thaiKey3;
+        List<dynamic> reviewList = randomWord['review'];
 
-        for (int i = 0; i < 3; i++) {
-          int randomIndex;
-          do {
-            randomIndex = random.nextInt(savedWords.length);
-          } while (randomThaiKeys.contains(savedWords[randomIndex]['thai']) &&
-              savedWords[randomIndex]['thai'] != thaiKey);
+        if (reviewList.length < 5) {
+          for (int i = 0; i < 3; i++) {
+            int randomIndex;
+            do {
+              randomIndex = random.nextInt(savedWords.length);
+            } while (randomThaiKeys.contains(savedWords[randomIndex]['thai']) &&
+                savedWords[randomIndex]['thai'] != thaiKey);
 
-          randomThaiKeys.add(savedWords[randomIndex]['thai']);
+            randomThaiKeys.add(savedWords[randomIndex]['thai']);
+          }
+
+          thaiKey1 = randomThaiKeys[0];
+          thaiKey2 = randomThaiKeys[1];
+          thaiKey3 = randomThaiKeys[2];
+
+          await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
+          randomThaiKeys.clear();
         }
-
-        thaiKey1 = randomThaiKeys[0];
-        thaiKey2 = randomThaiKeys[1];
-        thaiKey3 = randomThaiKeys[2];
-
-        await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
       }
     } else {
       print('No savedWords available.');

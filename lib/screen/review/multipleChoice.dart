@@ -13,11 +13,11 @@ class _multipleChoiceState extends State<multipleChoice> {
   CollectionReference<Map<String, dynamic>> userCollection =
       FirebaseFirestore.instance.collection("Profile");
 
-  @override
-  void initState() {
-    super.initState(); // Call super.initState() here
-    getQuestion();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getQuestion();
+  // }
 
   Future<void> getQuestion() async {
     try {
@@ -37,9 +37,18 @@ class _multipleChoiceState extends State<multipleChoice> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("multipleChoice"),
-      ),
-    );
+        appBar: AppBar(
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          title: Text(
+            "multipleChoice",
+            style: TextStyle(color: Colors.blue[400]!),
+          ),
+          backgroundColor: Colors.grey.shade50,
+          elevation: 0,
+        ),
+        body: Column(
+          children: [],
+        ));
   }
 }
