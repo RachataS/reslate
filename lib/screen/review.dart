@@ -26,7 +26,7 @@ class _reviewPageState extends State<reviewPage> {
           "Select Mode",
           style: TextStyle(color: Colors.blue[400]!),
         ),
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Center(

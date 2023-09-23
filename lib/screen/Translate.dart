@@ -49,7 +49,7 @@ class _translate_screenState extends State<translate_screen> {
     return Scaffold(
       // backgroundColor: Colors.blue,
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: false,
