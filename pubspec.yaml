@@ -20,17 +20,19 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   fluttertoast: ^8.2.2
   form_field_validator: ^1.1.0
+  get: ^4.6.6
   google_fonts: ^4.0.4
   google_sign_in: ^6.1.4
   http: ^0.13.6
   icons_plus: ^4.0.0
   shared_preferences: ^2.2.0
   translator: ^0.1.7
+  websafe_svg: ^3.0.0+5
 
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/favicon.png"
+  image_path: "assets/icons/favicon.png"
 
 dev_dependencies:
   flutter_test:
@@ -40,5 +42,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/
+    - assets/icons/
     - assets/audio/

@@ -6,8 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:reslate/screen/authentication/login.dart';
-
-import '../../../model/profile.dart';
+import '../../models/profile.dart';
 
 class registerPage extends StatefulWidget {
   const registerPage({super.key});

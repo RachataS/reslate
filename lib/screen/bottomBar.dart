@@ -8,8 +8,8 @@ import 'package:reslate/screen/menu.dart';
 import 'package:reslate/screen/review.dart';
 import 'package:reslate/screen/Translate.dart';
 
-import '../model/getDocument.dart';
-import '../model/profile.dart';
+import '../models/getDocument.dart';
+import '../models/profile.dart';
 
 class bottombar extends StatefulWidget {
   const bottombar({Key? key}) : super(key: key);
