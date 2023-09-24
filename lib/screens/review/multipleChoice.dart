@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reslate/controllers/question_controller.dart';
+import 'package:reslate/models/Questions.dart';
 import 'package:reslate/screens/review/components/body.dart';
 
 class multipleChoice extends StatefulWidget {
@@ -33,10 +34,16 @@ class _multipleChoiceState extends State<multipleChoice> {
         Map<String, dynamic> data = document.data();
         questionList.add(data);
       }
-      print(questionList);
+      await sendQuestion(questionList);
     } catch (e) {
       print("Error fetching data: $e");
     }
+  }
+
+  Future<void> sendQuestion(questionList) async {
+    Question question = Question();
+    question.questionList = questionList;
+    print(question.questionList);
   }
 
   Widget build(BuildContext context) {
