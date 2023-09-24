@@ -27,7 +27,6 @@ dependencies:
   icons_plus: ^4.0.0
   shared_preferences: ^2.2.0
   translator: ^0.1.7
-  websafe_svg: ^3.0.0+5
 
 flutter_icons:
   android: true

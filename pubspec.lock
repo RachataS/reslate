@@ -456,14 +456,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
-  logging:
-    dependency: transitive
-    description:
-      name: logging
-      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
   matcher:
     dependency: transitive
     description:
@@ -757,14 +749,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.4-beta"
-  websafe_svg:
-    dependency: "direct main"
-    description:
-      name: websafe_svg
-      sha256: "306549379ad9c6252c19441070466f5ce813feb267f24c6c1ee4a2918c305faa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0+5"
   win32:
     dependency: transitive
     description:
