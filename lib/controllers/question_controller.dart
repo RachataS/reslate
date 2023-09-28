@@ -24,16 +24,19 @@ class QuestionController extends GetxController
   QuestionController() {
     _pageController = PageController();
   }
+  Question question = Question();
 
-  List<Question> _questions = sample_data
+  List<Question> _questions = Question.sample_data
       .map(
-        (question) => Question(
-            id: question['id'],
-            question: question['question'],
-            options: question['options'],
-            answer: question['answer_index']),
+        (questionData) => Question(
+          id: questionData['id'],
+          question: questionData['question'],
+          options: questionData['options'],
+          answer: questionData['answer_index'],
+        ),
       )
       .toList();
+
   List<Question> get questions => this._questions;
 
   bool _isAnswered = false;

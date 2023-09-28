@@ -25,25 +25,17 @@ class _multipleChoiceState extends State<multipleChoice> {
 
   Future<void> getQuestion() async {
     try {
-      List<Map<String, dynamic>> questionList = [];
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await userCollection.doc(widget.docID).collection("savedWords").get();
 
       for (QueryDocumentSnapshot<Map<String, dynamic>> document
           in querySnapshot.docs) {
         Map<String, dynamic> data = document.data();
-        questionList.add(data);
+        Question.sample_data.add(data);
       }
-      await sendQuestion(questionList);
     } catch (e) {
       print("Error fetching data: $e");
     }
-  }
-
-  Future<void> sendQuestion(questionList) async {
-    Question question = Question();
-    question.questionList = questionList;
-    print(question.questionList);
   }
 
   Widget build(BuildContext context) {
