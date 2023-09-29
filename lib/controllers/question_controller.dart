@@ -96,9 +96,29 @@ class QuestionController extends GetxController
     update();
 
     // Once user select an ans after 3s it will go to the next qn
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(milliseconds: 500), () {
       nextQuestion();
     });
+  }
+
+  Future<void> setData(List<Map<String, dynamic>> data) async {
+    // Process and use the data in your controller as needed
+    // For example, you can update the questions list here.
+    // Be sure to clear any existing data if needed.
+    _questions.clear();
+
+    await Future.forEach(data, (questionData) {
+      _questions.add(
+        Question(
+          id: questionData['id'],
+          question: questionData['question'],
+          options: questionData['options'],
+          answer: questionData['answer_index'],
+        ),
+      );
+    });
+
+    update(); // Ensure the UI is updated after setting the data.
   }
 
   void nextQuestion() {

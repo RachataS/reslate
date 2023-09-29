@@ -200,9 +200,9 @@ class _reviewPageState extends State<reviewPage> {
       for (int a = 0; a < wordLength; a++) {
         Map<String, dynamic> randomWord = savedWords[a];
         String thaiKey = randomWord['thai'];
-        String engKey = randomWord['eng'];
+        String engKey = randomWord['question'];
         String thaiKey1, thaiKey2, thaiKey3;
-        List<dynamic> reviewList = randomWord['review'];
+        List<dynamic> reviewList = randomWord['options'];
 
         if (reviewList.length < 5) {
           for (int i = 0; i < 3; i++) {
@@ -246,7 +246,6 @@ class _reviewPageState extends State<reviewPage> {
           .doc(question);
 
       List<String> answerArray = [
-        question,
         correctAnswer,
         answer1,
         answer2,
@@ -254,7 +253,7 @@ class _reviewPageState extends State<reviewPage> {
       ];
 
       Map<String, dynamic> dataToStore = {
-        "review": answerArray,
+        "options": answerArray,
       };
       await newDocumentRef.set(dataToStore, SetOptions(merge: true));
     } catch (e) {

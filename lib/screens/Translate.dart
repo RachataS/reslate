@@ -224,11 +224,18 @@ class _translate_screenState extends State<translate_screen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
         child: FloatingActionButton(
-          onPressed: () {
+          onPressed: () async {
             if (selecttxt.length > 0) {
               dialogTranslate();
             } else {
-              saveWords(rawtxt.text, translated);
+              QuerySnapshot<Map<String, dynamic>> oldWordLengthQury =
+                  await FirebaseFirestore.instance
+                      .collection("Profile")
+                      .doc(widget.docID)
+                      .collection("savedWords")
+                      .get();
+              var oldWordLength = oldWordLengthQury.size;
+              saveWords(rawtxt.text, translated, oldWordLength);
             }
           },
           child: Icon(
@@ -262,7 +269,7 @@ class _translate_screenState extends State<translate_screen> {
     rawtxt.clear();
   }
 
-  Future<void> saveWords(eng, thai) async {
+  Future<void> saveWords(eng, thai, id) async {
     CollectionReference<Map<String, dynamic>> userCollection =
         FirebaseFirestore.instance.collection("Profile");
     DocumentReference<Map<String, dynamic>> userDocumentRef =
@@ -281,11 +288,13 @@ class _translate_screenState extends State<translate_screen> {
                     .collection("savedWords")
                     .doc(newDocumentId);
             Map<String, dynamic> dataToStore = {
+              'id': id += 1,
               'eng': thai,
-              'thai': eng,
+              'question': eng,
               'answerWrong': 0,
               'answerCorrect': 0,
-              "review": [],
+              "options": [],
+              "answer_index": 0
             };
             await newDocumentRef.set(dataToStore);
           } else {
@@ -296,23 +305,22 @@ class _translate_screenState extends State<translate_screen> {
                     .collection("savedWords")
                     .doc(newDocumentId);
             Map<String, dynamic> dataToStore = {
-              'eng': eng,
+              'id': id += 1,
+              'question': eng,
               'thai': thai,
               'answerWrong': 0,
               'answerCorrect': 0,
-              "review": []
+              "options": [],
+              "answer_index": 0
             };
             await newDocumentRef.set(dataToStore);
           }
-
           QuerySnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
               await userCollection
                   .doc(widget.docID)
                   .collection("savedWords")
                   .get();
-
-          int newWordLength = savedWordsQuerySnapshot.size;
-
+          var newWordLength = savedWordsQuerySnapshot.size;
           await userDocumentRef.update({'wordLength': newWordLength});
 
           DocumentSnapshot<Map<String, dynamic>> userDoc =
@@ -400,17 +408,25 @@ class _translate_screenState extends State<translate_screen> {
                       ),
                       child: Text('Close')),
                   TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.of(context).pop();
                         for (int i = 0; i < selecttranslated.length; i++) {
                           String translation = selecttranslated[i];
                           List<String> parts = translation.split('=');
 
                           if (parts.length == 2) {
+                            QuerySnapshot<Map<String, dynamic>>
+                                oldWordLengthQury = await FirebaseFirestore
+                                    .instance
+                                    .collection("Profile")
+                                    .doc(widget.docID)
+                                    .collection("savedWords")
+                                    .get();
+                            var oldWordLength = oldWordLengthQury.size;
                             String eng = parts[0].trim();
                             String thai = parts[1].trim();
 
-                            saveWords(eng, thai);
+                            saveWords(eng, thai, oldWordLength);
                           }
                         }
 
