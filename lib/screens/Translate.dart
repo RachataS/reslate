@@ -267,9 +267,7 @@ class _translate_screenState extends State<translate_screen> {
             }
           },
           child: Icon(
-            selecttxt.isNotEmpty
-                ? Icons.translate
-                : Icons.bookmark_outline_outlined,
+            selecttxt.isNotEmpty ? Icons.translate : Icons.bookmark,
           ),
         ),
       ),
@@ -306,70 +304,86 @@ class _translate_screenState extends State<translate_screen> {
         FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
 
     try {
-      if (rawtxt.text.isNotEmpty &&
-          translated != "คำแปล" &&
-          translated != "Translated") {
-        try {
-          if (RegExp(r'[^a-zA-Z]').hasMatch(eng)) {
-            String newDocumentId = thai;
-            DocumentReference<Map<String, dynamic>> newDocumentRef =
-                userCollection
-                    .doc(widget.docID)
-                    .collection("savedWords")
-                    .doc(newDocumentId);
-            Map<String, dynamic> dataToStore = {
-              'id': id += 1,
-              'eng': thai,
-              'question': eng,
-              'answerWrong': 0,
-              'answerCorrect': 0,
-              "options": [],
-              "answer_index": 0
-            };
-            await newDocumentRef.set(dataToStore);
+      if (eng.trim().isNotEmpty && thai.trim().isNotEmpty) {
+        if (!eng.contains(" ") && !thai.contains(" ")) {
+          if (!containsSpecialChars(eng) && !containsSpecialChars(thai)) {
+            try {
+              eng = eng.toLowerCase();
+              thai = thai.toLowerCase();
+
+              if (RegExp(r'[^a-zA-Z]').hasMatch(eng)) {
+                //save from thai translate
+                String newDocumentId = thai;
+                DocumentReference<Map<String, dynamic>> newDocumentRef =
+                    userCollection
+                        .doc(widget.docID)
+                        .collection("savedWords")
+                        .doc(newDocumentId);
+                Map<String, dynamic> dataToStore = {
+                  'id': id += 1,
+                  'thai': eng,
+                  'question': thai,
+                  'answerWrong': 0,
+                  'answerCorrect': 0,
+                  "options": [],
+                  "answer_index": 0
+                };
+                await newDocumentRef.set(dataToStore);
+              } else {
+                //save from eng translate
+                String newDocumentId = eng;
+                DocumentReference<Map<String, dynamic>> newDocumentRef =
+                    userCollection
+                        .doc(widget.docID)
+                        .collection("savedWords")
+                        .doc(newDocumentId);
+                Map<String, dynamic> dataToStore = {
+                  'id': id += 1,
+                  'question': eng,
+                  'thai': thai,
+                  'answerWrong': 0,
+                  'answerCorrect': 0,
+                  "options": [],
+                  "answer_index": 0
+                };
+                await newDocumentRef.set(dataToStore);
+              }
+              QuerySnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
+                  await userCollection
+                      .doc(widget.docID)
+                      .collection("savedWords")
+                      .get();
+              var newWordLength = savedWordsQuerySnapshot.size;
+              await userDocumentRef.update({'wordLength': newWordLength});
+
+              DocumentSnapshot<Map<String, dynamic>> userDoc =
+                  await userDocumentRef.get();
+
+              Map<String, dynamic>? data =
+                  userDoc.data() as Map<String, dynamic>?;
+
+              if (data != null) {
+                profile.data = data;
+                widget.sendData(data);
+              } else {
+                print('Data is null or not a Map<String, dynamic>');
+              }
+              Fluttertoast.showToast(
+                  msg: "บันทึกคำศัพท์เรียบร้อย", gravity: ToastGravity.TOP);
+            } catch (e) {
+              Fluttertoast.showToast(
+                  msg: "ไม่สามารถบันทึกคำศัำท์ได้", gravity: ToastGravity.TOP);
+            }
           } else {
-            String newDocumentId = eng;
-            DocumentReference<Map<String, dynamic>> newDocumentRef =
-                userCollection
-                    .doc(widget.docID)
-                    .collection("savedWords")
-                    .doc(newDocumentId);
-            Map<String, dynamic> dataToStore = {
-              'id': id += 1,
-              'question': eng,
-              'thai': thai,
-              'answerWrong': 0,
-              'answerCorrect': 0,
-              "options": [],
-              "answer_index": 0
-            };
-            await newDocumentRef.set(dataToStore);
+            Fluttertoast.showToast(
+                msg: "ไม่สามารถบันทึกคำศัพท์ที่มีอักษรพิเศษได้",
+                gravity: ToastGravity.TOP);
           }
-          QuerySnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
-              await userCollection
-                  .doc(widget.docID)
-                  .collection("savedWords")
-                  .get();
-          var newWordLength = savedWordsQuerySnapshot.size;
-          await userDocumentRef.update({'wordLength': newWordLength});
-
-          DocumentSnapshot<Map<String, dynamic>> userDoc =
-              await userDocumentRef.get();
-
-          Map<String, dynamic>? data = userDoc.data() as Map<String, dynamic>?;
-
-          if (data != null) {
-            profile.data = data;
-            widget.sendData(data);
-          } else {
-            print('Data is null or not a Map<String, dynamic>');
-          }
-        } catch (e) {
-          print(e);
+        } else {
+          Fluttertoast.showToast(
+              msg: "โปรดเลือกคำศัพท์ที่ต้องการบันทึก",
+              gravity: ToastGravity.TOP);
         }
-
-        Fluttertoast.showToast(
-            msg: "บันทึกคำศัพท์เรียบร้อย", gravity: ToastGravity.TOP);
       } else {
         Fluttertoast.showToast(
             msg: "กรุณาป้อนคำศัพท์เพื่อบันทึก", gravity: ToastGravity.TOP);
@@ -377,6 +391,36 @@ class _translate_screenState extends State<translate_screen> {
     } catch (e) {
       print(e);
     }
+  }
+
+  bool containsSpecialChars(String text) {
+    final specialChars = [
+      '.',
+      '/',
+      '=',
+      '|',
+      '\\',
+      '^',
+      '%',
+      '\$',
+      '#',
+      '-',
+      '+',
+      ',',
+      '<',
+      '>',
+      '@',
+      ':',
+      ';',
+      '\'',
+      '\"'
+    ];
+    for (var char in specialChars) {
+      if (text.contains(char)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   Future<void> dialogTranslate() async {
@@ -414,20 +458,22 @@ class _translate_screenState extends State<translate_screen> {
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '${selecttranslated.join("\n")}',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 25),
+              Expanded(
+                child: Center(
+                  child: Text(
+                    '${selecttranslated.join("\n")}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 25),
+                  ),
+                ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
                       onPressed: () {
                         setState(() {
                           selecttxt.clear();
@@ -439,8 +485,12 @@ class _translate_screenState extends State<translate_screen> {
                       style: TextButton.styleFrom(
                         textStyle: Theme.of(context).textTheme.labelLarge,
                       ),
-                      child: Text('Close')),
-                  TextButton(
+                      child: Text(
+                        'Close',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    TextButton(
                       onPressed: () async {
                         Navigator.of(context).pop();
                         for (int i = 0; i < selecttranslated.length; i++) {
@@ -472,15 +522,19 @@ class _translate_screenState extends State<translate_screen> {
                       style: TextButton.styleFrom(
                         textStyle: Theme.of(context).textTheme.labelLarge,
                       ),
-                      child: Text('Save')),
-                ],
-              )
+                      child: Text('Save'),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
     showDialog(
-        context: context, builder: (BuildContext context) => saveWordsDialog);
+      context: context,
+      builder: (BuildContext context) => saveWordsDialog,
+    );
   }
 }
