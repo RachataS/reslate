@@ -41,6 +41,7 @@ class _translate_screenState extends State<translate_screen> {
   var appbarInput = "English";
   var appbarOutput = "Thai";
   List<String> wordsListWithoutDuplicates = [];
+  int checkWords = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -189,28 +190,55 @@ class _translate_screenState extends State<translate_screen> {
                             j < i + 5 && j < wordsListWithoutDuplicates.length;
                             j++)
                           Flexible(
-                            child: TextButton(
-                              onPressed: () async {
-                                setState(() {
-                                  if (selecttxt.contains(
-                                      wordsListWithoutDuplicates[j])) {
-                                    selecttxt
-                                        .remove(wordsListWithoutDuplicates[j]);
-                                  } else {
-                                    selecttxt
-                                        .add(wordsListWithoutDuplicates[j]);
-                                  }
-                                });
-                              },
-                              child: Text(
-                                wordsListWithoutDuplicates[j],
-                                style: TextStyle(
-                                  color: selecttxt.contains(
-                                          wordsListWithoutDuplicates[j])
-                                      ? Colors.blue[400]
-                                      : Colors.black54,
+                            child: Stack(
+                              alignment: Alignment.topRight,
+                              children: [
+                                TextButton(
+                                  onPressed: () async {
+                                    setState(() {
+                                      if (selecttxt.contains(
+                                          wordsListWithoutDuplicates[j])) {
+                                        selecttxt.remove(
+                                            wordsListWithoutDuplicates[j]);
+                                        checkWords--;
+                                      } else {
+                                        selecttxt
+                                            .add(wordsListWithoutDuplicates[j]);
+                                        checkWords++;
+                                      }
+                                    });
+                                  },
+                                  child: Text(
+                                    wordsListWithoutDuplicates[j],
+                                    style: TextStyle(
+                                      color: selecttxt.contains(
+                                              wordsListWithoutDuplicates[j])
+                                          ? Colors.blue[400]
+                                          : Colors.black54,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                if (selecttxt
+                                    .contains(wordsListWithoutDuplicates[j]))
+                                  Container(
+                                    padding: EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors
+                                          .red, // You can change the color
+                                    ),
+                                    child: Text(
+                                      (selecttxt.indexOf(
+                                                  wordsListWithoutDuplicates[
+                                                      j]) +
+                                              1)
+                                          .toString(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
                       ],
@@ -239,7 +267,9 @@ class _translate_screenState extends State<translate_screen> {
             }
           },
           child: Icon(
-            selecttxt.isNotEmpty ? Icons.translate : Icons.upload,
+            selecttxt.isNotEmpty
+                ? Icons.translate
+                : Icons.bookmark_outline_outlined,
           ),
         ),
       ),
@@ -353,25 +383,27 @@ class _translate_screenState extends State<translate_screen> {
     double dialogWidth = 400;
     double dialogHeight = 200;
     String outputtxt = "";
-    for (int i = 0; i < selecttxt.length; i++) {
-      await translator
-          .translate(selecttxt[i], from: inputLanguage, to: outputLanguage)
-          .then((translation) {
-        setState(() {
-          selecttranslated.add(selecttxt[i] + " = " + translation.toString());
-          dialogHeight += 30;
-        });
-      });
-    }
 
-    if (dialogHeight > 800) {
+    if (checkWords > 20) {
       setState(() {
         selecttxt.clear();
         selecttranslated.clear();
         selecttranslated.add("Please select fewer than 20 words!");
-        dialogWidth = 300;
-        dialogHeight = 300;
+        dialogWidth = 250;
+        dialogHeight = 200;
+        checkWords = 0;
       });
+    } else {
+      for (int i = 0; i < selecttxt.length; i++) {
+        await translator
+            .translate(selecttxt[i], from: inputLanguage, to: outputLanguage)
+            .then((translation) {
+          setState(() {
+            selecttranslated.add(selecttxt[i] + " = " + translation.toString());
+            dialogHeight += 30;
+          });
+        });
+      }
     }
 
     Dialog saveWordsDialog = Dialog(
@@ -400,6 +432,7 @@ class _translate_screenState extends State<translate_screen> {
                         setState(() {
                           selecttxt.clear();
                           selecttranslated.clear();
+                          checkWords = 0;
                         });
                         Navigator.of(context).pop();
                       },
@@ -433,6 +466,7 @@ class _translate_screenState extends State<translate_screen> {
                         setState(() {
                           selecttxt.clear();
                           selecttranslated.clear();
+                          checkWords = 0;
                         });
                       },
                       style: TextButton.styleFrom(

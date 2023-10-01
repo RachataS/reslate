@@ -67,7 +67,7 @@ class _multipleChoiceState extends State<multipleChoice> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           } else if (snapshot.hasError || !snapshot.hasData) {
-            return Text('Error loading data');
+            return Text('Error loading question');
           } else {
             List<Map<String, dynamic>> firestoreData = snapshot.data!;
             _controller.setData(firestoreData);

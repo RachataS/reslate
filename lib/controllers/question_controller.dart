@@ -69,7 +69,7 @@ class QuestionController extends GetxController
       });
     _animationController.reset();
     // start our animation
-    // Once 60s is completed go to the next qn
+
     _animationController.forward().whenComplete(nextQuestion);
     _pageController = PageController();
     super.onInit();
@@ -134,7 +134,6 @@ class QuestionController extends GetxController
       // Once timer is finish go to the next qn
       _animationController.forward().whenComplete(nextQuestion);
     } else {
-      // Get package provide us simple way to naviigate another page
       resetQuiz();
       Get.to(() => ScoreScreen());
     }
@@ -154,9 +153,9 @@ class QuestionController extends GetxController
     _questionNumber = 1.obs;
     _numOfCorrectAns = 0;
     _isAnswered = false;
-    resetPageController(); // Reset the PageController
+    resetPageController();
     _animationController.reset();
-    _animationController.forward().whenComplete(nextQuestion);
+    _animationController.stop();
   }
 
   //  Future<void> quizDialog() async {

@@ -211,7 +211,6 @@ class _reviewPageState extends State<reviewPage> {
               randomIndex = random.nextInt(savedWords.length);
             } while (randomThaiKeys.contains(savedWords[randomIndex]['thai']) &&
                 savedWords[randomIndex]['thai'] != thaiKey);
-
             randomThaiKeys.add(savedWords[randomIndex]['thai']);
           }
 

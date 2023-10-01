@@ -43,7 +43,7 @@ class Body extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                     child: Text(
-                      "Question",
+                      "Question ${_questionController.questionNumber.value}",
                       style: Theme.of(context)
                           .textTheme
                           .headline4
