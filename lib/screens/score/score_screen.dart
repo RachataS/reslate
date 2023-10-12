@@ -26,7 +26,7 @@ class ScoreScreen extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                "${_qnController.correctAns}/${_qnController.questions.length}",
+                "${_qnController.correctAnswer}/${_qnController.questions.length}",
                 style: Theme.of(context)
                     .textTheme
                     .headline4
@@ -42,9 +42,7 @@ class ScoreScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50))),
                     onPressed: () {
-                      // QuestionController _controller =
-                      //     Get.put(QuestionController());
-                      // _controller.resetQuiz();
+                      _qnController.correctAnswer = 0;
                       Get.to(bottombar());
                     },
                     child: Text("return")),
