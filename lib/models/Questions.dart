@@ -5,9 +5,9 @@ class Question {
 
   static List<Map<String, dynamic>> sample_data = [
     // {
-    //   "id": 1,
-    //   "question": "apple",
-    //   "options": ['แอปเปิ้ล', 'พระเจ้า', 'มะม่วง', 'แมว'],
+    //   "id": 0,
+    //   "question": "start",
+    //   "options": ['เริ่มต้น', 'กำลังเริ่ม', 'จบ', 'หยุด'],
     //   "answer_index": 0,
     // },
     // {

@@ -205,22 +205,30 @@ class _reviewPageState extends State<reviewPage> {
         List<dynamic> reviewList = randomWord['options'];
 
         if (reviewList.length < 5) {
-          for (int i = 0; i < 3; i++) {
+          // Initialize a list to store the random indices
+          List<int> randomIndices = [];
+
+          while (randomIndices.length < 3) {
             int randomIndex;
             do {
               randomIndex = random.nextInt(savedWords.length);
-            } while (randomThaiKeys.contains(savedWords[randomIndex]['thai']) &&
-                savedWords[randomIndex]['thai'] != thaiKey);
-            print(savedWords);
-            randomThaiKeys.add(savedWords[randomIndex]['thai']);
+            } while (randomIndex == a ||
+                randomIndices.contains(randomIndex)); // Avoid duplicates
+            randomIndices.add(randomIndex);
           }
+
+          // Get the Thai keys for the randomly selected incorrect answers
+          List randomThaiKeys =
+              randomIndices.map((index) => savedWords[index]['thai']).toList();
+
+          // Ensure that the correct answer is not in the list of incorrect answers
+          randomThaiKeys.remove(thaiKey);
 
           thaiKey1 = randomThaiKeys[0];
           thaiKey2 = randomThaiKeys[1];
           thaiKey3 = randomThaiKeys[2];
 
           await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
-          randomThaiKeys.clear();
         }
       }
     } else {
@@ -245,15 +253,18 @@ class _reviewPageState extends State<reviewPage> {
           .collection("savedWords")
           .doc(question);
 
-      List<String> answerArray = [
-        correctAnswer,
-        answer1,
-        answer2,
-        answer3,
-      ];
+      // Create an array of answers with the correct answer included
+      List<String> answerArray = [correctAnswer, answer1, answer2, answer3];
+
+      // Shuffle the answerArray to randomize the order
+      answerArray.shuffle();
+
+      // Find the index of the correct answer within the shuffled array
+      int correctAnswerIndex = answerArray.indexOf(correctAnswer);
 
       Map<String, dynamic> dataToStore = {
         "options": answerArray,
+        "answer_index": correctAnswerIndex,
       };
       await newDocumentRef.set(dataToStore, SetOptions(merge: true));
     } catch (e) {

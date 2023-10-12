@@ -36,6 +36,10 @@ class _multipleChoiceState extends State<multipleChoice> {
         Map<String, dynamic> data = document.data();
         firestoreData.add(data);
       }
+
+      // Shuffle the data
+      firestoreData.shuffle();
+
       return firestoreData;
     } catch (e) {
       print("Error fetching data: $e");
