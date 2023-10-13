@@ -107,6 +107,7 @@ class _reviewPageState extends State<reviewPage> {
                           MaterialPageRoute(builder: (context) {
                         return multipleChoice(
                           docID: widget.docID,
+                          savedWordsData: true,
                         );
                       }));
                     }
@@ -140,6 +141,7 @@ class _reviewPageState extends State<reviewPage> {
                           MaterialPageRoute(builder: (context) {
                         return multipleChoice(
                           docID: widget.docID,
+                          savedWordsData: false,
                         );
                       }));
                     }

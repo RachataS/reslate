@@ -7,7 +7,8 @@ import 'package:reslate/screens/review/components/body.dart';
 
 class multipleChoice extends StatefulWidget {
   final String? docID;
-  multipleChoice({required this.docID});
+  final bool? savedWordsData;
+  multipleChoice({required this.docID, required this.savedWordsData});
 
   @override
   State<multipleChoice> createState() => _multipleChoiceState();
@@ -37,8 +38,22 @@ class _multipleChoiceState extends State<multipleChoice> {
         firestoreData.add(data);
       }
 
-      // Shuffle the data
-      firestoreData.shuffle();
+      // Determine whether to sort by answerCorrect or answerWrong
+      String sortByField =
+          widget.savedWordsData ?? false ? "answerCorrect" : "answerWrong";
+
+      // Sort the data based on the chosen field
+      firestoreData.sort((a, b) => a[sortByField].compareTo(b[sortByField]));
+
+      // Determine whether to show questions in ascending or descending order
+      bool ascendingOrder = (widget.savedWordsData ?? false)
+          ? (firestoreData.last[sortByField] <= 0)
+          : (firestoreData.first[sortByField] <= 0);
+
+      // If ascending order, reverse the list
+      if (ascendingOrder) {
+        firestoreData = List.from(firestoreData.reversed);
+      }
 
       return firestoreData;
     } catch (e) {

@@ -24,7 +24,6 @@ class ProgressBar extends StatelessWidget {
         builder: (controller) {
           return Stack(
             children: [
-              //new style green to red
               LayoutBuilder(
                 builder: (context, constraints) {
                   final animationValue = controller.animation.value;
@@ -42,17 +41,6 @@ class ProgressBar extends StatelessWidget {
                   );
                 },
               ),
-              //Old style all green
-              // LayoutBuilder(
-              //   builder: (context, constraints) => Container(
-              //     // from 0 to 1 it takes 60s
-              //     width: constraints.maxWidth * controller.animation.value,
-              //     decoration: BoxDecoration(
-              //       gradient: kPrimaryGradient,
-              //       borderRadius: BorderRadius.circular(50),
-              //     ),
-              //   ),
-              // ),
               Positioned.fill(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
