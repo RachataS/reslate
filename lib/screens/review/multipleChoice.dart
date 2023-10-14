@@ -18,8 +18,6 @@ class _multipleChoiceState extends State<multipleChoice> {
   CollectionReference<Map<String, dynamic>> userCollection =
       FirebaseFirestore.instance.collection("Profile");
 
-  QuestionController _controller = Get.put(QuestionController());
-
   @override
   void initState() {
     super.initState();
@@ -63,7 +61,8 @@ class _multipleChoiceState extends State<multipleChoice> {
   }
 
   Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController());
+    QuestionController _controller =
+        Get.put(QuestionController(savedWordsData: widget.savedWordsData));
 
     return Scaffold(
       extendBodyBehindAppBar: true,

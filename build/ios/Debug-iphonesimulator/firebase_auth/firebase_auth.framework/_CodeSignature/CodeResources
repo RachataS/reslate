@@ -36,10 +36,6 @@
 		<data>
 		YVuhmtGc4bXCzp/lw0XgE5wqStI=
 		</data>
-		<key>Headers/messages.g.h</key>
-		<data>
-		zPPXe0+3OH0ZzdN/LiMfNAGiLjU=
-		</data>
 		<key>Info.plist</key>
 		<data>
 		LhKqnk7PfSfKaZsFsqbDzIvQ8m8=
@@ -137,17 +133,6 @@
 			<key>hash2</key>
 			<data>
 			BbJKQpBlVIfhEWgmpg03qMeIXyBcrA67dWUjb+KAny4=
-			</data>
-		</dict>
-		<key>Headers/messages.g.h</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			zPPXe0+3OH0ZzdN/LiMfNAGiLjU=
-			</data>
-			<key>hash2</key>
-			<data>
-			ZJ2jLISeVoyOBBBlX43PwdUXQXJiEj7lP+WbULKq6f8=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

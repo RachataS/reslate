@@ -23,8 +23,8 @@ class QuestionController extends GetxController
 
   int currentPage = 1;
 
-  late bool? savedWord;
-  QuestionController({this.savedWord}) {
+  late bool? savedWordsData;
+  QuestionController({this.savedWordsData}) {
     _pageController = PageController();
   }
   Question question = Question();
@@ -64,7 +64,6 @@ class QuestionController extends GetxController
   // called immediately after the widget is allocated memory
   @override
   void onInit() {
-    print('savedword ${savedWord}');
     // Our animation duration is 60 s
     // so our plan is to fill the progress bar within 60s
     _animationController =
@@ -160,6 +159,7 @@ class QuestionController extends GetxController
           if (_correctAns == _selectedAns) {
             if (data != null && data.containsKey('answerCorrect')) {
               answercheck = data['answerCorrect'];
+
               updateAnswerCorrectInFirebase(answercheck);
             }
           } else {
@@ -202,11 +202,55 @@ class QuestionController extends GetxController
   }
 
   Future<void> updateAnswerCorrectInFirebase(int answerCorrectCount) async {
-    try {
-      final documentReference =
-          FirebaseFirestore.instance.collection('Profile').doc(docID);
-      final subcollectionReference = documentReference.collection("savedWords");
+    final subcollectionReference = FirebaseFirestore.instance
+        .collection('Profile')
+        .doc(docID)
+        .collection("savedWords");
+    if (answerCorrectCount >= 3) {
+      // Reset the count
+      // Show a dialog when answerCorrectCount is greater than or equal to 3
 
+      Get.dialog(
+        AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          title: Text('You have answered 3 questions correctly.'),
+          content: Text('Did you want to delete this word?'),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    answerCorrectCount = 0;
+                    Get.back(); // Close the dialog
+                    _animationController.reset();
+                    _animationController.forward().whenComplete(nextQuestion);
+                  },
+                  child: Text('No'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    await subcollectionReference
+                        .doc(
+                            '${_questions[_questionNumber.value - 1].question}')
+                        .delete();
+                    Get.back(); // Close the dialog
+                    _animationController.reset();
+                    _animationController.forward().whenComplete(nextQuestion);
+                  },
+                  child: Text(
+                    'Yes',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      );
+    }
+    try {
       await subcollectionReference
           .doc('${_questions[_questionNumber.value - 1].question}')
           .update({'answerCorrect': answerCorrectCount + 1});
@@ -217,9 +261,10 @@ class QuestionController extends GetxController
 
   Future<void> updateAnswerWrongInFirebase(int answerWrongCount) async {
     try {
-      final documentReference =
-          FirebaseFirestore.instance.collection('Profile').doc(docID);
-      final subcollectionReference = documentReference.collection("savedWords");
+      final subcollectionReference = FirebaseFirestore.instance
+          .collection('Profile')
+          .doc(docID)
+          .collection("savedWords");
 
       await subcollectionReference
           .doc('${_questions[_questionNumber.value - 1].question}')
