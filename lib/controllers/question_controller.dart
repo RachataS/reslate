@@ -153,20 +153,17 @@ class QuestionController extends GetxController
     if (_questionNumber.value < _questions.length) {
       if (savedWordsQuerySnapshot.exists) {
         final data = savedWordsQuerySnapshot.data();
-        var answercheck;
+        var answerCorrect, answerWrong;
 
+        if (data != null && data.containsKey('answerCorrect')) {
+          answerCorrect = data['answerCorrect'];
+          answerWrong = data['answerWrong'];
+        }
         try {
           if (_correctAns == _selectedAns) {
-            if (data != null && data.containsKey('answerCorrect')) {
-              answercheck = data['answerCorrect'];
-
-              updateAnswerCorrectInFirebase(answercheck);
-            }
+            updateAnswerCorrectInFirebase(answerCorrect, answerWrong);
           } else {
-            if (data != null && data.containsKey('answerWrong')) {
-              answercheck = data['answerWrong'];
-              updateAnswerWrongInFirebase(answercheck);
-            }
+            updateAnswerWrongInFirebase(answerCorrect, answerWrong);
             resetQuiz();
             Get.to(() => ScoreScreen());
             return; // Return to prevent further execution
@@ -201,65 +198,79 @@ class QuestionController extends GetxController
     }
   }
 
-  Future<void> updateAnswerCorrectInFirebase(int answerCorrectCount) async {
+  Future<void> updateAnswerCorrectInFirebase(
+      int answerCorrectCount, int answerWrongCount) async {
     final subcollectionReference = FirebaseFirestore.instance
         .collection('Profile')
         .doc(docID)
         .collection("savedWords");
-    if (answerCorrectCount >= 3) {
-      // Reset the count
-      // Show a dialog when answerCorrectCount is greater than or equal to 3
+    if (savedWordsData == true) {
+      if (answerCorrectCount >= 3) {
+        // Reset the count
+        // Show a dialog when answerCorrectCount is greater than or equal to 3
 
-      Get.dialog(
-        AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          title: Text('You have answered 3 questions correctly.'),
-          content: Text('Did you want to delete this word?'),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    answerCorrectCount = 0;
-                    Get.back(); // Close the dialog
-                    _animationController.reset();
-                    _animationController.forward().whenComplete(nextQuestion);
-                  },
-                  child: Text('No'),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    await subcollectionReference
-                        .doc(
-                            '${_questions[_questionNumber.value - 1].question}')
-                        .delete();
-                    Get.back(); // Close the dialog
-                    _animationController.reset();
-                    _animationController.forward().whenComplete(nextQuestion);
-                  },
-                  child: Text(
-                    'Yes',
-                    style: TextStyle(color: Colors.red),
+        Get.dialog(
+          AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            title: Text('You have answered 3 questions correctly.'),
+            content: Text('Did you want to delete this word?'),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      answerCorrectCount = 0;
+                      Get.back(); // Close the dialog
+                      _animationController.reset();
+                      _animationController.forward().whenComplete(nextQuestion);
+                    },
+                    child: Text('No'),
                   ),
-                ),
-              ],
-            )
-          ],
-        ),
-      );
-    }
-    try {
-      await subcollectionReference
-          .doc('${_questions[_questionNumber.value - 1].question}')
-          .update({'answerCorrect': answerCorrectCount + 1});
-    } catch (e) {
-      print("Error updating answerCorrect in Firebase: $e");
+                  TextButton(
+                    onPressed: () async {
+                      await subcollectionReference
+                          .doc(
+                              '${_questions[_questionNumber.value - 1].question}')
+                          .delete();
+                      Get.back(); // Close the dialog
+                      _animationController.reset();
+                      _animationController.forward().whenComplete(nextQuestion);
+                    },
+                    child: Text(
+                      'Yes',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        );
+      }
+      try {
+        await subcollectionReference
+            .doc('${_questions[_questionNumber.value - 1].question}')
+            .update({'answerCorrect': answerCorrectCount + 1});
+      } catch (e) {
+        print("Error updating answerCorrect in Firebase: $e");
+      }
+    } else if (savedWordsData == false) {
+      try {
+        if (answerWrongCount > 0) {
+          await subcollectionReference
+              .doc('${_questions[_questionNumber.value - 1].question}')
+              .update({'answerWrong': answerWrongCount - 1});
+        }
+      } catch (e) {
+        print("Error updating answerCorrect in Firebase: $e");
+      }
     }
   }
 
-  Future<void> updateAnswerWrongInFirebase(int answerWrongCount) async {
+  Future<void> updateAnswerWrongInFirebase(
+      int answerCorrectCount, int answerWrongCount) async {
     try {
       final subcollectionReference = FirebaseFirestore.instance
           .collection('Profile')
