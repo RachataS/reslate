@@ -64,6 +64,7 @@ class QuestionController extends GetxController
   // called immediately after the widget is allocated memory
   @override
   void onInit() {
+    print('savedword ${savedWord}');
     // Our animation duration is 60 s
     // so our plan is to fill the progress bar within 60s
     _animationController =
@@ -86,7 +87,6 @@ class QuestionController extends GetxController
     try {
       firebaseDoc firebasedoc = firebaseDoc();
       docID = await firebasedoc.getDocumentId();
-      print(docID);
     } catch (e) {
       print(e);
     }
@@ -152,33 +152,41 @@ class QuestionController extends GetxController
             .get();
 
     if (_questionNumber.value < _questions.length) {
-      // Proceed to the next question only if the answer is correct
       if (savedWordsQuerySnapshot.exists) {
         final data = savedWordsQuerySnapshot.data();
         var answercheck;
-        if (_correctAns == _selectedAns) {
-          _numOfCorrectAns++;
-          correctAnswer++;
-          if (data != null && data.containsKey('answerCorrect')) {
-            answercheck = data['answerCorrect'];
-          }
 
-          // Update answerCorrect count in Firebase
-          updateAnswerCorrectInFirebase(answercheck);
-        } else {
-          if (data != null && data.containsKey('answerWrong')) {
-            answercheck = data['answerWrong'];
+        try {
+          if (_correctAns == _selectedAns) {
+            if (data != null && data.containsKey('answerCorrect')) {
+              answercheck = data['answerCorrect'];
+              updateAnswerCorrectInFirebase(answercheck);
+            }
+          } else {
+            if (data != null && data.containsKey('answerWrong')) {
+              answercheck = data['answerWrong'];
+              updateAnswerWrongInFirebase(answercheck);
+            }
+            resetQuiz();
+            Get.to(() => ScoreScreen());
+            return; // Return to prevent further execution
           }
-          // Update answerWrong count in Firebase
-          updateAnswerWrongInFirebase(answercheck);
+        } catch (e) {
+          print(e);
         }
       }
 
-      _isAnswered = false;
-      _pageController.nextPage(
-        duration: Duration(milliseconds: 100),
-        curve: Curves.ease,
-      );
+      if (_isAnswered) {
+        _isAnswered = false;
+        _pageController.nextPage(
+          duration: Duration(milliseconds: 100),
+          curve: Curves.ease,
+        );
+      } else {
+        resetQuiz();
+        Get.to(() => ScoreScreen());
+        return;
+      }
 
       // Reset the counter
       _animationController.reset();
