@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:reslate/models/getDocument.dart';
 import '/models/Questions.dart';
 import '/screens/score/score_screen.dart';
 
@@ -21,7 +23,8 @@ class QuestionController extends GetxController
 
   int currentPage = 1;
 
-  QuestionController() {
+  late bool? savedWord;
+  QuestionController({this.savedWord}) {
     _pageController = PageController();
   }
   Question question = Question();
@@ -56,6 +59,7 @@ class QuestionController extends GetxController
   int get numOfCorrectAns => this._numOfCorrectAns;
 
   int correctAnswer = 0;
+  String? docID;
 
   // called immediately after the widget is allocated memory
   @override
@@ -69,12 +73,23 @@ class QuestionController extends GetxController
         // update like setState
         update();
       });
+    getDocId();
     _animationController.reset();
     // start our animation
 
     _animationController.forward().whenComplete(nextQuestion);
     _pageController = PageController();
     super.onInit();
+  }
+
+  Future<String?> getDocId() async {
+    try {
+      firebaseDoc firebasedoc = firebaseDoc();
+      docID = await firebasedoc.getDocumentId();
+      print(docID);
+    } catch (e) {
+      print(e);
+    }
   }
 
   // // called just before the Controller is deleted from memory
@@ -127,8 +142,38 @@ class QuestionController extends GetxController
     update(); // Ensure the UI is updated after setting the data.
   }
 
-  void nextQuestion() {
+  void nextQuestion() async {
+    DocumentSnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
+        await FirebaseFirestore.instance
+            .collection('Profile')
+            .doc(docID)
+            .collection("savedWords")
+            .doc('${_questions[_questionNumber.value - 1].question}')
+            .get();
+
     if (_questionNumber.value < _questions.length) {
+      // Proceed to the next question only if the answer is correct
+      if (savedWordsQuerySnapshot.exists) {
+        final data = savedWordsQuerySnapshot.data();
+        var answercheck;
+        if (_correctAns == _selectedAns) {
+          _numOfCorrectAns++;
+          correctAnswer++;
+          if (data != null && data.containsKey('answerCorrect')) {
+            answercheck = data['answerCorrect'];
+          }
+
+          // Update answerCorrect count in Firebase
+          updateAnswerCorrectInFirebase(answercheck);
+        } else {
+          if (data != null && data.containsKey('answerWrong')) {
+            answercheck = data['answerWrong'];
+          }
+          // Update answerWrong count in Firebase
+          updateAnswerWrongInFirebase(answercheck);
+        }
+      }
+
       _isAnswered = false;
       _pageController.nextPage(
         duration: Duration(milliseconds: 100),
@@ -139,11 +184,40 @@ class QuestionController extends GetxController
       _animationController.reset();
 
       // Then start it again
-      // Once timer is finished, go to the next question
+      // Once the timer is finished, go to the next question
       _animationController.forward().whenComplete(nextQuestion);
     } else {
+      // All questions answered, go to the ScoreScreen
       resetQuiz();
       Get.to(() => ScoreScreen());
+    }
+  }
+
+  Future<void> updateAnswerCorrectInFirebase(int answerCorrectCount) async {
+    try {
+      final documentReference =
+          FirebaseFirestore.instance.collection('Profile').doc(docID);
+      final subcollectionReference = documentReference.collection("savedWords");
+
+      await subcollectionReference
+          .doc('${_questions[_questionNumber.value - 1].question}')
+          .update({'answerCorrect': answerCorrectCount + 1});
+    } catch (e) {
+      print("Error updating answerCorrect in Firebase: $e");
+    }
+  }
+
+  Future<void> updateAnswerWrongInFirebase(int answerWrongCount) async {
+    try {
+      final documentReference =
+          FirebaseFirestore.instance.collection('Profile').doc(docID);
+      final subcollectionReference = documentReference.collection("savedWords");
+
+      await subcollectionReference
+          .doc('${_questions[_questionNumber.value - 1].question}')
+          .update({'answerWrong': answerWrongCount + 1});
+    } catch (e) {
+      print("Error updating answerCorrect in Firebase: $e");
     }
   }
 
