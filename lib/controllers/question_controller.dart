@@ -204,6 +204,7 @@ class QuestionController extends GetxController
         .collection('Profile')
         .doc(docID)
         .collection("savedWords");
+
     if (savedWordsData == true) {
       if (answerCorrectCount >= 3) {
         // Reset the count
@@ -213,15 +214,18 @@ class QuestionController extends GetxController
           AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            title: Text('You have answered 3 questions correctly.'),
-            content: Text('Did you want to delete this word?'),
+            title: Text('You have answered this word correct 3 time.'),
+            content: Text('Do you want to delete this word?'),
             actions: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
-                    onPressed: () {
-                      answerCorrectCount = 0;
+                    onPressed: () async {
+                      await subcollectionReference
+                          .doc(
+                              '${_questions[_questionNumber.value - 2].question}')
+                          .update({'answerCorrect': answerCorrectCount = 1});
                       Get.back(); // Close the dialog
                       _animationController.reset();
                       _animationController.forward().whenComplete(nextQuestion);
@@ -230,9 +234,14 @@ class QuestionController extends GetxController
                   ),
                   TextButton(
                     onPressed: () async {
+                      await FirebaseFirestore.instance
+                          .collection('Profile')
+                          .doc(docID)
+                          .update({'wordLength': questions.length - 1});
+
                       await subcollectionReference
                           .doc(
-                              '${_questions[_questionNumber.value - 1].question}')
+                              '${_questions[_questionNumber.value - 2].question}')
                           .delete();
                       Get.back(); // Close the dialog
                       _animationController.reset();
