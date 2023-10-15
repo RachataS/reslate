@@ -64,35 +64,40 @@ class _multipleChoiceState extends State<multipleChoice> {
     QuestionController _controller =
         Get.put(QuestionController(savedWordsData: widget.savedWordsData));
 
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        // Fluttter show the back button automatically
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          TextButton(
-              onPressed: _controller.nextQuestion,
-              child: Text(
-                "Skip",
-                style: TextStyle(color: Colors.black),
-              )),
-        ],
-      ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: getQuestion(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError || !snapshot.hasData) {
-            return Text('Error loading question');
-          } else {
-            List<Map<String, dynamic>> firestoreData = snapshot.data!;
-            _controller.setData(firestoreData);
-            return Body();
-          }
-        },
-      ),
-    );
+    return WillPopScope(
+        child: Scaffold(
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TextButton(
+                    onPressed: _controller.nextQuestion,
+                    child: Text(
+                      "Exit",
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    )),
+              ],
+            ),
+          ),
+          body: FutureBuilder<List<Map<String, dynamic>>>(
+            future: getQuestion(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return CircularProgressIndicator();
+              } else if (snapshot.hasError || !snapshot.hasData) {
+                return Text('Error loading question');
+              } else {
+                List<Map<String, dynamic>> firestoreData = snapshot.data!;
+                _controller.setData(firestoreData);
+                return Body();
+              }
+            },
+          ),
+        ),
+        onWillPop: () async => false);
   }
 }
