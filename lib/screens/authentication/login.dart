@@ -207,9 +207,6 @@ class _loginPageState extends State<loginPage> {
                                                       "ไม่สามารถรับข้อมูลผู้ใช้ได้",
                                                   gravity: ToastGravity.TOP);
                                             }
-                                            // Fluttertoast.showToast(
-                                            //     msg: "เข้าสู่ระบบสำเร็จ",
-                                            //     gravity: ToastGravity.TOP);
 
                                             Navigator.push(context,
                                                 MaterialPageRoute(
@@ -296,7 +293,15 @@ class _loginPageState extends State<loginPage> {
           }));
         });
       } on FirebaseAuthException catch (e) {
-        Fluttertoast.showToast(msg: e.code, gravity: ToastGravity.TOP);
+        var message;
+        if (e.code == "user-not-found") {
+          message = "ไม่พบบัญชีผู้ใช้";
+        } else if (e.code == "wrong-password") {
+          message = "รหัสผ่านไม่ถูกต้อง";
+        } else {
+          message = e.code;
+        }
+        Fluttertoast.showToast(msg: message, gravity: ToastGravity.TOP);
       }
       formKey.currentState?.reset();
     }

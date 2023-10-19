@@ -99,7 +99,14 @@ class QuestionController extends GetxController
     _pageController.dispose();
   }
 
-  void checkAns(Question question, int selectedIndex) {
+  void checkAns(Question question, int selectedIndex) async {
+    DocumentSnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
+        await FirebaseFirestore.instance
+            .collection('Profile')
+            .doc(docID)
+            .collection("savedWords")
+            .doc('${_questions[_questionNumber.value - 1].question}')
+            .get();
     // because once user press any option then it will run
     _isAnswered = true;
     _correctAns = question.answer;
@@ -114,7 +121,27 @@ class QuestionController extends GetxController
     // It will stop the counter
     _animationController.stop();
     update();
+    if (savedWordsQuerySnapshot.exists) {
+      final data = savedWordsQuerySnapshot.data();
+      var answerCorrect, answerWrong;
 
+      if (data != null && data.containsKey('answerCorrect')) {
+        answerCorrect = data['answerCorrect'];
+        answerWrong = data['answerWrong'];
+      }
+      try {
+        if (_correctAns == _selectedAns) {
+          await updateAnswerCorrectInFirebase(answerCorrect, answerWrong);
+        } else {
+          await updateAnswerWrongInFirebase(answerCorrect, answerWrong);
+          resetQuiz();
+          Get.to(() => ScoreScreen());
+          return; // Return to prevent further execution
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
     // Once user select an ans after 3s it will go to the next qn
     Future.delayed(Duration(milliseconds: 500), () {
       nextQuestion();
@@ -142,37 +169,7 @@ class QuestionController extends GetxController
   }
 
   void nextQuestion() async {
-    DocumentSnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
-        await FirebaseFirestore.instance
-            .collection('Profile')
-            .doc(docID)
-            .collection("savedWords")
-            .doc('${_questions[_questionNumber.value - 1].question}')
-            .get();
-
     if (_questionNumber.value < _questions.length) {
-      if (savedWordsQuerySnapshot.exists) {
-        final data = savedWordsQuerySnapshot.data();
-        var answerCorrect, answerWrong;
-
-        if (data != null && data.containsKey('answerCorrect')) {
-          answerCorrect = data['answerCorrect'];
-          answerWrong = data['answerWrong'];
-        }
-        try {
-          if (_correctAns == _selectedAns) {
-            updateAnswerCorrectInFirebase(answerCorrect, answerWrong);
-          } else {
-            updateAnswerWrongInFirebase(answerCorrect, answerWrong);
-            resetQuiz();
-            Get.to(() => ScoreScreen());
-            return; // Return to prevent further execution
-          }
-        } catch (e) {
-          print(e);
-        }
-      }
-
       if (_isAnswered) {
         _isAnswered = false;
         _pageController.nextPage(

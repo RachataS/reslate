@@ -136,11 +136,11 @@ class _bottombarState extends State<bottombar> {
                       ),
                       const BottomBarItem(
                         inActiveItem: Icon(
-                          Icons.api_rounded,
+                          Icons.quiz_rounded,
                           color: Colors.white,
                         ),
                         activeItem: Icon(
-                          Icons.api_rounded,
+                          Icons.quiz_rounded,
                           color: Colors.blue,
                         ),
                         itemLabel: 'Review',
