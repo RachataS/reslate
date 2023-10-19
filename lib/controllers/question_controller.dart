@@ -206,12 +206,36 @@ class QuestionController extends GetxController
       if (answerCorrectCount >= 3) {
         // Reset the count
         // Show a dialog when answerCorrectCount is greater than or equal to 3
-
         Get.dialog(
           AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            title: Text('You have answered this word correct 3 time.'),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            title: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow[700]!,
+                      size: 50,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow[700]!,
+                      size: 50,
+                    ),
+                    Icon(
+                      Icons.star,
+                      color: Colors.yellow[700]!,
+                      size: 50,
+                    ),
+                  ],
+                ),
+                Text('You have answered this word correctly 3 times.'),
+              ],
+            ),
             content: Text('Do you want to delete this word?'),
             actions: [
               Row(
@@ -227,7 +251,7 @@ class QuestionController extends GetxController
                       _animationController.reset();
                       _animationController.forward().whenComplete(nextQuestion);
                     },
-                    child: Text('No'),
+                    child: Text('Cancel'),
                   ),
                   TextButton(
                     onPressed: () async {
@@ -245,12 +269,12 @@ class QuestionController extends GetxController
                       _animationController.forward().whenComplete(nextQuestion);
                     },
                     child: Text(
-                      'Yes',
+                      'Delete',
                       style: TextStyle(color: Colors.red),
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         );
