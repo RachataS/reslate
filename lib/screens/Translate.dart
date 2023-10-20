@@ -48,20 +48,15 @@ class _translate_screenState extends State<translate_screen> {
     final Future<FirebaseApp> firebase = Firebase.initializeApp();
 
     return Scaffold(
-      // backgroundColor: Colors.blue,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: Container(
-            decoration: BoxDecoration(
-                color: Colors.blue[400]!,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(60),
-                    topRight: Radius.circular(60),
-                    bottomLeft: Radius.circular(60),
-                    bottomRight: Radius.circular(60))),
+        title: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -70,16 +65,18 @@ class _translate_screenState extends State<translate_screen> {
                   width: 120,
                   child: Text(
                     appbarInput,
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 19,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(shape: CircleBorder()),
                   child: CircleAvatar(
                     radius: 25,
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.swap_horiz_outlined,
-                        color: Colors.blue[400]!),
+                    backgroundColor: Colors.blue[400]!,
+                    child: Icon(Icons.swap_horiz_outlined, color: Colors.white),
                   ),
                   onPressed: () {
                     SystemSound.play(SystemSoundType.click);
@@ -110,143 +107,163 @@ class _translate_screenState extends State<translate_screen> {
                   width: 120,
                   child: Text(
                     appbarOutput,
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 19,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
               ],
             )),
       ),
-      body: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        key: formKey,
-        margin: const EdgeInsets.fromLTRB(12, 12, 12, 120),
-        child: ListView(
-          padding: const EdgeInsets.all(20),
-          children: [
-            Text(label),
-            const SizedBox(
-              height: 8,
-            ),
-            TextFormField(
-              style: const TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: inputbox,
-              ),
-              controller: rawtxt,
-              maxLines: null,
-              onChanged: (rawtxt) async {
-                if (rawtxt == null || rawtxt == '') {
-                  setState(() {
-                    translated = outputbox;
-                  });
-                  wordsList.clear();
-                  wordsListWithoutDuplicates.clear();
-                } else {
-                  try {
-                    formKey.currentState?.save();
-                    await translator
-                        .translate('${rawtxt}',
-                            from: inputLanguage, to: outputLanguage)
-                        .then((translation) {
-                      // Future.delayed(Duration(milliseconds: 500), () {
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+            Colors.blue[600]!,
+            Colors.blue[300]!,
+            Colors.blue[100]!,
+          ]),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 120),
+          child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            key: formKey,
+            margin: const EdgeInsets.fromLTRB(12, 12, 12, 120),
+            child: ListView(
+              padding: const EdgeInsets.all(20),
+              children: [
+                Text(label),
+                const SizedBox(
+                  height: 8,
+                ),
+                TextFormField(
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: inputbox,
+                  ),
+                  controller: rawtxt,
+                  maxLines: null,
+                  onChanged: (rawtxt) async {
+                    if (rawtxt == null || rawtxt == '') {
                       setState(() {
-                        translated = translation.toString();
-                        if (rawtxt.contains(' ')) {
-                          wordsList = rawtxt.split(' ');
-                        }
-                        // });
+                        translated = outputbox;
                       });
-                    });
-                  } catch (e) {
-                    print(e);
-                  }
-                }
-                wordsListWithoutDuplicates =
-                    List<String>.from(wordsList.toSet());
-              },
-            ),
-            const Divider(
-              height: 32,
-            ),
-            Text(
-              translated,
-              style: const TextStyle(
-                  fontSize: 28,
-                  color: Colors.black54,
-                  fontWeight: FontWeight.bold),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
-              child: Column(
-                children: [
-                  for (int i = 0; i < wordsListWithoutDuplicates.length; i += 5)
-                    Row(
-                      children: [
-                        for (int j = i;
-                            j < i + 5 && j < wordsListWithoutDuplicates.length;
-                            j++)
-                          Flexible(
-                            child: Stack(
-                              alignment: Alignment.topRight,
-                              children: [
-                                TextButton(
-                                  onPressed: () async {
-                                    setState(() {
-                                      if (selecttxt.contains(
-                                          wordsListWithoutDuplicates[j])) {
-                                        selecttxt.remove(
-                                            wordsListWithoutDuplicates[j]);
-                                        checkWords--;
-                                      } else {
-                                        selecttxt
-                                            .add(wordsListWithoutDuplicates[j]);
-                                        checkWords++;
-                                      }
-                                    });
-                                  },
-                                  child: Text(
-                                    wordsListWithoutDuplicates[j],
-                                    style: TextStyle(
-                                      color: selecttxt.contains(
-                                              wordsListWithoutDuplicates[j])
-                                          ? Colors.blue[400]
-                                          : Colors.black54,
-                                    ),
-                                  ),
-                                ),
-                                if (selecttxt
-                                    .contains(wordsListWithoutDuplicates[j]))
-                                  Container(
-                                    padding: EdgeInsets.all(4),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors
-                                          .red, // You can change the color
-                                    ),
-                                    child: Text(
-                                      (selecttxt.indexOf(
-                                                  wordsListWithoutDuplicates[
-                                                      j]) +
-                                              1)
-                                          .toString(),
-                                      style: TextStyle(
-                                        color: Colors.white,
+                      wordsList.clear();
+                      wordsListWithoutDuplicates.clear();
+                    } else {
+                      try {
+                        formKey.currentState?.save();
+                        await translator
+                            .translate('${rawtxt}',
+                                from: inputLanguage, to: outputLanguage)
+                            .then((translation) {
+                          // Future.delayed(Duration(milliseconds: 500), () {
+                          setState(() {
+                            translated = translation.toString();
+                            if (rawtxt.contains(' ')) {
+                              wordsList = rawtxt.split(' ');
+                            }
+                            // });
+                          });
+                        });
+                      } catch (e) {
+                        print(e);
+                      }
+                    }
+                    wordsListWithoutDuplicates =
+                        List<String>.from(wordsList.toSet());
+                  },
+                ),
+                const Divider(
+                  height: 32,
+                ),
+                Text(
+                  translated,
+                  style: const TextStyle(
+                      fontSize: 28,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+                  child: Column(
+                    children: [
+                      for (int i = 0;
+                          i < wordsListWithoutDuplicates.length;
+                          i += 5)
+                        Row(
+                          children: [
+                            for (int j = i;
+                                j < i + 5 &&
+                                    j < wordsListWithoutDuplicates.length;
+                                j++)
+                              Flexible(
+                                child: Stack(
+                                  alignment: Alignment.topRight,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () async {
+                                        setState(() {
+                                          if (selecttxt.contains(
+                                              wordsListWithoutDuplicates[j])) {
+                                            selecttxt.remove(
+                                                wordsListWithoutDuplicates[j]);
+                                            checkWords--;
+                                          } else {
+                                            selecttxt.add(
+                                                wordsListWithoutDuplicates[j]);
+                                            checkWords++;
+                                          }
+                                        });
+                                      },
+                                      child: Text(
+                                        wordsListWithoutDuplicates[j],
+                                        style: TextStyle(
+                                          color: selecttxt.contains(
+                                                  wordsListWithoutDuplicates[j])
+                                              ? Colors.blue[400]
+                                              : Colors.black54,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                      ],
-                    ),
-                ],
-              ),
+                                    if (selecttxt.contains(
+                                        wordsListWithoutDuplicates[j]))
+                                      Container(
+                                        padding: EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors
+                                              .red, // You can change the color
+                                        ),
+                                        child: Text(
+                                          (selecttxt.indexOf(
+                                                      wordsListWithoutDuplicates[
+                                                          j]) +
+                                                  1)
+                                              .toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
       floatingActionButton: Padding(

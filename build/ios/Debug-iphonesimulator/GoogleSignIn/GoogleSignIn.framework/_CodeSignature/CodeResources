@@ -6,7 +6,7 @@
 	<dict>
 		<key>GoogleSignIn.bundle/Info.plist</key>
 		<data>
-		EJxS85QTBnTOOhJU7cKYntRUq7o=
+		VvLijXtydPwV8gMHfdHuL5wVAho=
 		</data>
 		<key>GoogleSignIn.bundle/Roboto-Bold.ttf</key>
 		<data>
@@ -400,7 +400,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		x3mjl6eYARfTEqZZMm5Pc48vhVY=
+		nx2XwScvvoxjlMPHAvU7kM0oIB8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -413,11 +413,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			EJxS85QTBnTOOhJU7cKYntRUq7o=
+			VvLijXtydPwV8gMHfdHuL5wVAho=
 			</data>
 			<key>hash2</key>
 			<data>
-			tMTub9KzS+fn4QKf3B0KqX6nRaWJ4EELHweLpL0S8Jk=
+			IEBzU1L7irhrgB/O+sr/h98in6nWJC2y2tH++KRLOjw=
 			</data>
 		</dict>
 		<key>GoogleSignIn.bundle/Roboto-Bold.ttf</key>
