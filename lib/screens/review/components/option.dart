@@ -29,7 +29,7 @@ class Option extends StatelessWidget {
                 return kRedColor;
               }
             }
-            return kGrayColor; //เปลี่ยนสีตรงนี้
+            return kGrayColor; //Change options colors
           }
 
           IconData getTheRightIcon() {

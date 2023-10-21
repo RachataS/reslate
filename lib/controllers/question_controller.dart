@@ -73,6 +73,7 @@ class QuestionController extends GetxController
         // update like setState
         update();
       });
+    resetQuiz();
     getDocId();
     _animationController.reset();
     // start our animation
@@ -123,17 +124,20 @@ class QuestionController extends GetxController
     update();
     if (savedWordsQuerySnapshot.exists) {
       final data = savedWordsQuerySnapshot.data();
-      var answerCorrect, answerWrong;
+      var answerCorrect, answerWrong, correctStrike;
 
       if (data != null && data.containsKey('answerCorrect')) {
         answerCorrect = data['answerCorrect'];
         answerWrong = data['answerWrong'];
+        correctStrike = data['correctStrike'];
       }
       try {
         if (_correctAns == _selectedAns) {
-          await updateAnswerCorrectInFirebase(answerCorrect, answerWrong);
+          await updateAnswerCorrectInFirebase(
+              answerCorrect, answerWrong, correctStrike);
         } else {
-          await updateAnswerWrongInFirebase(answerCorrect, answerWrong);
+          await updateAnswerWrongInFirebase(
+              answerCorrect, answerWrong, correctStrike);
           resetQuiz();
           Get.to(() => ScoreScreen());
           return; // Return to prevent further execution
@@ -196,14 +200,14 @@ class QuestionController extends GetxController
   }
 
   Future<void> updateAnswerCorrectInFirebase(
-      int answerCorrectCount, int answerWrongCount) async {
+      int answerCorrectCount, int answerWrongCount, int correctStrike) async {
     final subcollectionReference = FirebaseFirestore.instance
         .collection('Profile')
         .doc(docID)
         .collection("savedWords");
 
     if (savedWordsData == true) {
-      if (answerCorrectCount >= 3) {
+      if (correctStrike >= 3) {
         // Reset the count
         // Show a dialog when answerCorrectCount is greater than or equal to 3
         Get.dialog(
@@ -243,13 +247,18 @@ class QuestionController extends GetxController
                 children: [
                   TextButton(
                     onPressed: () async {
+                      print(answerCorrectCount);
                       await subcollectionReference
                           .doc(
                               '${_questions[_questionNumber.value - 2].question}')
-                          .update({'answerCorrect': answerCorrectCount = 1});
+                          .update({
+                        'answerCorrect': answerCorrectCount = 1,
+                        "correctStrike": correctStrike = 1,
+                      });
                       Get.back(); // Close the dialog
                       _animationController.reset();
                       _animationController.forward().whenComplete(nextQuestion);
+                      print(answerCorrectCount);
                     },
                     child: Text('Cancel'),
                   ),
@@ -282,7 +291,10 @@ class QuestionController extends GetxController
       try {
         await subcollectionReference
             .doc('${_questions[_questionNumber.value - 1].question}')
-            .update({'answerCorrect': answerCorrectCount + 1});
+            .update({
+          'answerCorrect': answerCorrectCount + 1,
+          "correctStrike": correctStrike + 1,
+        });
       } catch (e) {
         print("Error updating answerCorrect in Firebase: $e");
       }
@@ -300,7 +312,7 @@ class QuestionController extends GetxController
   }
 
   Future<void> updateAnswerWrongInFirebase(
-      int answerCorrectCount, int answerWrongCount) async {
+      int answerCorrectCount, int answerWrongCount, int correctStrike) async {
     try {
       final subcollectionReference = FirebaseFirestore.instance
           .collection('Profile')
@@ -309,7 +321,10 @@ class QuestionController extends GetxController
 
       await subcollectionReference
           .doc('${_questions[_questionNumber.value - 1].question}')
-          .update({'answerWrong': answerWrongCount + 1});
+          .update({
+        'answerWrong': answerWrongCount + 1,
+        "correctStrike": 0,
+      });
     } catch (e) {
       print("Error updating answerCorrect in Firebase: $e");
     }
@@ -331,7 +346,7 @@ class QuestionController extends GetxController
     _isAnswered = false;
     resetPageController();
     _animationController.reset();
-    _animationController.stop();
+    // _animationController.stop();
   }
 
   //  Future<void> quizDialog() async {

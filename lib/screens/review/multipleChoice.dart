@@ -78,7 +78,7 @@ class _multipleChoiceState extends State<multipleChoice> {
                     onPressed: _controller.nextQuestion,
                     child: Text(
                       "Exit",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     )),
               ],
             ),

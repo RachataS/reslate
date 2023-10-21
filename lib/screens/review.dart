@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reslate/controllers/question_controller.dart';
 import 'package:reslate/screens/review/matchCard.dart';
 import 'dart:math';
@@ -366,31 +367,37 @@ class _reviewPageState extends State<reviewPage> {
         String thaiKey1, thaiKey2, thaiKey3;
         List<dynamic> reviewList = randomWord['options'];
 
-        if (reviewList.length < 5) {
-          // Initialize a list to store the random indices
-          List<int> randomIndices = [];
+        try {
+          if (reviewList.length < 5) {
+            // Initialize a list to store the random indices
+            List<int> randomIndices = [];
 
-          while (randomIndices.length < 3) {
-            int randomIndex;
-            do {
-              randomIndex = random.nextInt(savedWords.length);
-            } while (randomIndex == a ||
-                randomIndices.contains(randomIndex)); // Avoid duplicates
-            randomIndices.add(randomIndex);
+            while (randomIndices.length < 3) {
+              int randomIndex;
+              do {
+                randomIndex = random.nextInt(savedWords.length);
+              } while (randomIndex == a ||
+                  randomIndices.contains(randomIndex)); // Avoid duplicates
+              randomIndices.add(randomIndex);
+            }
+
+            // Get the Thai keys for the randomly selected incorrect answers
+            List randomThaiKeys = randomIndices
+                .map((index) => savedWords[index]['thai'])
+                .toList();
+
+            // Ensure that the correct answer is not in the list of incorrect answers
+            randomThaiKeys.remove(thaiKey);
+
+            thaiKey1 = randomThaiKeys[0];
+            thaiKey2 = randomThaiKeys[1];
+            thaiKey3 = randomThaiKeys[2];
+
+            await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
           }
-
-          // Get the Thai keys for the randomly selected incorrect answers
-          List randomThaiKeys =
-              randomIndices.map((index) => savedWords[index]['thai']).toList();
-
-          // Ensure that the correct answer is not in the list of incorrect answers
-          randomThaiKeys.remove(thaiKey);
-
-          thaiKey1 = randomThaiKeys[0];
-          thaiKey2 = randomThaiKeys[1];
-          thaiKey3 = randomThaiKeys[2];
-
-          await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
+        } catch (e) {
+          print('random choice error ${e}');
+          Fluttertoast.showToast(msg: '${e}', gravity: ToastGravity.TOP);
         }
       }
     } else {

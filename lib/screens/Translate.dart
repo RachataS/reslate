@@ -343,7 +343,8 @@ class _translate_screenState extends State<translate_screen> {
                   'answerWrong': 0,
                   'answerCorrect': 0,
                   "options": [],
-                  "answer_index": 0
+                  "answer_index": 0,
+                  "correctStrike": 0,
                 };
                 await newDocumentRef.set(dataToStore);
               } else {
@@ -361,7 +362,8 @@ class _translate_screenState extends State<translate_screen> {
                   'answerWrong': 0,
                   'answerCorrect': 0,
                   "options": [],
-                  "answer_index": 0
+                  "answer_index": 0,
+                  "correctStrike": 0,
                 };
                 await newDocumentRef.set(dataToStore);
               }
