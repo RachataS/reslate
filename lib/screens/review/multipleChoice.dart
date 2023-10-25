@@ -22,6 +22,8 @@ class _multipleChoiceState extends State<multipleChoice> {
   void initState() {
     super.initState();
     getQuestion();
+
+    print("from multi = ${widget.savedWordsData}");
   }
 
   Future<List<Map<String, dynamic>>> getQuestion() async {
@@ -61,8 +63,9 @@ class _multipleChoiceState extends State<multipleChoice> {
   }
 
   Widget build(BuildContext context) {
-    QuestionController _controller =
-        Get.put(QuestionController(savedWordsData: widget.savedWordsData));
+    QuestionController _controller = Get.put(QuestionController());
+
+    _controller.updateSavedWordsData(widget.savedWordsData);
 
     return WillPopScope(
         child: Scaffold(
@@ -99,5 +102,17 @@ class _multipleChoiceState extends State<multipleChoice> {
           ),
         ),
         onWillPop: () async => false);
+  }
+
+  void loadNewQuiz() async {
+    QuestionController _controller = Get.put(QuestionController());
+    // Reset the QuestionController
+    _controller.resetQuiz();
+
+    // Load the new quiz data or questions
+    List<Map<String, dynamic>> newQuizData = await getQuestion();
+
+    // Set the new data for the QuestionController
+    _controller.setData(newQuizData);
   }
 }

@@ -239,8 +239,7 @@ class _translate_screenState extends State<translate_screen> {
                                         padding: EdgeInsets.all(4),
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Colors
-                                              .red, // You can change the color
+                                          color: Colors.red,
                                         ),
                                         child: Text(
                                           (selecttxt.indexOf(

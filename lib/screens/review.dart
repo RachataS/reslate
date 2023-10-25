@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reslate/controllers/question_controller.dart';
 import 'package:reslate/screens/review/matchCard.dart';
@@ -18,19 +19,11 @@ class reviewPage extends StatefulWidget {
 }
 
 class _reviewPageState extends State<reviewPage> {
+  var numberOfQuestion = 10;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   automaticallyImplyLeading: false,
-      //   title: Text(
-      //     "Select Mode",
-      //     style: TextStyle(color: Colors.blue[400]!),
-      //   ),
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      // ),
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -72,6 +65,99 @@ class _reviewPageState extends State<reviewPage> {
                         ),
                       ),
                       Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                numberOfQuestion = 10;
+                                setState(() {});
+                              },
+                              child: Text(
+                                '10',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: numberOfQuestion == 10
+                                        ? Colors.blue
+                                        : Colors.white),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: numberOfQuestion == 10
+                                    ? Colors.white
+                                    : Colors.blue[400],
+                                shape: CircleBorder(),
+                                padding: EdgeInsets.all(15),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                numberOfQuestion = 20;
+                                setState(() {});
+                              },
+                              child: Text(
+                                '20',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: numberOfQuestion == 20
+                                        ? Colors.blue
+                                        : Colors.white),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: numberOfQuestion == 20
+                                    ? Colors.white
+                                    : Colors.blue[400],
+                                shape: CircleBorder(),
+                                padding: EdgeInsets.all(15),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                numberOfQuestion = 40;
+                                setState(() {});
+                              },
+                              child: Text(
+                                '40',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: numberOfQuestion == 40
+                                        ? Colors.blue
+                                        : Colors.white),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: numberOfQuestion == 40
+                                    ? Colors.white
+                                    : Colors.blue[400],
+                                shape: CircleBorder(),
+                                padding: EdgeInsets.all(15),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                numberOfQuestion = 60;
+                                setState(() {});
+                              },
+                              child: Text(
+                                '60',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: numberOfQuestion == 60
+                                        ? Colors.blue
+                                        : Colors.white),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: numberOfQuestion == 60
+                                    ? Colors.white
+                                    : Colors.blue[400],
+                                shape: CircleBorder(),
+                                padding: EdgeInsets.all(15),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
                         padding: const EdgeInsets.all(20),
                         child: SizedBox(
                           width: 250,
@@ -79,7 +165,7 @@ class _reviewPageState extends State<reviewPage> {
                             onPressed: () async {
                               SystemSound.play(SystemSoundType.click);
 
-                              await getSavedWords(true, false);
+                              await getSavedWords();
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return multipleChoice(
@@ -105,7 +191,7 @@ class _reviewPageState extends State<reviewPage> {
                             onPressed: () async {
                               SystemSound.play(SystemSoundType.click);
 
-                              await getSavedWords(false, true);
+                              await getSavedWords();
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return multipleChoice(
@@ -193,44 +279,6 @@ class _reviewPageState extends State<reviewPage> {
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(15, 80, 15, 15),
-              //   child: SizedBox(
-              //     width: 250,
-              //     height: 250,
-              //     child: ElevatedButton.icon(
-              //         style: ElevatedButton.styleFrom(
-              //             backgroundColor: Colors.blue[400],
-              //             fixedSize: const Size(300, 50),
-              //             shape: RoundedRectangleBorder(
-              //                 borderRadius: BorderRadius.circular(50))),
-              //         onPressed: () {
-              //           SystemSound.play(SystemSoundType.click);
-              //           dialogMode(true, false);
-              //         },
-              //         icon: Icon(Icons.workspaces_filled),
-              //         label: Text(" Multiple Choice")),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(15),
-              //   child: SizedBox(
-              //     width: 250,
-              //     height: 250,
-              //     child: ElevatedButton.icon(
-              //         style: ElevatedButton.styleFrom(
-              //             backgroundColor: Colors.blue[400],
-              //             fixedSize: const Size(300, 50),
-              //             shape: RoundedRectangleBorder(
-              //                 borderRadius: BorderRadius.circular(50))),
-              //         onPressed: () {
-              //           SystemSound.play(SystemSoundType.click);
-              //           dialogMode(false, true);
-              //         },
-              //         icon: Icon(Icons.apps_rounded),
-              //         label: Text(" Match Card")),
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -238,98 +286,7 @@ class _reviewPageState extends State<reviewPage> {
     );
   }
 
-  Future<void> dialogMode(multiple, card) async {
-    Dialog wordSelect = Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Container(
-        width: 300,
-        height: 300,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (multiple == true)
-              Text(
-                "Mutiple Choice",
-                style: TextStyle(fontSize: 20),
-              ),
-            if (card == true)
-              Text('Match Card', style: TextStyle(fontSize: 20)),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: SizedBox(
-                width: 250,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    SystemSound.play(SystemSoundType.click);
-                    if (multiple == true) {
-                      await getSavedWords(true, false);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return multipleChoice(
-                          docID: widget.docID,
-                          savedWordsData: true,
-                        );
-                      }));
-                    }
-                    if (card == true) {
-                      //match card random method
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return matchCard();
-                      }));
-                    }
-                  },
-                  child: Text("Saved words"),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[400],
-                      fixedSize: const Size(300, 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50))),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: SizedBox(
-                width: 250,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    SystemSound.play(SystemSoundType.click);
-                    if (multiple == true) {
-                      await getSavedWords(false, true);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return multipleChoice(
-                          docID: widget.docID,
-                          savedWordsData: false,
-                        );
-                      }));
-                    }
-                    if (card == true) {
-                      //match card random method
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return matchCard();
-                      }));
-                    }
-                  },
-                  child: Text("Wrong answer"),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[400],
-                      fixedSize: const Size(300, 50),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50))),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-    showDialog(context: context, builder: (BuildContext context) => wordSelect);
-  }
-
-  Future<void> getSavedWords(correct, wrong) async {
+  Future<void> getSavedWords() async {
     List<Map<String, dynamic>> savedWords = [];
 
     DocumentReference<Map<String, dynamic>> userDocumentRef =

@@ -22,9 +22,9 @@ class QuestionController extends GetxController
   PageController get pageController => this._pageController;
 
   int currentPage = 1;
-
   late bool? savedWordsData;
-  QuestionController({this.savedWordsData}) {
+
+  QuestionController() {
     _pageController = PageController();
   }
   Question question = Question();
@@ -73,7 +73,7 @@ class QuestionController extends GetxController
         // update like setState
         update();
       });
-    resetQuiz();
+
     getDocId();
     _animationController.reset();
     // start our animation
@@ -101,6 +101,7 @@ class QuestionController extends GetxController
   }
 
   void checkAns(Question question, int selectedIndex) async {
+    print(savedWordsData);
     DocumentSnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
         await FirebaseFirestore.instance
             .collection('Profile')
@@ -247,7 +248,6 @@ class QuestionController extends GetxController
                 children: [
                   TextButton(
                     onPressed: () async {
-                      print(answerCorrectCount);
                       await subcollectionReference
                           .doc(
                               '${_questions[_questionNumber.value - 2].question}')
@@ -258,7 +258,6 @@ class QuestionController extends GetxController
                       Get.back(); // Close the dialog
                       _animationController.reset();
                       _animationController.forward().whenComplete(nextQuestion);
-                      print(answerCorrectCount);
                     },
                     child: Text('Cancel'),
                   ),
@@ -298,7 +297,7 @@ class QuestionController extends GetxController
       } catch (e) {
         print("Error updating answerCorrect in Firebase: $e");
       }
-    } else if (savedWordsData == false) {
+    } else {
       try {
         if (answerWrongCount > 0) {
           await subcollectionReference
@@ -339,6 +338,10 @@ class QuestionController extends GetxController
     _pageController = PageController(); // Create a new controller
   }
 
+  void updateSavedWordsData(boolIn) {
+    savedWordsData = boolIn;
+  }
+
   void resetQuiz() {
     _questionNumber.value = 1;
     _questionNumber = 1.obs;
@@ -346,7 +349,7 @@ class QuestionController extends GetxController
     _isAnswered = false;
     resetPageController();
     _animationController.reset();
-    // _animationController.stop();
+    _animationController.stop();
   }
 
   //  Future<void> quizDialog() async {
