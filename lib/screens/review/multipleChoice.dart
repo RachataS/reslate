@@ -7,7 +7,6 @@ import 'package:reslate/screens/review/components/body.dart';
 class multipleChoice extends StatefulWidget {
   final String? docID;
   final bool? savedWordsData;
-
   multipleChoice({
     required this.docID,
     required this.savedWordsData,
@@ -72,8 +71,11 @@ class _multipleChoiceState extends State<multipleChoice> {
   Future<List<Map<String, dynamic>>> getQuestion() async {
     List<Map<String, dynamic>> firestoreData = [];
     try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await userCollection.doc(widget.docID).collection("savedWords").get();
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await userCollection
+          .doc(widget.docID)
+          .collection("savedWords")
+          .where("beQuestion", isEqualTo: true)
+          .get();
 
       for (QueryDocumentSnapshot<Map<String, dynamic>> document
           in querySnapshot.docs) {

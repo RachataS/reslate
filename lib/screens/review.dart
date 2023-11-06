@@ -163,7 +163,20 @@ class _reviewPageState extends State<reviewPage> {
                             onPressed: () async {
                               SystemSound.play(SystemSoundType.click);
 
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                              );
+
                               await getSavedWords(numberOfQuestion, true);
+
+                              Navigator.of(context, rootNavigator: true).pop();
+
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return multipleChoice(
@@ -189,7 +202,20 @@ class _reviewPageState extends State<reviewPage> {
                             onPressed: () async {
                               SystemSound.play(SystemSoundType.click);
 
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                              );
+
                               await getSavedWords(numberOfQuestion, false);
+
+                              Navigator.of(context, rootNavigator: true).pop();
+
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return multipleChoice(
@@ -308,56 +334,71 @@ class _reviewPageState extends State<reviewPage> {
         savedWords = savedWords.reversed.toList();
       }
 
-      await userDocumentRef
-          .get()
-          .then((DocumentSnapshot<Map<String, dynamic>> document) {
-        if (document.exists) {
-          Map<String, dynamic> data = document.data()!;
-        }
-      }).catchError((error) {
-        print("Error getting document: $error");
-      });
-
       Random random = Random();
 
-      for (int a = 0; a < savedWords.length; a++) {
-        Map<String, dynamic> randomWord = savedWords[a];
-        String thaiKey = randomWord['thai'];
-        String engKey = randomWord['question'];
-        String thaiKey1, thaiKey2, thaiKey3;
-        List<dynamic> reviewList = randomWord['options'];
+      if (numberOfQuestion <= savedWords.length) {
+        for (int a = 0; a < numberOfQuestion && a < savedWords.length; a++) {
+          Map<String, dynamic> randomWord = savedWords[a];
+          String thaiKey = randomWord['thai'];
+          String engKey = randomWord['question'];
+          String thaiKey1, thaiKey2, thaiKey3;
+          List<dynamic> reviewList = randomWord['options'];
 
-        try {
-          if (reviewList.length < 5) {
-            // Initialize a list to store the random indices
-            List<int> randomIndices = [];
+          try {
+            if (reviewList.length < 5) {
+              // Update the "beQuestion" field to true for the selected word
+              savedWords[a]['beQuestion'] = true;
 
-            while (randomIndices.length < 3) {
-              int randomIndex;
-              do {
-                randomIndex = random.nextInt(savedWords.length);
-              } while (randomIndex == a ||
-                  randomIndices.contains(randomIndex)); // Avoid duplicates
-              randomIndices.add(randomIndex);
+              // Initialize a list to store the random indices
+              List<int> randomIndices = [];
+
+              while (randomIndices.length < 3) {
+                int randomIndex;
+                do {
+                  randomIndex = random.nextInt(savedWords.length);
+                } while (randomIndex == a ||
+                    randomIndices.contains(randomIndex)); // Avoid duplicates
+                randomIndices.add(randomIndex);
+              }
+
+              // Get the Thai keys for the randomly selected incorrect answers
+              List randomThaiKeys = randomIndices
+                  .map((index) => savedWords[index]['thai'])
+                  .toList();
+
+              // Ensure that the correct answer is not in the list of incorrect answers
+              randomThaiKeys.remove(thaiKey);
+
+              thaiKey1 = randomThaiKeys[0];
+              thaiKey2 = randomThaiKeys[1];
+              thaiKey3 = randomThaiKeys[2];
+              await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
             }
-
-            // Get the Thai keys for the randomly selected incorrect answers
-            List randomThaiKeys = randomIndices
-                .map((index) => savedWords[index]['thai'])
-                .toList();
-
-            // Ensure that the correct answer is not in the list of incorrect answers
-            randomThaiKeys.remove(thaiKey);
-
-            thaiKey1 = randomThaiKeys[0];
-            thaiKey2 = randomThaiKeys[1];
-            thaiKey3 = randomThaiKeys[2];
-            await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
+          } catch (e) {
+            print('random choice error ${e}');
+            Fluttertoast.showToast(msg: '${e}', gravity: ToastGravity.TOP);
           }
-        } catch (e) {
-          print('random choice error ${e}');
-          Fluttertoast.showToast(msg: '${e}', gravity: ToastGravity.TOP);
+          // print('${a} = ${engKey}');
         }
+      } else {
+        Fluttertoast.showToast(
+            msg: "คุณมีคำศัพท์ไม่ถึง ${numberOfQuestion} คำ",
+            gravity: ToastGravity.TOP);
+        return;
+      }
+
+      // Update the Firestore documents to set "beQuestion" to false for the remaining words
+      for (int i = numberOfQuestion; i < savedWords.length; i++) {
+        savedWords[i]['beQuestion'] = false;
+      }
+
+      // Update Firestore documents with the modified "beQuestion" values
+      for (Map<String, dynamic> wordData in savedWords) {
+        await userDocumentRef
+            .collection("savedWords")
+            .doc(wordData['question'])
+            .set({'beQuestion': wordData['beQuestion']},
+                SetOptions(merge: true));
       }
     } else {
       print('No savedWords available.');

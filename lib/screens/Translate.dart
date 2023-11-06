@@ -6,12 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
 import 'package:reslate/models/languageChange.dart';
 import 'package:reslate/models/profile.dart';
-import 'package:reslate/screens/menu.dart';
+
 import 'package:translator/translator.dart';
-import 'dart:convert';
 
 class translate_screen extends StatefulWidget {
   final String? docID;
@@ -344,6 +342,7 @@ class _translate_screenState extends State<translate_screen> {
                   "options": [],
                   "answer_index": 0,
                   "correctStrike": 0,
+                  "beQuestion": false,
                 };
                 await newDocumentRef.set(dataToStore);
               } else {
@@ -363,6 +362,7 @@ class _translate_screenState extends State<translate_screen> {
                   "options": [],
                   "answer_index": 0,
                   "correctStrike": 0,
+                  "beQuestion": false,
                 };
                 await newDocumentRef.set(dataToStore);
               }
@@ -431,8 +431,10 @@ class _translate_screenState extends State<translate_screen> {
       ':',
       ';',
       '\'',
-      '\"'
+      '\"',
+      '\n',
     ];
+
     for (var char in specialChars) {
       if (text.contains(char)) {
         return true;
