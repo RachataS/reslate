@@ -173,17 +173,20 @@ class _reviewPageState extends State<reviewPage> {
                                 },
                               );
 
-                              await getSavedWords(numberOfQuestion, true);
+                              int savedWords =
+                                  await getSavedWords(numberOfQuestion, true);
 
                               Navigator.of(context, rootNavigator: true).pop();
 
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return multipleChoice(
-                                  docID: widget.docID,
-                                  savedWordsData: true,
-                                );
-                              }));
+                              if (numberOfQuestion <= savedWords) {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return multipleChoice(
+                                    docID: widget.docID,
+                                    savedWordsData: true,
+                                  );
+                                }));
+                              }
                             },
                             child: Text("Saved words"),
                             style: ElevatedButton.styleFrom(
@@ -212,17 +215,20 @@ class _reviewPageState extends State<reviewPage> {
                                 },
                               );
 
-                              await getSavedWords(numberOfQuestion, false);
+                              int savedWords =
+                                  await getSavedWords(numberOfQuestion, false);
 
                               Navigator.of(context, rootNavigator: true).pop();
 
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return multipleChoice(
-                                  docID: widget.docID,
-                                  savedWordsData: false,
-                                );
-                              }));
+                              if (numberOfQuestion <= savedWords) {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return multipleChoice(
+                                    docID: widget.docID,
+                                    savedWordsData: false,
+                                  );
+                                }));
+                              }
                             },
                             child: Text("Wrong answer"),
                             style: ElevatedButton.styleFrom(
@@ -310,7 +316,7 @@ class _reviewPageState extends State<reviewPage> {
     );
   }
 
-  Future<void> getSavedWords(int numberOfQuestion, bool savedWordsData) async {
+  Future<int> getSavedWords(int numberOfQuestion, bool savedWordsData) async {
     List<Map<String, dynamic>> savedWords = [];
 
     DocumentReference<Map<String, dynamic>> userDocumentRef =
@@ -374,7 +380,6 @@ class _reviewPageState extends State<reviewPage> {
             }
           } catch (e) {
             print('random choice error ${e}');
-            Fluttertoast.showToast(msg: '${e}', gravity: ToastGravity.TOP);
           }
           // print('${a} = ${engKey}');
         }
@@ -405,6 +410,7 @@ class _reviewPageState extends State<reviewPage> {
     } else {
       print('No savedWords available.');
     }
+    return savedWords.length;
   }
 
   Future<void> saveChoice(
