@@ -163,7 +163,7 @@ class _reviewPageState extends State<reviewPage> {
                             onPressed: () async {
                               SystemSound.play(SystemSoundType.click);
 
-                              await getSavedWords(numberOfQuestion);
+                              await getSavedWords(numberOfQuestion, true);
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return multipleChoice(
@@ -189,7 +189,7 @@ class _reviewPageState extends State<reviewPage> {
                             onPressed: () async {
                               SystemSound.play(SystemSoundType.click);
 
-                              await getSavedWords(numberOfQuestion);
+                              await getSavedWords(numberOfQuestion, false);
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return multipleChoice(
@@ -284,7 +284,7 @@ class _reviewPageState extends State<reviewPage> {
     );
   }
 
-  Future<void> getSavedWords(int numberOfQuestion) async {
+  Future<void> getSavedWords(int numberOfQuestion, bool savedWordsData) async {
     List<Map<String, dynamic>> savedWords = [];
     print(numberOfQuestion);
 
@@ -300,13 +300,19 @@ class _reviewPageState extends State<reviewPage> {
     });
 
     if (savedWords.isNotEmpty) {
-      var wordLength;
+      // Sort the savedWords list based on the chosen field and order
+      String sortByField = savedWordsData ? "answerCorrect" : "answerWrong";
+      savedWords.sort((a, b) => a[sortByField].compareTo(b[sortByField]));
+
+      if (!savedWordsData) {
+        savedWords = savedWords.reversed.toList();
+      }
+
       await userDocumentRef
           .get()
           .then((DocumentSnapshot<Map<String, dynamic>> document) {
         if (document.exists) {
           Map<String, dynamic> data = document.data()!;
-          wordLength = data["wordLength"];
         }
       }).catchError((error) {
         print("Error getting document: $error");
@@ -314,7 +320,7 @@ class _reviewPageState extends State<reviewPage> {
 
       Random random = Random();
 
-      for (int a = 0; a < wordLength; a++) {
+      for (int a = 0; a < savedWords.length; a++) {
         Map<String, dynamic> randomWord = savedWords[a];
         String thaiKey = randomWord['thai'];
         String engKey = randomWord['question'];
@@ -346,7 +352,6 @@ class _reviewPageState extends State<reviewPage> {
             thaiKey1 = randomThaiKeys[0];
             thaiKey2 = randomThaiKeys[1];
             thaiKey3 = randomThaiKeys[2];
-
             await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
           }
         } catch (e) {
