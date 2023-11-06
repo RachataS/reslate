@@ -40,7 +40,7 @@ class _reviewPageState extends State<reviewPage> {
                 child: Text(
                   "Select Mode",
                   style: TextStyle(
-                    color: Colors.white!,
+                    color: Colors.white,
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
@@ -312,7 +312,6 @@ class _reviewPageState extends State<reviewPage> {
 
   Future<void> getSavedWords(int numberOfQuestion, bool savedWordsData) async {
     List<Map<String, dynamic>> savedWords = [];
-    print(numberOfQuestion);
 
     DocumentReference<Map<String, dynamic>> userDocumentRef =
         FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
@@ -337,6 +336,8 @@ class _reviewPageState extends State<reviewPage> {
       Random random = Random();
 
       if (numberOfQuestion <= savedWords.length) {
+        List<int> randomIndices = [];
+
         for (int a = 0; a < numberOfQuestion && a < savedWords.length; a++) {
           Map<String, dynamic> randomWord = savedWords[a];
           String thaiKey = randomWord['thai'];
@@ -348,9 +349,6 @@ class _reviewPageState extends State<reviewPage> {
             if (reviewList.length < 5) {
               // Update the "beQuestion" field to true for the selected word
               savedWords[a]['beQuestion'] = true;
-
-              // Initialize a list to store the random indices
-              List<int> randomIndices = [];
 
               while (randomIndices.length < 3) {
                 int randomIndex;
@@ -380,25 +378,29 @@ class _reviewPageState extends State<reviewPage> {
           }
           // print('${a} = ${engKey}');
         }
+
+        // Update the Firestore documents to set "beQuestion" to false for the remaining words
+        for (int i = numberOfQuestion; i < savedWords.length; i++) {
+          savedWords[i]['beQuestion'] = false;
+        }
+
+        // Batch Firestore updates for "beQuestion" values
+        WriteBatch batch = FirebaseFirestore.instance.batch();
+        for (Map<String, dynamic> wordData in savedWords) {
+          DocumentReference docRef = userDocumentRef
+              .collection("savedWords")
+              .doc(wordData['question']);
+          batch.set(
+            docRef,
+            {'beQuestion': wordData['beQuestion']},
+            SetOptions(merge: true),
+          );
+        }
+        await batch.commit();
       } else {
         Fluttertoast.showToast(
             msg: "คุณมีคำศัพท์ไม่ถึง ${numberOfQuestion} คำ",
             gravity: ToastGravity.TOP);
-        return;
-      }
-
-      // Update the Firestore documents to set "beQuestion" to false for the remaining words
-      for (int i = numberOfQuestion; i < savedWords.length; i++) {
-        savedWords[i]['beQuestion'] = false;
-      }
-
-      // Update Firestore documents with the modified "beQuestion" values
-      for (Map<String, dynamic> wordData in savedWords) {
-        await userDocumentRef
-            .collection("savedWords")
-            .doc(wordData['question'])
-            .set({'beQuestion': wordData['beQuestion']},
-                SetOptions(merge: true));
       }
     } else {
       print('No savedWords available.');
