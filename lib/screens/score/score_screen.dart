@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reslate/screens/bottomBar.dart';
-import '/constants.dart';
 import '/controllers/question_controller.dart';
-import 'package:flutter_svg/svg.dart';
 
 class ScoreScreen extends StatelessWidget {
   @override

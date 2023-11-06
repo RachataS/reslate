@@ -7,11 +7,8 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:reslate/models/getDocument.dart';
 import 'package:reslate/screens/bottomBar.dart';
-import 'package:reslate/screens/Translate.dart';
 import 'package:reslate/screens/authentication/registerPage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/profile.dart';
 

@@ -83,6 +83,7 @@ class QuestionController extends GetxController
     super.onInit();
   }
 
+  // ignore: body_might_complete_normally_nullable
   Future<String?> getDocId() async {
     try {
       firebaseDoc firebasedoc = firebaseDoc();
