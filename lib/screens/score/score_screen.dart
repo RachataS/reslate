@@ -61,7 +61,7 @@ class ScoreScreen extends StatelessWidget {
                           onPressed: () async {
                             _qnController.correctAnswer = 0;
                             docID = await firebasedoc.getDocumentId();
-                            firebasedoc.getSavedWords(
+                            await firebasedoc.getSavedWords(
                                 numberOfQuestion, savedWordsData, docID);
                             Get.to(multipleChoice(
                               savedWordsData: savedWordsData,
