@@ -103,7 +103,7 @@ class _multipleChoiceState extends State<multipleChoice> {
       if (ascendingOrder) {
         firestoreData = List.from(firestoreData.reversed);
       }
-
+      // print('Question = ${firestoreData}');
       return firestoreData;
     } catch (e) {
       print("Error fetching data: $e");

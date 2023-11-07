@@ -369,21 +369,30 @@ class _reviewPageState extends State<reviewPage> {
 
               // Get the Thai keys for the randomly selected incorrect answers
               List randomThaiKeys = randomIndices
-                  .map((index) => savedWords[index]['thai'])
+                  .map((index) {
+                    if (index < savedWords.length) {
+                      return savedWords[index]['thai'];
+                    } else {
+                      return null;
+                    }
+                  })
+                  .where((key) => key != null)
                   .toList();
 
               // Ensure that the correct answer is not in the list of incorrect answers
               randomThaiKeys.remove(thaiKey);
 
-              thaiKey1 = randomThaiKeys[0];
-              thaiKey2 = randomThaiKeys[1];
-              thaiKey3 = randomThaiKeys[2];
-              await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
+              if (randomThaiKeys.length >= 3) {
+                thaiKey1 = randomThaiKeys[0];
+                thaiKey2 = randomThaiKeys[1];
+                thaiKey3 = randomThaiKeys[2];
+                await saveChoice(engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3);
+              }
             }
           } catch (e) {
             print('random choice error ${e}');
           }
-          // print('${a} = ${engKey}');
+          print('${a} = ${engKey}');
         }
 
         // Update the Firestore documents to set "beQuestion" to false for the remaining words
