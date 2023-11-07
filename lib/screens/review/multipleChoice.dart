@@ -74,6 +74,7 @@ class _multipleChoiceState extends State<multipleChoice> {
 
   Future<List<Map<String, dynamic>>> getQuestion() async {
     List<Map<String, dynamic>> firestoreData = [];
+
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await userCollection
           .doc(widget.docID)
@@ -84,7 +85,9 @@ class _multipleChoiceState extends State<multipleChoice> {
       for (QueryDocumentSnapshot<Map<String, dynamic>> document
           in querySnapshot.docs) {
         Map<String, dynamic> data = document.data();
-        firestoreData.add(data);
+        if (data['options'] != null && data['options'].length > 1) {
+          firestoreData.add(data);
+        }
       }
 
       // Determine whether to sort by answerCorrect or answerWrong
@@ -103,7 +106,7 @@ class _multipleChoiceState extends State<multipleChoice> {
       if (ascendingOrder) {
         firestoreData = List.from(firestoreData.reversed);
       }
-      // print('Question = ${firestoreData}');
+
       return firestoreData;
     } catch (e) {
       print("Error fetching data: $e");
