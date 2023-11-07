@@ -184,6 +184,7 @@ class _reviewPageState extends State<reviewPage> {
                                   return multipleChoice(
                                     docID: widget.docID,
                                     savedWordsData: true,
+                                    numberOfQuestion: numberOfQuestion,
                                   );
                                 }));
                               }
@@ -226,6 +227,7 @@ class _reviewPageState extends State<reviewPage> {
                                   return multipleChoice(
                                     docID: widget.docID,
                                     savedWordsData: false,
+                                    numberOfQuestion: numberOfQuestion,
                                   );
                                 }));
                               }

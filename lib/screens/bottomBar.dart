@@ -38,6 +38,7 @@ class _bottombarState extends State<bottombar> {
   Future<void> getProfile() async {
     try {
       docID = await firebasedoc.getDocumentId();
+
       if (docID == null) {
         firebaseDocument =
             await FirebaseFirestore.instance.collection('Profile').doc();

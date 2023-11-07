@@ -7,9 +7,11 @@ import 'package:reslate/screens/review/components/body.dart';
 class multipleChoice extends StatefulWidget {
   final String? docID;
   final bool? savedWordsData;
+  late int? numberOfQuestion;
   multipleChoice({
-    required this.docID,
-    required this.savedWordsData,
+    this.docID,
+    this.savedWordsData,
+    this.numberOfQuestion,
   });
 
   @override
@@ -27,7 +29,8 @@ class _multipleChoiceState extends State<multipleChoice> {
   }
 
   Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController());
+    QuestionController _controller =
+        Get.put(QuestionController(numberOfQuestion: widget.numberOfQuestion));
 
     _controller.updateSavedWordsData(widget.savedWordsData);
 

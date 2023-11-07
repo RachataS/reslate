@@ -22,9 +22,10 @@ class QuestionController extends GetxController
   PageController get pageController => this._pageController;
 
   int currentPage = 1;
-  late bool? savedWordsData;
+  late bool savedWordsData;
+  late int? numberOfQuestion;
 
-  QuestionController() {
+  QuestionController({this.numberOfQuestion}) {
     _pageController = PageController();
   }
   Question question = Question();
@@ -102,7 +103,6 @@ class QuestionController extends GetxController
   }
 
   void checkAns(Question question, int selectedIndex) async {
-    print(savedWordsData);
     DocumentSnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
         await FirebaseFirestore.instance
             .collection('Profile')
@@ -141,7 +141,10 @@ class QuestionController extends GetxController
           await updateAnswerWrongInFirebase(
               answerCorrect, answerWrong, correctStrike);
           resetQuiz();
-          Get.to(() => ScoreScreen());
+          Get.to(() => ScoreScreen(
+                savedWordsData: savedWordsData,
+                numberOfQuestion: numberOfQuestion,
+              ));
           return; // Return to prevent further execution
         }
       } catch (e) {
@@ -184,7 +187,10 @@ class QuestionController extends GetxController
         );
       } else {
         resetQuiz();
-        Get.to(() => ScoreScreen());
+        Get.to(() => ScoreScreen(
+              savedWordsData: savedWordsData,
+              numberOfQuestion: numberOfQuestion,
+            ));
         return;
       }
 
@@ -197,7 +203,10 @@ class QuestionController extends GetxController
     } else {
       // All questions answered, go to the ScoreScreen
       resetQuiz();
-      Get.to(() => ScoreScreen());
+      Get.to(() => ScoreScreen(
+            savedWordsData: savedWordsData,
+            numberOfQuestion: numberOfQuestion,
+          ));
     }
   }
 
