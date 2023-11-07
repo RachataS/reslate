@@ -362,6 +362,11 @@ class QuestionController extends GetxController
     _animationController.stop();
   }
 
+  void startTimer() {
+    // Start the animation again
+    _animationController.forward().whenComplete(nextQuestion);
+  }
+
   //  Future<void> quizDialog() async {
   //   double dialogWidth = 300;
   //   double dialogHeight = 300;

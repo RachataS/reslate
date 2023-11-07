@@ -33,6 +33,7 @@ class _multipleChoiceState extends State<multipleChoice> {
         Get.put(QuestionController(numberOfQuestion: widget.numberOfQuestion));
 
     _controller.updateSavedWordsData(widget.savedWordsData);
+    _controller.startTimer();
 
     return WillPopScope(
         child: Scaffold(
