@@ -167,7 +167,7 @@ class firebaseDoc {
           } catch (e) {
             print('random choice error ${e}');
           }
-          print('${a} = ${engKey}');
+          // print('${a} = ${engKey}');
         }
 
         // Update the Firestore documents to set "beQuestion" to false for the remaining words
@@ -203,6 +203,7 @@ class firebaseDoc {
 
   Future<void> saveChoice(
       question, correctAnswer, answer1, answer2, answer3, docID) async {
+    // print('${question} ${correctAnswer} ${answer1} ${answer2} ${answer3}');
     CollectionReference<Map<String, dynamic>> userCollection =
         FirebaseFirestore.instance.collection("Profile");
 

@@ -367,6 +367,10 @@ class QuestionController extends GetxController
     _animationController.forward().whenComplete(nextQuestion);
   }
 
+  void getNumberOfQuestion(getnumber) {
+    numberOfQuestion = getnumber;
+  }
+
   //  Future<void> quizDialog() async {
   //   double dialogWidth = 300;
   //   double dialogHeight = 300;

@@ -66,6 +66,7 @@ class ScoreScreen extends StatelessWidget {
                             Get.to(multipleChoice(
                               savedWordsData: savedWordsData,
                               docID: docID,
+                              numberOfQuestion: numberOfQuestion,
                             ));
                           },
                           child: Text("Play again")),
@@ -82,6 +83,7 @@ class ScoreScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(50))),
                             onPressed: () {
                               _qnController.correctAnswer = 0;
+                              _qnController.resetQuiz();
                               Get.to(bottombar());
                             },
                             child: Text("Return")),

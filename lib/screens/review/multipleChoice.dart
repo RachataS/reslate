@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reslate/controllers/question_controller.dart';
+import 'package:reslate/models/getDocument.dart';
 import 'package:reslate/screens/review/components/body.dart';
 
 class multipleChoice extends StatefulWidget {
@@ -29,11 +30,11 @@ class _multipleChoiceState extends State<multipleChoice> {
   }
 
   Widget build(BuildContext context) {
-    QuestionController _controller =
-        Get.put(QuestionController(numberOfQuestion: widget.numberOfQuestion));
+    QuestionController _controller = Get.put(QuestionController());
 
     _controller.updateSavedWordsData(widget.savedWordsData);
     _controller.startTimer();
+    _controller.getNumberOfQuestion(widget.numberOfQuestion);
 
     return WillPopScope(
         child: Scaffold(
@@ -106,6 +107,13 @@ class _multipleChoiceState extends State<multipleChoice> {
       if (ascendingOrder) {
         firestoreData = List.from(firestoreData.reversed);
       }
+      int numberOfQuestion = widget.numberOfQuestion ?? 0;
+      // while (firestoreData.length < numberOfQuestion) {
+      //   print(firestoreData.length);
+      //   firebaseDoc firebasedoc = firebaseDoc();
+      //   await firebasedoc.getSavedWords(
+      //       numberOfQuestion, widget.savedWordsData ?? true, widget.docID);
+      // }
 
       return firestoreData;
     } catch (e) {
