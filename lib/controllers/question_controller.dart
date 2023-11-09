@@ -223,8 +223,9 @@ class QuestionController extends GetxController
         // Show a dialog when answerCorrectCount is greater than or equal to 3
         Get.dialog(
           AlertDialog(
+            backgroundColor: Colors.amber[100]!,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(50),
             ),
             title: Column(
               children: [

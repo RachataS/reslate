@@ -526,7 +526,10 @@ class _translate_screenState extends State<translate_screen> {
     }
 
     Dialog saveWordsDialog = Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      backgroundColor: Colors.blue[100]!,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50), // Adjust the radius as needed
+      ),
       child: Container(
         width: dialogWidth,
         height: dialogHeight,
@@ -597,7 +600,10 @@ class _translate_screenState extends State<translate_screen> {
                       style: TextButton.styleFrom(
                         textStyle: Theme.of(context).textTheme.labelLarge,
                       ),
-                      child: Text('Save'),
+                      child: Text(
+                        'Save',
+                        style: TextStyle(color: Colors.blue[800]!),
+                      ),
                     ),
                   ],
                 ),
@@ -607,6 +613,7 @@ class _translate_screenState extends State<translate_screen> {
         ),
       ),
     );
+
     showDialog(
       context: context,
       builder: (BuildContext context) => saveWordsDialog,
