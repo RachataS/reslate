@@ -164,7 +164,7 @@ class _translate_screenState extends State<translate_screen> {
                           setState(() {
                             translated = translation.toString();
                             if (rawtxt.contains(' ')) {
-                              wordsList = rawtxt.split(' ');
+                              wordsList = rawtxt.toLowerCase().split(' ');
                             }
                             // });
                           });
@@ -173,13 +173,12 @@ class _translate_screenState extends State<translate_screen> {
                         print(e);
                       }
                     }
+                    // Split special characters and update the list
+                    wordsList = splitSpecialChars(wordsList);
                     // Deduplicate the list
                     wordsListWithoutDuplicates =
                         List<String>.from(wordsList.toSet());
-
-// Split special characters and update the list
-                    wordsListWithoutDuplicates =
-                        splitSpecialChars(wordsListWithoutDuplicates);
+                    wordsListWithoutDuplicates.sort();
                   },
                 ),
                 const Divider(
@@ -194,71 +193,84 @@ class _translate_screenState extends State<translate_screen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
-                  child: Column(
-                    children: [
-                      for (int i = 0;
-                          i < wordsListWithoutDuplicates.length;
-                          i += 5)
-                        Row(
-                          children: [
-                            for (int j = i;
-                                j < i + 5 &&
-                                    j < wordsListWithoutDuplicates.length;
-                                j++)
-                              Flexible(
-                                child: Stack(
-                                  alignment: Alignment.topRight,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () async {
-                                        setState(() {
-                                          if (selecttxt.contains(
-                                              wordsListWithoutDuplicates[j])) {
-                                            selecttxt.remove(
-                                                wordsListWithoutDuplicates[j]);
-                                            checkWords--;
-                                          } else {
-                                            selecttxt.add(
-                                                wordsListWithoutDuplicates[j]);
-                                            checkWords++;
-                                          }
-                                        });
-                                      },
-                                      child: Text(
-                                        wordsListWithoutDuplicates[j],
-                                        style: TextStyle(
-                                          color: selecttxt.contains(
-                                                  wordsListWithoutDuplicates[j])
-                                              ? Colors.blue[400]
-                                              : Colors.black54,
-                                        ),
-                                      ),
-                                    ),
-                                    if (selecttxt.contains(
-                                        wordsListWithoutDuplicates[j]))
-                                      Container(
-                                        padding: EdgeInsets.all(4),
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.red,
-                                        ),
-                                        child: Text(
-                                          (selecttxt.indexOf(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        for (int i = 0;
+                            i < wordsListWithoutDuplicates.length;
+                            i += 5)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              for (int j = i;
+                                  j < i + 5 &&
+                                      j < wordsListWithoutDuplicates.length;
+                                  j++)
+                                Flexible(
+                                  child: Stack(
+                                    alignment: Alignment.topRight,
+                                    children: [
+                                      SizedBox(
+                                        // height: 55,
+                                        width: 80,
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            setState(() {
+                                              if (selecttxt.contains(
+                                                  wordsListWithoutDuplicates[
+                                                      j])) {
+                                                selecttxt.remove(
+                                                    wordsListWithoutDuplicates[
+                                                        j]);
+                                                checkWords--;
+                                              } else {
+                                                selecttxt.add(
+                                                    wordsListWithoutDuplicates[
+                                                        j]);
+                                                checkWords++;
+                                              }
+                                            });
+                                          },
+                                          child: Text(
+                                            wordsListWithoutDuplicates[j],
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              color: selecttxt.contains(
                                                       wordsListWithoutDuplicates[
-                                                          j]) +
-                                                  1)
-                                              .toString(),
-                                          style: TextStyle(
-                                            color: Colors.white,
+                                                          j])
+                                                  ? Colors.blue[400]
+                                                  : Colors.black54,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                  ],
+                                      if (selecttxt.contains(
+                                          wordsListWithoutDuplicates[j]))
+                                        Container(
+                                          padding: EdgeInsets.all(4),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.red,
+                                          ),
+                                          child: Text(
+                                            (selecttxt.indexOf(
+                                                        wordsListWithoutDuplicates[
+                                                            j]) +
+                                                    1)
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                          ],
-                        ),
-                    ],
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ],

@@ -65,7 +65,7 @@ class _loginPageState extends State<loginPage> {
                                 padding:
                                     const EdgeInsets.fromLTRB(0, 20, 200, 20),
                                 child: Text(
-                                  'Raslate',
+                                  'Reslate',
                                   style: GoogleFonts.josefinSans(
                                       textStyle: TextStyle(
                                           fontSize: 50, color: Colors.white)),
@@ -73,7 +73,7 @@ class _loginPageState extends State<loginPage> {
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(0, 0, 200, 20),
+                                    const EdgeInsets.fromLTRB(10, 0, 200, 20),
                                 child: Text(
                                   'Login\nyour account',
                                   style: GoogleFonts.josefinSans(

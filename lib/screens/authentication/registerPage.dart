@@ -68,7 +68,7 @@ class _registerPageState extends State<registerPage> {
                                 padding:
                                     const EdgeInsets.fromLTRB(0, 20, 200, 20),
                                 child: Text(
-                                  'Raslate',
+                                  'Reslate',
                                   style: GoogleFonts.josefinSans(
                                       textStyle: TextStyle(
                                           fontSize: 50, color: Colors.white)),
@@ -76,7 +76,7 @@ class _registerPageState extends State<registerPage> {
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.fromLTRB(0, 0, 200, 20),
+                                    const EdgeInsets.fromLTRB(10, 0, 200, 20),
                                 child: Text(
                                   'Register\nyour account',
                                   style: GoogleFonts.josefinSans(
