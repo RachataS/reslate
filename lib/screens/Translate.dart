@@ -41,34 +41,8 @@ class _translate_screenState extends State<translate_screen> {
   List<String> wordsListWithoutDuplicates = [];
   int checkWords = 0;
 
-  final List<String> specialChars = [
-    '.',
-    '/',
-    '=',
-    '|',
-    '\\',
-    '^',
-    '%',
-    '\$',
-    '#',
-    '-',
-    '+',
-    ',',
-    '<',
-    '>',
-    '@',
-    ':',
-    ';',
-    '\'',
-    '\"',
-    '\n',
-    '!'
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final Future<FirebaseApp> firebase = Firebase.initializeApp();
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -441,6 +415,30 @@ class _translate_screenState extends State<translate_screen> {
   }
 
   bool containsSpecialChars(String text) {
+    final specialChars = [
+      '.',
+      '/',
+      '=',
+      '|',
+      '\\',
+      '^',
+      '%',
+      '\$',
+      '#',
+      '-',
+      '+',
+      ',',
+      '<',
+      '>',
+      '@',
+      ':',
+      ';',
+      '\'',
+      '\"',
+      '\n',
+      '!',
+    ];
+
     for (var char in specialChars) {
       if (text.contains(char)) {
         return true;
@@ -451,6 +449,30 @@ class _translate_screenState extends State<translate_screen> {
 
   // Function to split special characters from a list of words
   List<String> splitSpecialChars(List<String> words) {
+    final List<String> specialChars = [
+      '.',
+      '/',
+      '=',
+      '|',
+      '\\',
+      '^',
+      '%',
+      '\$',
+      '#',
+      '-',
+      '+',
+      ',',
+      '<',
+      '>',
+      '@',
+      ':',
+      ';',
+      '\'',
+      '\"',
+      '\n',
+      '!',
+    ];
+
     List<String> wordsWithoutSpecialChars = [];
     for (var word in words) {
       String wordWithoutSpecialChars = word;
@@ -468,7 +490,6 @@ class _translate_screenState extends State<translate_screen> {
   Future<void> dialogTranslate() async {
     double dialogWidth = 400;
     double dialogHeight = 200;
-    String outputtxt = "";
 
     if (checkWords > 20) {
       setState(() {
