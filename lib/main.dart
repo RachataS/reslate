@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:reslate/screen/authentication/login.dart';
-import 'package:reslate/screen/bottomBar.dart';
+import 'package:get/get.dart';
+import 'package:reslate/screens/bottomBar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +12,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       // theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       home: bottombar(),
