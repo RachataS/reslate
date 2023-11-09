@@ -41,6 +41,30 @@ class _translate_screenState extends State<translate_screen> {
   List<String> wordsListWithoutDuplicates = [];
   int checkWords = 0;
 
+  final List<String> specialChars = [
+    '.',
+    '/',
+    '=',
+    '|',
+    '\\',
+    '^',
+    '%',
+    '\$',
+    '#',
+    '-',
+    '+',
+    ',',
+    '<',
+    '>',
+    '@',
+    ':',
+    ';',
+    '\'',
+    '\"',
+    '\n',
+    '!'
+  ];
+
   @override
   Widget build(BuildContext context) {
     final Future<FirebaseApp> firebase = Firebase.initializeApp();
@@ -175,8 +199,13 @@ class _translate_screenState extends State<translate_screen> {
                         print(e);
                       }
                     }
+                    // Deduplicate the list
                     wordsListWithoutDuplicates =
                         List<String>.from(wordsList.toSet());
+
+// Split special characters and update the list
+                    wordsListWithoutDuplicates =
+                        splitSpecialChars(wordsListWithoutDuplicates);
                   },
                 ),
                 const Divider(
@@ -412,35 +441,28 @@ class _translate_screenState extends State<translate_screen> {
   }
 
   bool containsSpecialChars(String text) {
-    final specialChars = [
-      '.',
-      '/',
-      '=',
-      '|',
-      '\\',
-      '^',
-      '%',
-      '\$',
-      '#',
-      '-',
-      '+',
-      ',',
-      '<',
-      '>',
-      '@',
-      ':',
-      ';',
-      '\'',
-      '\"',
-      '\n',
-    ];
-
     for (var char in specialChars) {
       if (text.contains(char)) {
         return true;
       }
     }
     return false;
+  }
+
+  // Function to split special characters from a list of words
+  List<String> splitSpecialChars(List<String> words) {
+    List<String> wordsWithoutSpecialChars = [];
+    for (var word in words) {
+      String wordWithoutSpecialChars = word;
+      for (var char in specialChars) {
+        wordWithoutSpecialChars = wordWithoutSpecialChars.replaceAll(char, '');
+      }
+      if (wordWithoutSpecialChars.isNotEmpty) {
+        wordsWithoutSpecialChars.add(wordWithoutSpecialChars);
+      }
+    }
+
+    return wordsWithoutSpecialChars;
   }
 
   Future<void> dialogTranslate() async {
