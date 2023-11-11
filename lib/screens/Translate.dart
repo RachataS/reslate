@@ -601,7 +601,7 @@ class _translate_screenState extends State<translate_screen> {
                         textStyle: Theme.of(context).textTheme.labelLarge,
                       ),
                       child: Text(
-                        'Save',
+                        'Bookmark',
                         style: TextStyle(color: Colors.blue[800]!),
                       ),
                     ),

@@ -138,13 +138,16 @@ class QuestionController extends GetxController
           await updateAnswerCorrectInFirebase(
               answerCorrect, answerWrong, correctStrike);
         } else {
-          await updateAnswerWrongInFirebase(
-              answerCorrect, answerWrong, correctStrike);
-          resetQuiz();
-          Get.to(() => ScoreScreen(
-                savedWordsData: savedWordsData,
-                numberOfQuestion: numberOfQuestion,
-              ));
+          Future.delayed(const Duration(seconds: 1), () async {
+            await updateAnswerWrongInFirebase(
+                answerCorrect, answerWrong, correctStrike);
+            resetQuiz();
+            Get.to(() => ScoreScreen(
+                  savedWordsData: savedWordsData,
+                  numberOfQuestion: numberOfQuestion,
+                ));
+          });
+
           return; // Return to prevent further execution
         }
       } catch (e) {
@@ -186,11 +189,13 @@ class QuestionController extends GetxController
           curve: Curves.ease,
         );
       } else {
-        resetQuiz();
-        Get.to(() => ScoreScreen(
-              savedWordsData: savedWordsData,
-              numberOfQuestion: numberOfQuestion,
-            ));
+        Future.delayed(const Duration(seconds: 1), () {
+          resetQuiz();
+          Get.to(() => ScoreScreen(
+                savedWordsData: savedWordsData,
+                numberOfQuestion: numberOfQuestion,
+              ));
+        });
         return;
       }
 
@@ -202,11 +207,14 @@ class QuestionController extends GetxController
       _animationController.forward().whenComplete(nextQuestion);
     } else {
       // All questions answered, go to the ScoreScreen
-      resetQuiz();
-      Get.to(() => ScoreScreen(
-            savedWordsData: savedWordsData,
-            numberOfQuestion: numberOfQuestion,
-          ));
+
+      Future.delayed(const Duration(seconds: 1), () {
+        resetQuiz();
+        Get.to(() => ScoreScreen(
+              savedWordsData: savedWordsData,
+              numberOfQuestion: numberOfQuestion,
+            ));
+      });
     }
   }
 

@@ -50,44 +50,49 @@ class ScoreScreen extends StatelessWidget {
                           ?.copyWith(color: Colors.white),
                     ),
                     Spacer(),
-                    SizedBox(
-                      width: 300,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue[400],
-                              fixedSize: const Size(300, 50),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50))),
-                          onPressed: () async {
-                            _qnController.correctAnswer = 0;
-                            docID = await firebasedoc.getDocumentId();
-                            await firebasedoc.getSavedWords(
-                                numberOfQuestion, savedWordsData, docID);
-                            Get.to(multipleChoice(
-                              savedWordsData: savedWordsData,
-                              docID: docID,
-                              numberOfQuestion: numberOfQuestion,
-                            ));
-                          },
-                          child: Text("Play again")),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: SizedBox(
-                        width: 300,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue[400],
-                                fixedSize: const Size(300, 50),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50))),
-                            onPressed: () {
-                              _qnController.correctAnswer = 0;
-                              _qnController.resetQuiz();
-                              Get.to(bottombar());
-                            },
-                            child: Text("Return")),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 150,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue[400],
+                                  fixedSize: const Size(300, 50),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50))),
+                              onPressed: () {
+                                _qnController.correctAnswer = 0;
+                                _qnController.resetQuiz();
+                                Get.to(bottombar());
+                              },
+                              child: Text("Return")),
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        SizedBox(
+                          width: 150,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue[400],
+                                  fixedSize: const Size(300, 50),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(50))),
+                              onPressed: () async {
+                                _qnController.correctAnswer = 0;
+                                docID = await firebasedoc.getDocumentId();
+                                await firebasedoc.getSavedWords(
+                                    numberOfQuestion, savedWordsData, docID);
+                                Get.to(multipleChoice(
+                                  savedWordsData: savedWordsData,
+                                  docID: docID,
+                                  numberOfQuestion: numberOfQuestion,
+                                ));
+                              },
+                              child: Text("Play again")),
+                        ),
+                      ],
                     ),
                     Spacer(flex: 3),
                   ],
