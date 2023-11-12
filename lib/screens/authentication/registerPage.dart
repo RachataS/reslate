@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:reslate/screens/authentication/login.dart';
 import '../../models/profile.dart';
@@ -246,11 +247,9 @@ class _registerPageState extends State<registerPage> {
                                                     msg:
                                                         "สร้างบัญชีผู้ใช้สำเร็จ",
                                                     gravity: ToastGravity.TOP);
-                                                Navigator.pushReplacement(
-                                                    context, MaterialPageRoute(
-                                                        builder: (context) {
-                                                  return loginPage();
-                                                }));
+                                                Get.to(loginPage(),
+                                                    transition:
+                                                        Transition.fadeIn);
                                                 formKey.currentState?.reset();
                                               } on FirebaseAuthException catch (e) {
                                                 var message;
@@ -281,11 +280,8 @@ class _registerPageState extends State<registerPage> {
                                   ),
                                   TextButton(
                                       onPressed: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return loginPage();
-                                        }));
+                                        Get.to(loginPage(),
+                                            transition: Transition.fadeIn);
                                       },
                                       child: Text(
                                         "Already have an account? Sign in now",

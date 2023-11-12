@@ -65,7 +65,8 @@ class ScoreScreen extends StatelessWidget {
                                 _qnController.correctAnswer = 0;
                                 _qnController.resetQuiz();
                                 _qnController.stopTimer();
-                                Get.to(bottombar());
+                                Get.to(bottombar(),
+                                    transition: Transition.topLevel);
                               },
                               child: Text("Return")),
                         ),
@@ -85,11 +86,13 @@ class ScoreScreen extends StatelessWidget {
                                 docID = await firebasedoc.getDocumentId();
                                 await firebasedoc.getSavedWords(
                                     numberOfQuestion, savedWordsData, docID);
-                                Get.to(multipleChoice(
-                                  savedWordsData: savedWordsData,
-                                  docID: docID,
-                                  numberOfQuestion: numberOfQuestion,
-                                ));
+                                Get.to(
+                                    multipleChoice(
+                                      savedWordsData: savedWordsData,
+                                      docID: docID,
+                                      numberOfQuestion: numberOfQuestion,
+                                    ),
+                                    transition: Transition.topLevel);
                               },
                               child: Text("Play again")),
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:reslate/models/getDocument.dart';
 import 'package:reslate/screens/review/matchCard.dart';
 import 'package:reslate/screens/review/multipleChoice.dart';
@@ -27,7 +28,7 @@ class _reviewPageState extends State<reviewPage> {
             Colors.blue[600]!,
             Colors.blue[300]!,
             Colors.blue[100]!,
-            // Colors.blue[500]!,
+            // Colors.blue[50]!,
           ]),
         ),
         child: Center(
@@ -178,14 +179,13 @@ class _reviewPageState extends State<reviewPage> {
                               Navigator.of(context, rootNavigator: true).pop();
 
                               if (numberOfQuestion <= savedWords) {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return multipleChoice(
-                                    docID: widget.docID,
-                                    savedWordsData: true,
-                                    numberOfQuestion: numberOfQuestion,
-                                  );
-                                }));
+                                Get.to(
+                                    multipleChoice(
+                                      docID: widget.docID,
+                                      savedWordsData: true,
+                                      numberOfQuestion: numberOfQuestion,
+                                    ),
+                                    transition: Transition.topLevel);
                               }
                             },
                             child: Text("Saved words"),
@@ -221,14 +221,13 @@ class _reviewPageState extends State<reviewPage> {
                               Navigator.of(context, rootNavigator: true).pop();
 
                               if (numberOfQuestion <= savedWords) {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return multipleChoice(
-                                    docID: widget.docID,
-                                    savedWordsData: false,
-                                    numberOfQuestion: numberOfQuestion,
-                                  );
-                                }));
+                                Get.to(
+                                    multipleChoice(
+                                      docID: widget.docID,
+                                      savedWordsData: false,
+                                      numberOfQuestion: numberOfQuestion,
+                                    ),
+                                    transition: Transition.topLevel);
                               }
                             },
                             child: Text("Wrong answer"),

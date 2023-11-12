@@ -142,10 +142,12 @@ class QuestionController extends GetxController
             await updateAnswerWrongInFirebase(
                 answerCorrect, answerWrong, correctStrike);
             resetQuiz();
-            Get.to(() => ScoreScreen(
-                  savedWordsData: savedWordsData,
-                  numberOfQuestion: numberOfQuestion,
-                ));
+            Get.to(
+                () => ScoreScreen(
+                      savedWordsData: savedWordsData,
+                      numberOfQuestion: numberOfQuestion,
+                    ),
+                transition: Transition.topLevel);
           });
 
           return; // Return to prevent further execution
@@ -191,10 +193,12 @@ class QuestionController extends GetxController
       } else {
         // Future.delayed(const Duration(seconds: 1), () {
         resetQuiz();
-        Get.to(() => ScoreScreen(
-              savedWordsData: savedWordsData,
-              numberOfQuestion: numberOfQuestion,
-            ));
+        Get.to(
+            () => ScoreScreen(
+                  savedWordsData: savedWordsData,
+                  numberOfQuestion: numberOfQuestion,
+                ),
+            transition: Transition.topLevel);
         // });
         return;
       }
@@ -210,10 +214,12 @@ class QuestionController extends GetxController
 
       Future.delayed(const Duration(seconds: 1), () {
         resetQuiz();
-        Get.to(() => ScoreScreen(
-              savedWordsData: savedWordsData,
-              numberOfQuestion: numberOfQuestion,
-            ));
+        Get.to(
+            () => ScoreScreen(
+                  savedWordsData: savedWordsData,
+                  numberOfQuestion: numberOfQuestion,
+                ),
+            transition: Transition.topLevel);
       });
     }
   }

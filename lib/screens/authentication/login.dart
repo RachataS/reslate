@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -191,6 +192,16 @@ class _loginPageState extends State<loginPage> {
                                         15, 15, 15, 15),
                                     child: ElevatedButton(
                                       onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return Center(
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            );
+                                          },
+                                        );
                                         try {
                                           GooglesignInProvider()
                                               .googleLogin()
@@ -205,11 +216,9 @@ class _loginPageState extends State<loginPage> {
                                                   gravity: ToastGravity.TOP);
                                             }
 
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return bottombar();
-                                            }));
+                                            Get.to(bottombar(),
+                                                transition:
+                                                    Transition.topLevel);
                                           });
                                         } catch (e) {
                                           Fluttertoast.showToast(
@@ -231,11 +240,8 @@ class _loginPageState extends State<loginPage> {
                                   ),
                                   TextButton(
                                       onPressed: () {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return registerPage();
-                                        }));
+                                        Get.to(registerPage(),
+                                            transition: Transition.fadeIn);
                                       },
                                       child: Text(
                                         "Don't have an account? Register now!",
@@ -285,9 +291,7 @@ class _loginPageState extends State<loginPage> {
           formKey.currentState?.reset();
           Fluttertoast.showToast(
               msg: "เข้าสู่ระบบสำเร็จ", gravity: ToastGravity.TOP);
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return bottombar();
-          }));
+          Get.to(bottombar(), transition: Transition.topLevel);
         });
       } on FirebaseAuthException catch (e) {
         var message;

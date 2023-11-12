@@ -112,16 +112,18 @@ class _bottombarState extends State<bottombar> {
                       Colors.transparent, // Set the canvas color to transparent
                 ),
                 child: BottomNavigationBar(
-                  fixedColor: Colors.white,
+                  fixedColor: Colors.blue[600]!,
                   backgroundColor: Colors.transparent,
                   elevation: 0, // Set the elevation to 0 to remove the shadow
                   currentIndex: currentIndex,
                   onTap: (index) {
                     setState(() {
                       currentIndex = index;
-                      _pageController.animateToPage(index,
-                          duration: Duration(milliseconds: 300),
-                          curve: Curves.ease);
+                      _pageController.jumpToPage(index);
+                      // slide
+                      // _pageController.animateToPage(index,
+                      //     duration: Duration(milliseconds: 250),
+                      //     curve: Curves.ease);
                     });
                   },
                   items: [
