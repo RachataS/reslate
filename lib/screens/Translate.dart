@@ -119,6 +119,7 @@ class _translate_screenState extends State<translate_screen> {
             Colors.blue[600]!,
             Colors.blue[300]!,
             Colors.blue[100]!,
+            // Colors.blue[50]!,
           ]),
         ),
         child: Padding(
@@ -281,6 +282,7 @@ class _translate_screenState extends State<translate_screen> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
         child: FloatingActionButton(
+          // backgroundColor: Colors.white,
           onPressed: () async {
             if (selecttxt.length > 0) {
               dialogTranslate();
@@ -297,6 +299,7 @@ class _translate_screenState extends State<translate_screen> {
           },
           child: Icon(
             selecttxt.isNotEmpty ? Icons.translate : Icons.bookmark,
+            // color: Colors.blue,
           ),
         ),
       ),

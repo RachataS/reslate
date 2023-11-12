@@ -189,13 +189,13 @@ class QuestionController extends GetxController
           curve: Curves.ease,
         );
       } else {
-        Future.delayed(const Duration(seconds: 1), () {
-          resetQuiz();
-          Get.to(() => ScoreScreen(
-                savedWordsData: savedWordsData,
-                numberOfQuestion: numberOfQuestion,
-              ));
-        });
+        // Future.delayed(const Duration(seconds: 1), () {
+        resetQuiz();
+        Get.to(() => ScoreScreen(
+              savedWordsData: savedWordsData,
+              numberOfQuestion: numberOfQuestion,
+            ));
+        // });
         return;
       }
 
@@ -374,6 +374,10 @@ class QuestionController extends GetxController
   void startTimer() {
     // Start the animation again
     _animationController.forward().whenComplete(nextQuestion);
+  }
+
+  void stopTimer() {
+    _animationController.stop();
   }
 
   void getNumberOfQuestion(getnumber) {

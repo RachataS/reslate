@@ -85,84 +85,145 @@ class _bottombarState extends State<bottombar> {
     });
   }
 
+  // new bottom bar style
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: isLoading
-                ? Center(
-                    child: CircularProgressIndicator(),
+      child: Scaffold(
+        body: isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : screens.isNotEmpty
+                ? PageView(
+                    controller: _pageController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: List.generate(
+                        screens.length, (index) => screens[index]),
                   )
-                : screens.isNotEmpty
-                    ? Scaffold(
-                        body: screens[currentIndex],
-                      )
-                    : PageView(
-                        controller: _pageController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: List.generate(
-                            screens.length, (index) => screens[index]),
-                      ),
-            extendBody: true,
-            bottomNavigationBar: isLoading || screens.isEmpty
-                ? null
-                : AnimatedNotchBottomBar(
-                    notchBottomBarController: _controller,
-                    color: Colors.blue[400]!,
-                    showLabel: true,
-                    itemLabelStyle:
-                        TextStyle(color: Colors.white, fontSize: 13),
-                    notchColor: Colors.white,
-                    removeMargins: false,
-                    bottomBarWidth: 400,
-                    durationInMilliSeconds: 100,
-                    bottomBarItems: [
-                      const BottomBarItem(
-                        inActiveItem: Icon(
-                          Icons.g_translate_outlined,
-                          color: Colors.white,
-                        ),
-                        activeItem: Icon(
-                          Icons.g_translate_outlined,
-                          color: Colors.blue,
-                        ),
-                        itemLabel: 'Translate',
-                      ),
-                      const BottomBarItem(
-                        inActiveItem: Icon(
-                          Icons.quiz_rounded,
-                          color: Colors.white,
-                        ),
-                        activeItem: Icon(
-                          Icons.quiz_rounded,
-                          color: Colors.blue,
-                        ),
-                        itemLabel: 'Review',
-                      ),
-                      const BottomBarItem(
-                        inActiveItem: Icon(
-                          Icons.menu,
-                          color: Colors.white,
-                        ),
-                        activeItem: Icon(
-                          Icons.menu,
-                          color: Colors.blue,
-                        ),
-                        itemLabel: 'Menu',
-                      ),
-                    ],
-                    onTap: (index) {
-                      setState(() => currentIndex = index);
-                      _controller.index = index;
-                    },
-                  ),
-          ),
-        ),
-        onWillPop: () async => false);
+                : Container(),
+        extendBody: true,
+        bottomNavigationBar: isLoading || screens.isEmpty
+            ? null
+            : Theme(
+                data: Theme.of(context).copyWith(
+                  // Set the elevation to 0 to remove the shadow
+                  canvasColor:
+                      Colors.transparent, // Set the canvas color to transparent
+                ),
+                child: BottomNavigationBar(
+                  fixedColor: Colors.white,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0, // Set the elevation to 0 to remove the shadow
+                  currentIndex: currentIndex,
+                  onTap: (index) {
+                    setState(() {
+                      currentIndex = index;
+                      _pageController.animateToPage(index,
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.ease);
+                    });
+                  },
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.g_translate_outlined),
+                      label: 'Translate',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.quiz_rounded),
+                      label: 'Review',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.menu),
+                      label: 'Menu',
+                    ),
+                  ],
+                ),
+              ),
+      ),
+      onWillPop: () async => false,
+    );
   }
+
+  // old bottom bar style
+  // @override
+  // Widget build(BuildContext context) {
+  //   return WillPopScope(
+  //       child: GestureDetector(
+  //         onTap: () {
+  //           FocusScope.of(context).unfocus();
+  //         },
+  //         child: Scaffold(
+  //           resizeToAvoidBottomInset: false,
+  //           body: isLoading
+  //               ? Center(
+  //                   child: CircularProgressIndicator(),
+  //                 )
+  //               : screens.isNotEmpty
+  //                   ? Scaffold(
+  //                       body: screens[currentIndex],
+  //                     )
+  //                   : PageView(
+  //                       controller: _pageController,
+  //                       physics: const NeverScrollableScrollPhysics(),
+  //                       children: List.generate(
+  //                           screens.length, (index) => screens[index]),
+  //                     ),
+  //           extendBody: true,
+  //           bottomNavigationBar: isLoading || screens.isEmpty
+  //               ? null
+  //               : AnimatedNotchBottomBar(
+  //                   notchBottomBarController: _controller,
+  //                   color: Colors.blue[400]!,
+  //                   showLabel: true,
+  //                   itemLabelStyle:
+  //                       TextStyle(color: Colors.white, fontSize: 13),
+  //                   notchColor: Colors.white,
+  //                   removeMargins: false,
+  //                   bottomBarWidth: 400,
+  //                   durationInMilliSeconds: 100,
+  //                   bottomBarItems: [
+  //                     const BottomBarItem(
+  //                       inActiveItem: Icon(
+  //                         Icons.g_translate_outlined,
+  //                         color: Colors.white,
+  //                       ),
+  //                       activeItem: Icon(
+  //                         Icons.g_translate_outlined,
+  //                         color: Colors.blue,
+  //                       ),
+  //                       itemLabel: 'Translate',
+  //                     ),
+  //                     const BottomBarItem(
+  //                       inActiveItem: Icon(
+  //                         Icons.quiz_rounded,
+  //                         color: Colors.white,
+  //                       ),
+  //                       activeItem: Icon(
+  //                         Icons.quiz_rounded,
+  //                         color: Colors.blue,
+  //                       ),
+  //                       itemLabel: 'Review',
+  //                     ),
+  //                     const BottomBarItem(
+  //                       inActiveItem: Icon(
+  //                         Icons.menu,
+  //                         color: Colors.white,
+  //                       ),
+  //                       activeItem: Icon(
+  //                         Icons.menu,
+  //                         color: Colors.blue,
+  //                       ),
+  //                       itemLabel: 'Menu',
+  //                     ),
+  //                   ],
+  //                   onTap: (index) {
+  //                     setState(() => currentIndex = index);
+  //                     _controller.index = index;
+  //                   },
+  //                 ),
+  //         ),
+  //       ),
+  //       onWillPop: () async => false);
+  // }
 }

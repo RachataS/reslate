@@ -64,6 +64,7 @@ class ScoreScreen extends StatelessWidget {
                               onPressed: () {
                                 _qnController.correctAnswer = 0;
                                 _qnController.resetQuiz();
+                                _qnController.stopTimer();
                                 Get.to(bottombar());
                               },
                               child: Text("Return")),

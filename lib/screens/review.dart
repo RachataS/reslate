@@ -27,6 +27,7 @@ class _reviewPageState extends State<reviewPage> {
             Colors.blue[600]!,
             Colors.blue[300]!,
             Colors.blue[100]!,
+            // Colors.blue[500]!,
           ]),
         ),
         child: Center(
