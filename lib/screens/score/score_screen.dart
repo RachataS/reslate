@@ -83,15 +83,24 @@ class ScoreScreen extends StatelessWidget {
                               onPressed: () async {
                                 _qnController.correctAnswer = 0;
                                 docID = await firebasedoc.getDocumentId();
-                                await firebasedoc.getSavedWords(
-                                    numberOfQuestion, savedWordsData, docID);
-                                Get.to(
-                                    multipleChoice(
-                                      savedWordsData: savedWordsData,
-                                      docID: docID,
-                                      numberOfQuestion: numberOfQuestion,
-                                    ),
-                                    transition: Transition.topLevel);
+                                var savedWordsLength =
+                                    await firebasedoc.getSavedWords(
+                                        numberOfQuestion,
+                                        savedWordsData,
+                                        docID);
+
+                                if (savedWordsLength >= numberOfQuestion!) {
+                                  Get.to(
+                                      multipleChoice(
+                                        savedWordsData: savedWordsData,
+                                        docID: docID,
+                                        numberOfQuestion: numberOfQuestion,
+                                      ),
+                                      transition: Transition.topLevel);
+                                } else {
+                                  Get.to(bottombar(),
+                                      transition: Transition.topLevel);
+                                }
                               },
                               child: Text("Play again")),
                         ),

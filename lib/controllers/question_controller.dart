@@ -233,9 +233,7 @@ class QuestionController extends GetxController
 
     if (savedWordsData == true) {
       if (correctStrike >= 3) {
-        // Reset the count
-        // Show a dialog when answerCorrectCount is greater than or equal to 3
-        Get.dialog(
+        await Get.dialog(
           AlertDialog(
             backgroundColor: Colors.amber[100]!,
             shape: RoundedRectangleBorder(
@@ -275,10 +273,10 @@ class QuestionController extends GetxController
                     onPressed: () async {
                       await subcollectionReference
                           .doc(
-                              '${_questions[_questionNumber.value - 2].question}')
+                              '${_questions[_questionNumber.value - 1].question}')
                           .update({
-                        'answerCorrect': answerCorrectCount = 1,
-                        "correctStrike": correctStrike = 1,
+                        'answerCorrect': answerCorrectCount = 0,
+                        "correctStrike": correctStrike = 0,
                       });
                       Get.back(); // Close the dialog
                       _animationController.reset();
@@ -288,14 +286,22 @@ class QuestionController extends GetxController
                   ),
                   TextButton(
                     onPressed: () async {
+                      final savedWordsQuerySnapshot = await FirebaseFirestore
+                          .instance
+                          .collection("Profile")
+                          .doc(docID)
+                          .collection("savedWords")
+                          .get();
+
                       await FirebaseFirestore.instance
                           .collection('Profile')
                           .doc(docID)
-                          .update({'wordLength': questions.length - 1});
+                          .update(
+                              {'wordLength': savedWordsQuerySnapshot.size - 1});
 
                       await subcollectionReference
                           .doc(
-                              '${_questions[_questionNumber.value - 2].question}')
+                              '${_questions[_questionNumber.value - 1].question}')
                           .delete();
                       Get.back(); // Close the dialog
                       _animationController.reset();
