@@ -26,7 +26,7 @@ class _multipleChoiceState extends State<multipleChoice> {
   @override
   void initState() {
     super.initState();
-    print("from multi = ${widget.savedWordsData}");
+    // print("from multi = ${widget.savedWordsData}");
   }
 
   Widget build(BuildContext context) {

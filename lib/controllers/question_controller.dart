@@ -60,6 +60,7 @@ class QuestionController extends GetxController
   int get numOfCorrectAns => this._numOfCorrectAns;
 
   int correctAnswer = 0;
+
   String? docID;
 
   // called immediately after the widget is allocated memory
@@ -146,6 +147,7 @@ class QuestionController extends GetxController
                 () => ScoreScreen(
                       savedWordsData: savedWordsData,
                       numberOfQuestion: numberOfQuestion,
+                      docID: docID,
                     ),
                 transition: Transition.topLevel);
           });
@@ -197,6 +199,7 @@ class QuestionController extends GetxController
             () => ScoreScreen(
                   savedWordsData: savedWordsData,
                   numberOfQuestion: numberOfQuestion,
+                  docID: docID,
                 ),
             transition: Transition.topLevel);
         // });
@@ -218,6 +221,7 @@ class QuestionController extends GetxController
             () => ScoreScreen(
                   savedWordsData: savedWordsData,
                   numberOfQuestion: numberOfQuestion,
+                  docID: docID,
                 ),
             transition: Transition.topLevel);
       });

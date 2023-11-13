@@ -241,7 +241,8 @@ class _registerPageState extends State<registerPage> {
                                                   "Username": profile.username,
                                                   "Email": profile.email,
                                                   "password": profile.password,
-                                                  "wordLength": 0
+                                                  "wordLength": 0,
+                                                  "topScore": 0,
                                                 });
                                                 Fluttertoast.showToast(
                                                     msg:

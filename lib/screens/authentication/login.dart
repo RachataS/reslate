@@ -276,7 +276,8 @@ class _loginPageState extends State<loginPage> {
       "Username": username,
       "Email": email,
       "password": password,
-      "wordLength": 0
+      "wordLength": 0,
+      "topScore": 0,
     });
   }
 
