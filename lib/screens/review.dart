@@ -236,10 +236,7 @@ class _reviewPageState extends State<reviewPage> {
                             SystemSound.play(SystemSoundType.click);
 
                             //match card random method
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return matchCard();
-                            }));
+                            Get.to(matchCard());
                           },
                           child: Text("Let’s play"),
                           style: ElevatedButton.styleFrom(
@@ -485,10 +482,7 @@ class _reviewPageState extends State<reviewPage> {
                             SystemSound.play(SystemSoundType.click);
 
                             //match card random method
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return matchCard();
-                            }));
+                            Get.to(matchCard());
                           },
                           child: Text("Let’s play"),
                           style: ElevatedButton.styleFrom(

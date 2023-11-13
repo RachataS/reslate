@@ -27,19 +27,27 @@ class _ScoreScreenState extends State<ScoreScreen> {
   late int topScore = 0;
   late String buttonText;
   late QuestionController _qnController;
+  var maxQuestion;
 
   @override
   void initState() {
     super.initState();
     _qnController = Get.put(QuestionController());
-    _updateButtonText();
     fetchTopScore();
+    _updateButtonText();
   }
 
   void _updateButtonText() {
     buttonText = (_qnController.correctAnswer >= (widget.numberOfQuestion ?? 0))
         ? "Next Level"
         : "Play again";
+
+    maxQuestion = _qnController.questions.length;
+    if (_qnController.correctAnswer > maxQuestion) {
+      setState(() {
+        maxQuestion += maxQuestion;
+      });
+    }
   }
 
   void fetchTopScore() async {
@@ -107,7 +115,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                   ),
                   SizedBox(height: 30),
                   Text(
-                    "${_qnController.correctAnswer}/${_qnController.questions.length}",
+                    "${_qnController.correctAnswer}/${maxQuestion}",
                     style: Theme.of(context)
                         .textTheme
                         .headline4
@@ -148,30 +156,58 @@ class _ScoreScreenState extends State<ScoreScreen> {
                             ),
                           ),
                           onPressed: () async {
-                            _qnController.correctAnswer = 0;
-                            widget.docID = await firebasedoc.getDocumentId();
-                            var savedWordsLength =
-                                await firebasedoc.getSavedWords(
-                              widget.numberOfQuestion,
-                              widget.savedWordsData,
-                              widget.docID,
-                            );
+                            if (widget.numberOfQuestion! >
+                                _qnController.correctAnswer) {
+                              _qnController.correctAnswer = 0;
+                              widget.docID = await firebasedoc.getDocumentId();
+                              var savedWordsLength =
+                                  await firebasedoc.getSavedWords(
+                                widget.numberOfQuestion,
+                                widget.savedWordsData,
+                                widget.docID,
+                              );
 
-                            if (savedWordsLength >=
-                                (widget.numberOfQuestion ?? 0)) {
-                              Get.to(
-                                multipleChoice(
-                                  savedWordsData: widget.savedWordsData,
-                                  docID: widget.docID,
-                                  numberOfQuestion: widget.numberOfQuestion,
-                                ),
-                                transition: Transition.topLevel,
-                              );
+                              if (savedWordsLength >=
+                                  (widget.numberOfQuestion ?? 0)) {
+                                Get.to(
+                                  multipleChoice(
+                                    savedWordsData: widget.savedWordsData,
+                                    docID: widget.docID,
+                                    numberOfQuestion: widget.numberOfQuestion,
+                                  ),
+                                  transition: Transition.topLevel,
+                                );
+                              } else {
+                                Get.to(
+                                  bottombar(),
+                                  transition: Transition.topLevel,
+                                );
+                              }
                             } else {
-                              Get.to(
-                                bottombar(),
-                                transition: Transition.topLevel,
+                              widget.docID = await firebasedoc.getDocumentId();
+                              var savedWordsLength =
+                                  await firebasedoc.getSavedWords(
+                                widget.numberOfQuestion,
+                                widget.savedWordsData,
+                                widget.docID,
                               );
+
+                              if (savedWordsLength >=
+                                  (widget.numberOfQuestion ?? 0)) {
+                                Get.to(
+                                  multipleChoice(
+                                    savedWordsData: widget.savedWordsData,
+                                    docID: widget.docID,
+                                    numberOfQuestion: widget.numberOfQuestion,
+                                  ),
+                                  transition: Transition.topLevel,
+                                );
+                              } else {
+                                Get.to(
+                                  bottombar(),
+                                  transition: Transition.topLevel,
+                                );
+                              }
                             }
                           },
                           child: Text(buttonText),

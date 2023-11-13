@@ -12,8 +12,19 @@ class _matchCardState extends State<matchCard> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Center(
-        child: Text("matchCard"),
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+            Colors.blue[600]!,
+            Colors.blue[300]!,
+            Colors.blue[100]!,
+            // Colors.blue[50]!,
+          ]),
+        ),
+        child: Center(
+          child: Text("matchCard"),
+        ),
       ),
     );
   }
