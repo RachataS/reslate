@@ -382,43 +382,7 @@ class QuestionController extends GetxController
     _animationController.forward().whenComplete(nextQuestion);
   }
 
-  void stopTimer() {
-    _animationController.stop();
-  }
-
   void getNumberOfQuestion(getnumber) {
     numberOfQuestion = getnumber;
   }
-
-  //  Future<void> quizDialog() async {
-  //   double dialogWidth = 300;
-  //   double dialogHeight = 300;
-
-  //   Dialog saveWordsDialog = Dialog(
-  //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-  //     child: Container(
-  //       width: dialogWidth,
-  //       height: dialogHeight,
-  //       child: Padding(
-  //         padding: const EdgeInsets.all(10),
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             Text(
-  //               'show',
-  //               textAlign: TextAlign.center,
-  //               style: TextStyle(fontSize: 25),
-  //             ),
-  //             SizedBox(
-  //               height: 10,
-  //             ),
-
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  //   showDialog(
-  //       context: context, builder: (BuildContext context) => saveWordsDialog);
-  // }
 }
