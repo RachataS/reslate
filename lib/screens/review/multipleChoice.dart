@@ -23,6 +23,8 @@ class _multipleChoiceState extends State<multipleChoice> {
   CollectionReference<Map<String, dynamic>> userCollection =
       FirebaseFirestore.instance.collection("Profile");
 
+  firebaseDoc firebasedoc = firebaseDoc();
+
   @override
   void initState() {
     super.initState();
@@ -56,7 +58,8 @@ class _multipleChoiceState extends State<multipleChoice> {
             ),
           ),
           body: FutureBuilder<List<Map<String, dynamic>>>(
-            future: getQuestion(),
+            future:
+                firebasedoc.getQuestion(widget.docID, widget.savedWordsData),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return CircularProgressIndicator();
@@ -71,54 +74,5 @@ class _multipleChoiceState extends State<multipleChoice> {
           ),
         ),
         onWillPop: () async => false);
-  }
-
-  Future<List<Map<String, dynamic>>> getQuestion() async {
-    List<Map<String, dynamic>> firestoreData = [];
-
-    try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot = await userCollection
-          .doc(widget.docID)
-          .collection("savedWords")
-          .where("beQuestion", isEqualTo: true)
-          .get();
-
-      for (QueryDocumentSnapshot<Map<String, dynamic>> document
-          in querySnapshot.docs) {
-        Map<String, dynamic> data = document.data();
-        if (data['options'] != null && data['options'].length > 1) {
-          firestoreData.add(data);
-        }
-      }
-
-      // Determine whether to sort by answerCorrect or answerWrong
-      String sortByField =
-          widget.savedWordsData ?? false ? "answerCorrect" : "answerWrong";
-
-      // Sort the data based on the chosen field
-      firestoreData.sort((a, b) => a[sortByField].compareTo(b[sortByField]));
-
-      // Determine whether to show questions in ascending or descending order
-      bool ascendingOrder = (widget.savedWordsData ?? false)
-          ? (firestoreData.last[sortByField] <= 0)
-          : (firestoreData.first[sortByField] <= 0);
-
-      // If ascending order, reverse the list
-      if (ascendingOrder) {
-        firestoreData = List.from(firestoreData.reversed);
-      }
-      int numberOfQuestion = widget.numberOfQuestion ?? 0;
-      // while (firestoreData.length < numberOfQuestion) {
-      //   print(firestoreData.length);
-      //   firebaseDoc firebasedoc = firebaseDoc();
-      //   await firebasedoc.getSavedWords(
-      //       numberOfQuestion, widget.savedWordsData ?? true, widget.docID);
-      // }
-
-      return firestoreData;
-    } catch (e) {
-      print("Error fetching data: $e");
-      return []; // Return an empty list on error
-    }
   }
 }

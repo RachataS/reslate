@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:reslate/models/getDocument.dart';
+import 'package:reslate/screens/review/multipleChoice.dart';
 
 class matchCard extends StatefulWidget {
-  const matchCard({super.key});
+  final String? docID;
+  final bool? savedWordsData;
+
+  const matchCard({this.docID, this.savedWordsData});
 
   @override
   State<matchCard> createState() => _matchCardState();
 }
 
 class _matchCardState extends State<matchCard> {
+  firebaseDoc firebasecdoc = firebaseDoc();
+
+  void getCard() async {
+    var words =
+        await firebasecdoc.getQuestion(widget.docID, widget.savedWordsData);
+    print(words);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCard();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

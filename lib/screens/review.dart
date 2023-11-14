@@ -236,7 +236,10 @@ class _reviewPageState extends State<reviewPage> {
                             SystemSound.play(SystemSoundType.click);
 
                             //match card random method
-                            Get.to(matchCard());
+                            Get.to(matchCard(
+                              docID: widget.docID,
+                              savedWordsData: true,
+                            ));
                           },
                           child: Text("Let’s play"),
                           style: ElevatedButton.styleFrom(
@@ -482,7 +485,10 @@ class _reviewPageState extends State<reviewPage> {
                             SystemSound.play(SystemSoundType.click);
 
                             //match card random method
-                            Get.to(matchCard());
+                            Get.to(matchCard(
+                              docID: widget.docID,
+                              savedWordsData: false,
+                            ));
                           },
                           child: Text("Let’s play"),
                           style: ElevatedButton.styleFrom(
