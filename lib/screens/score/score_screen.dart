@@ -79,39 +79,38 @@ class _ScoreScreenState extends State<ScoreScreen> {
     return WillPopScope(
       child: Scaffold(
         body: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              colors: [
-                Colors.blue[500]!,
-                Colors.blue[400]!,
-                Colors.blue[300]!,
-              ],
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                colors: [
+                  Colors.red[600]!,
+                  Colors.red[300]!,
+                  Colors.red[100]!,
+                ],
+              ),
             ),
-          ),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Column(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              margin: const EdgeInsets.fromLTRB(30, 250, 30, 250),
+              child: Column(
                 children: [
                   Spacer(flex: 3),
                   Text("Top Score",
-                      style: TextStyle(fontSize: 40, color: Colors.white)),
+                      style: TextStyle(fontSize: 40, color: Colors.red)),
                   SizedBox(height: 30),
                   Text(
                     "${topScore}",
                     style: Theme.of(context)
                         .textTheme
                         .headline4
-                        ?.copyWith(color: Colors.white),
+                        ?.copyWith(color: Colors.red),
                   ),
-                  SizedBox(
-                    height: 50,
-                  ),
+                  Spacer(),
                   Text(
                     "Score",
-                    style: TextStyle(fontSize: 35, color: Colors.white),
+                    style: TextStyle(fontSize: 35, color: Colors.red),
                   ),
                   SizedBox(height: 30),
                   Text(
@@ -119,7 +118,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                     style: Theme.of(context)
                         .textTheme
                         .headline4
-                        ?.copyWith(color: Colors.white),
+                        ?.copyWith(color: Colors.red),
                   ),
                   Spacer(),
                   Row(
@@ -129,7 +128,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                         width: 150,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue[400],
+                            backgroundColor: Colors.red[400],
                             fixedSize: const Size(300, 50),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
@@ -149,7 +148,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                         width: 150,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue[400],
+                            backgroundColor: Colors.red[400],
                             fixedSize: const Size(300, 50),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
@@ -217,10 +216,139 @@ class _ScoreScreenState extends State<ScoreScreen> {
                   ),
                   Spacer(flex: 3),
                 ],
-              )
-            ],
-          ),
-        ),
+              ),
+            )
+            // Stack(
+            //   fit: StackFit.expand,
+            //   children: [
+            //     Column(
+            //       children: [
+            //         Spacer(flex: 3),
+            //         Text("Top Score",
+            //             style: TextStyle(fontSize: 40, color: Colors.white)),
+            //         SizedBox(height: 30),
+            //         Text(
+            //           "${topScore}",
+            //           style: Theme.of(context)
+            //               .textTheme
+            //               .headline4
+            //               ?.copyWith(color: Colors.white),
+            //         ),
+            //         SizedBox(
+            //           height: 50,
+            //         ),
+            //         Text(
+            //           "Score",
+            //           style: TextStyle(fontSize: 35, color: Colors.white),
+            //         ),
+            //         SizedBox(height: 30),
+            //         Text(
+            //           "${_qnController.correctAnswer}/${maxQuestion}",
+            //           style: Theme.of(context)
+            //               .textTheme
+            //               .headline4
+            //               ?.copyWith(color: Colors.white),
+            //         ),
+            //         Spacer(),
+            //         Row(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             SizedBox(
+            //               width: 150,
+            //               child: ElevatedButton(
+            //                 style: ElevatedButton.styleFrom(
+            //                   backgroundColor: Colors.blue[400],
+            //                   fixedSize: const Size(300, 50),
+            //                   shape: RoundedRectangleBorder(
+            //                     borderRadius: BorderRadius.circular(50),
+            //                   ),
+            //                 ),
+            //                 onPressed: () {
+            //                   _qnController.correctAnswer = 0;
+            //                   _qnController.resetQuiz();
+            //                   Get.to(bottombar(),
+            //                       transition: Transition.topLevel);
+            //                 },
+            //                 child: Text("Return"),
+            //               ),
+            //             ),
+            //             SizedBox(width: 30),
+            //             SizedBox(
+            //               width: 150,
+            //               child: ElevatedButton(
+            //                 style: ElevatedButton.styleFrom(
+            //                   backgroundColor: Colors.blue[400],
+            //                   fixedSize: const Size(300, 50),
+            //                   shape: RoundedRectangleBorder(
+            //                     borderRadius: BorderRadius.circular(50),
+            //                   ),
+            //                 ),
+            //                 onPressed: () async {
+            //                   if (widget.numberOfQuestion! >
+            //                       _qnController.correctAnswer) {
+            //                     _qnController.correctAnswer = 0;
+            //                     widget.docID = await firebasedoc.getDocumentId();
+            //                     var savedWordsLength =
+            //                         await firebasedoc.getSavedWords(
+            //                       widget.numberOfQuestion,
+            //                       widget.savedWordsData,
+            //                       widget.docID,
+            //                     );
+
+            //                     if (savedWordsLength >=
+            //                         (widget.numberOfQuestion ?? 0)) {
+            //                       Get.to(
+            //                         multipleChoice(
+            //                           savedWordsData: widget.savedWordsData,
+            //                           docID: widget.docID,
+            //                           numberOfQuestion: widget.numberOfQuestion,
+            //                         ),
+            //                         transition: Transition.topLevel,
+            //                       );
+            //                     } else {
+            //                       Get.to(
+            //                         bottombar(),
+            //                         transition: Transition.topLevel,
+            //                       );
+            //                     }
+            //                   } else {
+            //                     widget.docID = await firebasedoc.getDocumentId();
+            //                     var savedWordsLength =
+            //                         await firebasedoc.getSavedWords(
+            //                       widget.numberOfQuestion,
+            //                       widget.savedWordsData,
+            //                       widget.docID,
+            //                     );
+
+            //                     if (savedWordsLength >=
+            //                         (widget.numberOfQuestion ?? 0)) {
+            //                       Get.to(
+            //                         multipleChoice(
+            //                           savedWordsData: widget.savedWordsData,
+            //                           docID: widget.docID,
+            //                           numberOfQuestion: widget.numberOfQuestion,
+            //                         ),
+            //                         transition: Transition.topLevel,
+            //                       );
+            //                     } else {
+            //                       Get.to(
+            //                         bottombar(),
+            //                         transition: Transition.topLevel,
+            //                       );
+            //                     }
+            //                   }
+            //                 },
+            //                 child: Text(buttonText),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //         Spacer(flex: 3),
+            //       ],
+            //     )
+            //   ],
+            // ),
+            ),
       ),
       onWillPop: () async => false,
     );

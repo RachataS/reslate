@@ -65,12 +65,56 @@ class _menuPageState extends State<menuPage> {
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
         child: FloatingActionButton(
           onPressed: () async {
-            try {
-              logOut();
-              Get.to(loginPage(), transition: Transition.topLevel);
-            } catch (e) {
-              print(e);
-            }
+            // Show a dialog to confirm logout
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  backgroundColor: Colors.blue[100]!,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        40), // Adjust the radius as needed
+                  ),
+                  title: Text(
+                    "Logout",
+                    textAlign: TextAlign.center,
+                  ),
+                  content: Text("Are you sure you want to logout?"),
+                  actions: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            Navigator.of(context).pop(); // Close the dialog
+                            try {
+                              await logOut();
+                              Get.to(loginPage(),
+                                  transition: Transition.topLevel);
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
+                          child: Text(
+                            "Logout",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                );
+              },
+            );
           },
           child: Icon(Icons.logout),
         ),
