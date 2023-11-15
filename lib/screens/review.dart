@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:reslate/models/getDocument.dart';
-import 'package:reslate/screens/review/matchCard.dart';
-import 'package:reslate/screens/review/multipleChoice.dart';
+import 'package:reslate/screens/review/matchCard/matchCard.dart';
+import 'package:reslate/screens/review/multipleChoice/multipleChoice.dart';
 
 class reviewPage extends StatefulWidget {
   final String? docID;
@@ -236,10 +236,12 @@ class _reviewPageState extends State<reviewPage> {
                             SystemSound.play(SystemSoundType.click);
 
                             //match card random method
-                            Get.to(matchCard(
-                              docID: widget.docID,
-                              savedWordsData: true,
-                            ));
+                            Get.to(
+                                matchCard(
+                                  docID: widget.docID,
+                                  savedWordsData: true,
+                                ),
+                                transition: Transition.topLevel);
                           },
                           child: Text("Let’s play"),
                           style: ElevatedButton.styleFrom(
@@ -485,10 +487,12 @@ class _reviewPageState extends State<reviewPage> {
                             SystemSound.play(SystemSoundType.click);
 
                             //match card random method
-                            Get.to(matchCard(
-                              docID: widget.docID,
-                              savedWordsData: false,
-                            ));
+                            Get.to(
+                                matchCard(
+                                  docID: widget.docID,
+                                  savedWordsData: false,
+                                ),
+                                transition: Transition.topLevel);
                           },
                           child: Text("Let’s play"),
                           style: ElevatedButton.styleFrom(
