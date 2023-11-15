@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reslate/screens/review/matchCard/ui/widgets/web/game_board.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/mobile/game_board_mobile.dart';
 
 class MemoryMatchPage extends StatelessWidget {
@@ -13,19 +12,24 @@ class MemoryMatchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: ((context, constraints) {
-            if (constraints.maxWidth > 720) {
-              return GameBoard(
-                gameLevel: gameLevel,
-              );
-            } else {
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+            Colors.blue[600]!,
+            Colors.blue[300]!,
+            Colors.blue[100]!,
+            // Colors.blue[50]!,
+          ]),
+        ),
+        child: SafeArea(
+          child: LayoutBuilder(
+            builder: ((context, constraints) {
               return GameBoardMobile(
                 gameLevel: gameLevel,
               );
-            }
-          }),
+            }),
+          ),
         ),
       ),
     );

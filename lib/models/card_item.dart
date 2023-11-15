@@ -3,15 +3,20 @@ import 'package:flutter/material.dart';
 enum CardState { hidden, visible, guessed }
 
 class CardItem {
-  CardItem({
-    required this.value,
-    required this.icon,
-    required this.color,
-    this.state = CardState.hidden,
-  });
+  CardItem(
+      {required this.id,
+      required this.thai,
+      required this.question,
+      required this.color,
+      this.state = CardState.hidden,
+      this.matched = false,
+      this.check});
 
-  final int value;
-  final IconData icon;
+  final int id;
+  final String thai;
+  final String question;
   final Color color;
   CardState state;
+  bool matched;
+  int? check;
 }

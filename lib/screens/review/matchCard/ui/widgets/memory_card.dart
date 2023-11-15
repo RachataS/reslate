@@ -8,8 +8,8 @@ class MemoryCard extends StatelessWidget {
     required this.card,
     required this.index,
     required this.onCardPressed,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final CardItem card;
   final int index;
@@ -36,17 +36,30 @@ class MemoryCard extends StatelessWidget {
         color:
             card.state == CardState.visible || card.state == CardState.guessed
                 ? card.color
-                : Colors.grey,
+                : Colors.black45,
         child: Center(
           child: card.state == CardState.hidden
               ? null
-              : SizedBox.expand(
-                  child: FittedBox(
-                    child: Icon(
-                      card.icon,
-                      color: Colors.white,
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      card.question,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
+                    SizedBox(height: 8),
+                    Text(
+                      card.thai,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
                 ),
         ),
       ),

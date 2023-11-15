@@ -18,7 +18,6 @@ class GameOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int i = 300;
     return Column(
       children: gameLevels.map((level) {
         return Padding(
@@ -28,7 +27,7 @@ class GameOptions extends StatelessWidget {
                 _routeBuilder(context, level['level']),
                 (Route<dynamic> route) => false),
             title: level['title'],
-            color: level['color']![700]!,
+            color: level['color']![400]!,
             width: 250,
           ),
         );

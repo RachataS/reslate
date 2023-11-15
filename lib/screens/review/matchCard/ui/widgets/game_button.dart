@@ -20,21 +20,23 @@ class GameButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height,
-      width: width,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          textStyle: TextStyle(fontSize: fontSize),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(height / 2),
+    return Container(
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: color,
+            textStyle: TextStyle(fontSize: fontSize),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(height / 2),
+              ),
             ),
           ),
+          onPressed: onPressed,
+          child: Text(title),
         ),
-        onPressed: onPressed,
-        child: Text(title),
       ),
     );
   }

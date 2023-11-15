@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:reslate/models/getDocument.dart';
-import 'package:reslate/screens/review/multipleChoice/multipleChoice.dart';
 import 'package:reslate/screens/review/matchCard/ui/pages/startup_page.dart';
 
 class matchCard extends StatefulWidget {
