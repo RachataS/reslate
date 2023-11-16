@@ -89,7 +89,6 @@ class Game {
           card1.state = CardState.guessed;
           card2.state = CardState.guessed;
           isGameOver = _isGameOver();
-          print(card1.check);
         } else {
           card1.state = CardState.hidden;
           card2.state = CardState.hidden;
@@ -106,13 +105,15 @@ class Game {
           thai: questionCard.thai,
           question: questionCard.question,
           state: CardState.hidden,
-          color: cardColor),
+          color: cardColor,
+          check: questionCard.check),
       CardItem(
           id: thaiCard.id,
           thai: thaiCard.thai,
           question: thaiCard.question,
           state: CardState.hidden,
-          color: cardColor),
+          color: cardColor,
+          check: questionCard.check),
     ];
   }
 
