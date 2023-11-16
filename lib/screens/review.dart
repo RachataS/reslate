@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:reslate/models/getDocument.dart';
-import 'package:reslate/screens/review/matchCard/matchCard.dart';
 import 'package:reslate/screens/review/multipleChoice/multipleChoice.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/game_options.dart';
 
@@ -465,25 +464,7 @@ class _reviewPageState extends State<reviewPage> {
                       padding: const EdgeInsets.all(20),
                       child: SizedBox(
                         width: 250,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            SystemSound.play(SystemSoundType.click);
-
-                            //match card random method
-                            Get.to(
-                                matchCard(
-                                  docID: widget.docID,
-                                  savedWordsData: false,
-                                ),
-                                transition: Transition.topLevel);
-                          },
-                          child: Text("Let’s play"),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue[400],
-                              fixedSize: const Size(300, 50),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50))),
-                        ),
+                        child: GameOptions(),
                       ),
                     ),
                   ],

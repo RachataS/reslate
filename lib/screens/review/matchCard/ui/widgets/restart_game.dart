@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:reslate/screens/review/matchCard/ui/pages/startup_page.dart';
+import 'package:get/get.dart';
+import 'package:reslate/screens/bottomBar.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/game_controls_bottomsheet.dart';
 
 class RestartGame extends StatelessWidget {
@@ -41,10 +42,7 @@ class RestartGame extends StatelessWidget {
   }
 
   void navigateback(BuildContext context) {
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (BuildContext context) {
-      return const StartUpPage();
-    }), (Route<dynamic> route) => false);
+    Get.to(bottombar(), transition: Transition.topLevel);
   }
 
   @override

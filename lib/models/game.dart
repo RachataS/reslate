@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:reslate/models/card_item.dart';
 import 'package:reslate/models/getDocument.dart';
-import 'package:reslate/screens/review/matchCard/utils/icons.dart';
 
 class Game {
   Game(this.gridSize) {
@@ -25,18 +24,18 @@ class Game {
       wordsList = await firebasedoc.getCard(docID, true);
       wordsList.shuffle(Random());
 
-      generateCards(wordsList);
+      await generateCards(wordsList);
     } catch (e) {
       print(e);
     }
   }
 
-  void generateCards(List<Map<String, dynamic>> jsonData) {
+  Future<void> generateCards(List<Map<String, dynamic>> jsonData) async {
     cards = [];
     final List<Color> cardColors = Colors.primaries.toList();
 
     jsonData.shuffle(Random());
-    print('---------------------');
+
     for (int i = 0; i < (gridSize * gridSize / 2); i++) {
       final cardData = jsonData[i];
       final CardItem questionCard = CardItem(
@@ -54,22 +53,13 @@ class Game {
         color: Colors.red,
         check: i,
       );
-      print(cardData['question']);
+
       final Color cardColor = cardColors[i % cardColors.length];
       final List<CardItem> newCards =
           _createCardItems(questionCard, thaiCard, cardColor);
       cards.addAll(newCards);
     }
     cards.shuffle(Random());
-  }
-
-  void generateIcons() {
-    icons = <IconData>{};
-    for (int j = 0; j < (gridSize * gridSize / 2); j++) {
-      final IconData icon = _getRandomCardIcon();
-      icons.add(icon);
-      icons.add(icon); // Add the icon twice to ensure pairs are generated.
-    }
   }
 
   void resetGame() {
@@ -120,15 +110,6 @@ class Game {
           color: cardColor,
           check: questionCard.check),
     ];
-  }
-
-  IconData _getRandomCardIcon() {
-    final Random random = Random();
-    IconData icon;
-    do {
-      icon = cardIcons[random.nextInt(cardIcons.length)];
-    } while (icons.contains(icon));
-    return icon;
   }
 
   List<int> _getVisibleCardIndexes() {

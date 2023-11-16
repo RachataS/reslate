@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:reslate/models/game.dart';
-import 'package:reslate/screens/review/matchCard/ui/widgets/game_confetti.dart';
-
 import 'package:reslate/screens/review/matchCard/ui/widgets/memory_card.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/mobile/game_best_time_mobile.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/mobile/game_timer_mobile.dart';

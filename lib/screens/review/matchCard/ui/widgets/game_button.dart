@@ -5,37 +5,30 @@ class GameButton extends StatelessWidget {
     required this.title,
     required this.onPressed,
     required this.color,
-    this.height = 40,
     this.width = double.infinity,
-    this.fontSize = 18,
+    this.fontSize = 16,
     Key? key,
   }) : super(key: key);
 
   final String title;
   final VoidCallback onPressed;
   final Color color;
-  final double height;
+
   final double width;
   final double fontSize;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SizedBox(
-        height: height,
-        width: width,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: color,
-            textStyle: TextStyle(fontSize: fontSize),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue[400],
+            fixedSize: const Size(300, 50),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(height / 2),
-              ),
-            ),
-          ),
-          onPressed: onPressed,
-          child: Text(title),
+                borderRadius: BorderRadius.circular(50))),
+        child: Text(
+          title,
         ),
       ),
     );
