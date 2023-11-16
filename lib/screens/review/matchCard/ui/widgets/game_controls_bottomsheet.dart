@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reslate/screens/bottomBar.dart';
-import 'package:reslate/screens/review/matchCard/ui/pages/startup_page.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/game_button.dart';
 import 'package:reslate/screens/review/matchCard/utils/constants.dart';
 

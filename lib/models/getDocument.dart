@@ -279,4 +279,50 @@ class firebaseDoc {
       return []; // Return an empty list on error
     }
   }
+
+  Future<List<Map<String, dynamic>>> getCard(docID, savedWordsData) async {
+    List<Map<String, dynamic>> firestoreData = [];
+
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await userCollection.doc(docID).collection("savedWords").get();
+
+      for (QueryDocumentSnapshot<Map<String, dynamic>> document
+          in querySnapshot.docs) {
+        Map<String, dynamic> data = document.data();
+        if (data['options'] != null && data['options'].length > 1) {
+          firestoreData.add(data);
+        }
+      }
+
+      // Determine whether to sort by answerCorrect or answerWrong
+      String sortByField =
+          savedWordsData ?? false ? "answerCorrect" : "answerWrong";
+
+      // Sort the data based on the chosen field
+      firestoreData.sort((a, b) => a[sortByField].compareTo(b[sortByField]));
+
+      // Determine whether to show questions in ascending or descending order
+      bool ascendingOrder = (savedWordsData ?? false)
+          ? (firestoreData.last[sortByField] <= 0)
+          : (firestoreData.first[sortByField] <= 0);
+
+      // If ascending order, reverse the list
+      if (ascendingOrder) {
+        firestoreData = List.from(firestoreData.reversed);
+      }
+      // int numberOfQuestion = numberOfQuestion ?? 0;
+      // while (firestoreData.length < numberOfQuestion) {
+      //   print(firestoreData.length);
+      //   firebaseDoc firebasedoc = firebaseDoc();
+      //   await firebasedoc.getSavedWords(
+      //       numberOfQuestion, widget.savedWordsData ?? true, widget.docID);
+      // }
+
+      return firestoreData;
+    } catch (e) {
+      print("Error fetching data: $e");
+      return []; // Return an empty list on error
+    }
+  }
 }

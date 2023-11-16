@@ -22,7 +22,9 @@ class Game {
     try {
       firebaseDoc firebasedoc = firebaseDoc();
       docID = await firebasedoc.getDocumentId();
-      wordsList = await firebasedoc.getQuestion(docID, true);
+      wordsList = await firebasedoc.getCard(docID, true);
+      wordsList.shuffle(Random());
+
       generateCards(wordsList);
     } catch (e) {
       print(e);
@@ -32,6 +34,9 @@ class Game {
   void generateCards(List<Map<String, dynamic>> jsonData) {
     cards = [];
     final List<Color> cardColors = Colors.primaries.toList();
+
+    jsonData.shuffle(Random());
+    print('---------------------');
     for (int i = 0; i < (gridSize * gridSize / 2); i++) {
       final cardData = jsonData[i];
       final CardItem questionCard = CardItem(
@@ -49,7 +54,7 @@ class Game {
         color: Colors.red,
         check: i,
       );
-
+      print(cardData['question']);
       final Color cardColor = cardColors[i % cardColors.length];
       final List<CardItem> newCards =
           _createCardItems(questionCard, thaiCard, cardColor);
