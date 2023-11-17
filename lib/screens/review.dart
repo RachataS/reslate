@@ -231,7 +231,9 @@ class _reviewPageState extends State<reviewPage> {
                       padding: const EdgeInsets.all(20),
                       child: SizedBox(
                         width: 250,
-                        child: GameOptions(),
+                        child: GameOptions(
+                          docID: widget.docID,
+                        ),
                       ),
                     ),
                   ],
@@ -464,7 +466,9 @@ class _reviewPageState extends State<reviewPage> {
                       padding: const EdgeInsets.all(20),
                       child: SizedBox(
                         width: 250,
-                        child: GameOptions(),
+                        child: GameOptions(
+                          docID: widget.docID,
+                        ),
                       ),
                     ),
                   ],

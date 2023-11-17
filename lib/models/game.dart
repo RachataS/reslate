@@ -114,14 +114,13 @@ class Game {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.blue[100]!,
+          backgroundColor: Colors.red[200]!,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
-          title: Text(
-            'Game Over',
-            textAlign: TextAlign.center,
-          ),
+          title: Text('Game Over',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.red[900]!)),
           content: Text('You ran out of presses!'),
           actions: <Widget>[
             Align(
@@ -134,7 +133,10 @@ class Game {
                       Navigator.of(context).pop(); // Close the dialog
                       resetGame();
                     },
-                    child: Text('Play Again'),
+                    child: Text(
+                      'Play Again',
+                      style: TextStyle(color: Colors.blue[700]!),
+                    ),
                   ),
                   SizedBox(width: 16), // Add some spacing between buttons
                   TextButton(
@@ -142,7 +144,8 @@ class Game {
                       Navigator.of(context).pop(); // Close the dialog
                       Get.to(bottombar(), transition: Transition.topLevel);
                     },
-                    child: Text('Exit'),
+                    child:
+                        Text('Exit', style: TextStyle(color: Colors.red[700]!)),
                   ),
                 ],
               ),
