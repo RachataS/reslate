@@ -23,7 +23,7 @@ class GameButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue[400],
+            backgroundColor: color,
             fixedSize: const Size(300, 50),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50))),

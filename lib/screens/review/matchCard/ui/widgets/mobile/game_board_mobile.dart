@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:reslate/screens/review/multipleChoice/components/progress_bar.dart';
+import 'package:reslate/screens/review/multipleChoice/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:reslate/models/game.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/memory_card.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/mobile/game_best_time_mobile.dart';
@@ -12,8 +12,8 @@ import 'package:reslate/screens/review/matchCard/ui/widgets/restart_game.dart';
 class GameBoardMobile extends StatefulWidget {
   const GameBoardMobile({
     required this.gameLevel,
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final int gameLevel;
 
@@ -27,6 +27,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   late Duration duration;
   int bestTime = 0;
   bool showConfetti = false;
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +35,13 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     duration = const Duration();
     startTimer();
     getBestTime();
+  }
+
+  @override
+  void dispose() {
+    // Cancel the timer when the widget is disposed
+    timer.cancel();
+    super.dispose();
   }
 
   void getBestTime() async {
@@ -46,6 +54,11 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
 
   startTimer() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) async {
+      if (!mounted) {
+        // Check if the widget is still in the tree before updating the state
+        return;
+      }
+
       setState(() {
         final seconds = duration.inSeconds + 1;
         duration = Duration(seconds: seconds);
@@ -112,7 +125,9 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                     return MemoryCard(
                       index: index,
                       card: game.cards[index],
-                      onCardPressed: game.onCardPressed,
+                      onCardPressed: (int index) {
+                        game.onCardPressed(index, context);
+                      },
                     );
                   }),
                 ),

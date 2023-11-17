@@ -2,12 +2,15 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:reslate/models/card_item.dart';
 import 'package:reslate/models/getDocument.dart';
+import 'package:reslate/screens/bottomBar.dart';
 
 class Game {
   Game(this.gridSize) {
     getWordsList();
+    matching = 24;
   }
   final int gridSize;
 
@@ -17,7 +20,9 @@ class Game {
 
   var docID, wordsList;
 
-  Future<String?> getWordsList() async {
+  int matching = 24;
+
+  Future<void> getWordsList() async {
     try {
       firebaseDoc firebasedoc = firebaseDoc();
       docID = await firebasedoc.getDocumentId();
@@ -65,9 +70,14 @@ class Game {
   void resetGame() {
     generateCards(wordsList);
     isGameOver = false;
+    matching = 24;
   }
 
-  void onCardPressed(int index) {
+  void onCardPressed(int index, BuildContext context) {
+    if (isGameOver) {
+      return; // Game is already over, no need to process further
+    }
+
     if (cards[index].state == CardState.visible ||
         cards[index].state == CardState.guessed) {
       return;
@@ -88,8 +98,59 @@ class Game {
           card1.state = CardState.hidden;
           card2.state = CardState.hidden;
         }
+
+        matching--;
+        print('press $matching');
+
+        if (matching == 0) {
+          _showGameOverDialog(context);
+        }
       });
     }
+  }
+
+  void _showGameOverDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.blue[100]!,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          title: Text(
+            'Game Over',
+            textAlign: TextAlign.center,
+          ),
+          content: Text('You ran out of presses!'),
+          actions: <Widget>[
+            Align(
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                      resetGame();
+                    },
+                    child: Text('Play Again'),
+                  ),
+                  SizedBox(width: 16), // Add some spacing between buttons
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close the dialog
+                      Get.to(bottombar(), transition: Transition.topLevel);
+                    },
+                    child: Text('Exit'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   List<CardItem> _createCardItems(
