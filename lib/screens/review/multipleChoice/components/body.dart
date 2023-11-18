@@ -65,14 +65,17 @@ class Body extends StatelessWidget {
                 Divider(thickness: 1.5),
                 SizedBox(height: kDefaultPadding),
                 Expanded(
-                  child: PageView.builder(
-                    // Block swipe to next qn
-                    physics: NeverScrollableScrollPhysics(),
-                    controller: _questionController.pageController,
-                    onPageChanged: _questionController.updateTheQnNum,
-                    itemCount: _questionController.questions.length,
-                    itemBuilder: (context, index) => QuestionCard(
-                        question: _questionController.questions[index]),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 60),
+                    child: PageView.builder(
+                      // Block swipe to next qn
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: _questionController.pageController,
+                      onPageChanged: _questionController.updateTheQnNum,
+                      itemCount: _questionController.questions.length,
+                      itemBuilder: (context, index) => QuestionCard(
+                          question: _questionController.questions[index]),
+                    ),
                   ),
                 ),
               ],

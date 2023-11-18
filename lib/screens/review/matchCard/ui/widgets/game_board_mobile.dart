@@ -117,7 +117,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                 children: [
                   Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(150),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     margin: const EdgeInsets.all(20),
                     color: (game.matching <= 8)
@@ -146,7 +146,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                   ),
                   Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(150),
+                      borderRadius: BorderRadius.circular(15),
                     ),
                     margin: const EdgeInsets.all(20),
                     color: Colors.amber[200]!,
@@ -178,7 +178,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
               Expanded(
                 child: GridView.count(
                   crossAxisCount: game.gridSize,
-                  childAspectRatio: aspectRatio * 2,
+                  childAspectRatio: aspectRatio * 1.5,
                   children: List.generate(game.cards.length, (index) {
                     return MemoryCard(
                       index: index,

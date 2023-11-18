@@ -46,7 +46,7 @@ class _reviewPageState extends State<reviewPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 100, 20, 40),
+              padding: const EdgeInsets.fromLTRB(20, 80, 20, 20),
               child: Text(
                 "Saved Words",
                 style: TextStyle(
@@ -281,7 +281,7 @@ class _reviewPageState extends State<reviewPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 100, 20, 40),
+              padding: const EdgeInsets.fromLTRB(20, 80, 20, 20),
               child: Text(
                 "Wrong Answer",
                 style: TextStyle(

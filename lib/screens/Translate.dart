@@ -43,6 +43,8 @@ class _translate_screenState extends State<translate_screen> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final double appBarHeight = kToolbarHeight;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -58,7 +60,7 @@ class _translate_screenState extends State<translate_screen> {
               children: [
                 Container(
                   alignment: Alignment.center,
-                  width: 120,
+                  width: screenSize.width / 4,
                   child: Text(
                     appbarInput,
                     style: TextStyle(
@@ -100,7 +102,7 @@ class _translate_screenState extends State<translate_screen> {
                 ),
                 Container(
                   alignment: Alignment.center,
-                  width: 120,
+                  width: screenSize.width / 4,
                   child: Text(
                     appbarOutput,
                     style: TextStyle(
@@ -123,7 +125,7 @@ class _translate_screenState extends State<translate_screen> {
           ]),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 120),
+          padding: EdgeInsets.only(top: screenSize.height * 0.12),
           child: Card(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
