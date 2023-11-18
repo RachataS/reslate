@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:reslate/models/getDocument.dart';
 import 'package:reslate/screens/review/matchCard/ui/pages/memory_match_page.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/game_button.dart';
@@ -13,12 +14,8 @@ class GameOptions extends StatelessWidget {
     this.docID,
   });
 
-  static Route<dynamic> _routeBuilder(BuildContext context, int gameLevel) {
-    return MaterialPageRoute(
-      builder: (_) {
-        return MemoryMatchPage(gameLevel: gameLevel);
-      },
-    );
+  static Widget _routeBuilder(BuildContext context, int gameLevel) {
+    return MemoryMatchPage(gameLevel: gameLevel);
   }
 
   @override
@@ -40,9 +37,9 @@ class GameOptions extends StatelessWidget {
                   .toList();
 
               if (savedWords.length >= 70) {
-                Navigator.of(context).pushAndRemoveUntil(
-                  _routeBuilder(context, level['level']),
-                  (Route<dynamic> route) => false,
+                Get.to(
+                  () => _routeBuilder(context, level['level']),
+                  transition: Transition.topLevel,
                 );
               } else {
                 Fluttertoast.showToast(
