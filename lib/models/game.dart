@@ -11,6 +11,7 @@ class Game {
   Game(this.gridSize) {
     getWordsList();
     matching = 24;
+    score = 0;
   }
   final int gridSize;
 
@@ -21,6 +22,7 @@ class Game {
   var docID, wordsList;
 
   int matching = 24;
+  int score = 0;
 
   Future<void> getWordsList() async {
     try {
@@ -71,6 +73,7 @@ class Game {
     generateCards(wordsList);
     isGameOver = false;
     matching = 24;
+    score = 0;
   }
 
   void onCardPressed(int index, BuildContext context) {
@@ -94,19 +97,34 @@ class Game {
           card1.state = CardState.guessed;
           card2.state = CardState.guessed;
           isGameOver = _isGameOver();
+
+          // Increment the score when a pair is matched
+          score++;
         } else {
           card1.state = CardState.hidden;
           card2.state = CardState.hidden;
         }
 
         matching--;
-        print('press $matching');
 
         if (matching == 0) {
           _showGameOverDialog(context);
+        } else if (_isGameOver()) {
+          // If all cards are matched, reset the game randomly
+          resetGameRandomly();
         }
       });
     }
+  }
+
+  void resetGameRandomly() {
+    // Shuffle the wordsList and generate new cards
+    wordsList.shuffle(Random());
+    generateCards(wordsList);
+
+    // Reset the game state
+    isGameOver = false;
+    matching += 5;
   }
 
   void _showGameOverDialog(BuildContext context) {
@@ -121,7 +139,7 @@ class Game {
           title: Text('Game Over',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.red[900]!)),
-          content: Text('You ran out of presses!'),
+          content: Text('Your score is ${score}'),
           actions: <Widget>[
             Align(
               alignment: Alignment.center,
