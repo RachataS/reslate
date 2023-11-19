@@ -29,8 +29,13 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   @override
   void initState() {
     super.initState();
+    initializeGame();
+  }
+
+  Future<void> initializeGame() async {
     game = Game(widget.gameLevel);
     duration = const Duration();
+    await game.getWordsList();
     startTimer();
     getBestTime();
   }
@@ -122,7 +127,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                     margin: const EdgeInsets.all(20),
                     color: (game.matching <= 8)
                         ? Colors.red[200]!
-                        : Colors.green[200]!, // Conditional color assignment
+                        : Colors.blue[200]!, // Conditional color assignment
                     child: SizedBox(
                       width: 120,
                       height: 50,

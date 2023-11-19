@@ -93,6 +93,7 @@ class Game {
       final CardItem card2 = cards[visibleCardIndexes[1]];
 
       Future.delayed(const Duration(milliseconds: 1000), () {
+        //edit delay time when open card
         if (card1.check == card2.check) {
           card1.state = CardState.guessed;
           card2.state = CardState.guessed;

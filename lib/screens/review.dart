@@ -61,7 +61,7 @@ class _reviewPageState extends State<reviewPage> {
                   borderRadius: BorderRadius.circular(15)),
               margin: const EdgeInsets.all(20),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 10, 40),
+                padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
                   children: [
                     Text(
@@ -198,7 +198,10 @@ class _reviewPageState extends State<reviewPage> {
                                   transition: Transition.topLevel);
                             }
                           },
-                          child: Text("Let’s play"),
+                          child: Text(
+                            "Let’s play",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue[400],
                               fixedSize: const Size(300, 50),
@@ -216,7 +219,7 @@ class _reviewPageState extends State<reviewPage> {
                   borderRadius: BorderRadius.circular(15)),
               margin: const EdgeInsets.all(20),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 10, 40),
+                padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
                   children: [
                     Text(
@@ -241,14 +244,14 @@ class _reviewPageState extends State<reviewPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
               child: Text(
                 "Note : This mode takes the user's recorded words and turns them into questions.",
                 style: TextStyle(color: Colors.blue[600]!),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -296,7 +299,7 @@ class _reviewPageState extends State<reviewPage> {
                   borderRadius: BorderRadius.circular(15)),
               margin: const EdgeInsets.all(20),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 10, 40),
+                padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
                   children: [
                     Text(
@@ -433,7 +436,10 @@ class _reviewPageState extends State<reviewPage> {
                                   transition: Transition.topLevel);
                             }
                           },
-                          child: Text("Let’s play"),
+                          child: Text(
+                            "Let’s play",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue[400],
                               fixedSize: const Size(300, 50),
@@ -451,7 +457,7 @@ class _reviewPageState extends State<reviewPage> {
                   borderRadius: BorderRadius.circular(15)),
               margin: const EdgeInsets.all(20),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 10, 40),
+                padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
                   children: [
                     Text(
@@ -476,14 +482,14 @@ class _reviewPageState extends State<reviewPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
               child: Text(
                 "Note : This mode takes the words that the user answered incorrectly and turns them into questions.",
                 style: TextStyle(color: Colors.blue[600]!),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
