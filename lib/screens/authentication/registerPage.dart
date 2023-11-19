@@ -60,29 +60,36 @@ class _registerPageState extends State<registerPage> {
                   child: Form(
                     key: formKey,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 100, 10, 20),
+                          padding: const EdgeInsets.only(left: 20, top: 100),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment
+                                .start, // Aligns children to the start (left) of the column
                             children: [
                               Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 20, 200, 20),
+                                padding: const EdgeInsets.only(
+                                    bottom:
+                                        10), // Adjusted EdgeInsets for left alignment
                                 child: Text(
                                   'Reslate',
                                   style: GoogleFonts.josefinSans(
-                                      textStyle: TextStyle(
-                                          fontSize: 50, color: Colors.white)),
+                                    textStyle: TextStyle(
+                                        fontSize: 50, color: Colors.white),
+                                  ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(10, 0, 200, 20),
+                                padding: const EdgeInsets.only(
+                                    bottom:
+                                        10), // Adjusted EdgeInsets for left alignment
                                 child: Text(
                                   'Register\nyour account',
                                   style: GoogleFonts.josefinSans(
-                                      textStyle: TextStyle(
-                                          fontSize: 30, color: Colors.white)),
+                                    textStyle: TextStyle(
+                                        fontSize: 30, color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ],
@@ -108,7 +115,8 @@ class _registerPageState extends State<registerPage> {
                               child: Column(
                                 children: <Widget>[
                                   Container(
-                                    padding: EdgeInsets.all(10),
+                                    padding:
+                                        EdgeInsets.only(right: 10, left: 10),
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(10),
@@ -211,7 +219,7 @@ class _registerPageState extends State<registerPage> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 45,
+                                    height: 30,
                                   ),
                                   Center(
                                     child: ElevatedButton.icon(
@@ -273,8 +281,14 @@ class _registerPageState extends State<registerPage> {
                                             }
                                           }
                                         },
-                                        icon: Icon(Icons.add),
-                                        label: Text("Register")),
+                                        icon: Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                        ),
+                                        label: Text(
+                                          "Register",
+                                          style: TextStyle(color: Colors.white),
+                                        )),
                                   ),
                                   SizedBox(
                                     height: 20,

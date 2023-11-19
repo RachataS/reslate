@@ -57,29 +57,36 @@ class _loginPageState extends State<loginPage> {
                   child: Form(
                     key: formKey,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 100, 10, 20),
+                          padding: const EdgeInsets.only(left: 20, top: 100),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment
+                                .start, // Aligns children to the start (left) of the column
                             children: [
                               Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 20, 200, 20),
+                                padding: const EdgeInsets.only(
+                                    bottom:
+                                        10), // Adjusted EdgeInsets for left alignment
                                 child: Text(
                                   'Reslate',
                                   style: GoogleFonts.josefinSans(
-                                      textStyle: TextStyle(
-                                          fontSize: 50, color: Colors.white)),
+                                    textStyle: TextStyle(
+                                        fontSize: 50, color: Colors.white),
+                                  ),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(10, 0, 200, 20),
+                                padding: const EdgeInsets.only(
+                                    bottom:
+                                        10), // Adjusted EdgeInsets for left alignment
                                 child: Text(
                                   'Login\nyour account',
                                   style: GoogleFonts.josefinSans(
-                                      textStyle: TextStyle(
-                                          fontSize: 30, color: Colors.white)),
+                                    textStyle: TextStyle(
+                                        fontSize: 30, color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ],
@@ -101,11 +108,12 @@ class _loginPageState extends State<loginPage> {
                           child: SingleChildScrollView(
                             child: Padding(
                               padding:
-                                  const EdgeInsets.fromLTRB(30, 50, 30, 20),
+                                  const EdgeInsets.fromLTRB(30, 40, 30, 20),
                               child: Column(
                                 children: <Widget>[
                                   Container(
-                                    padding: EdgeInsets.all(10),
+                                    padding:
+                                        EdgeInsets.only(left: 10, right: 10),
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(10),
@@ -176,20 +184,25 @@ class _loginPageState extends State<loginPage> {
                                           onPressed: () {
                                             handleLogin();
                                           },
-                                          icon: Icon(Icons.login),
-                                          label: Text("Login")),
+                                          icon: Icon(
+                                            Icons.login,
+                                            color: Colors.white,
+                                          ),
+                                          label: Text(
+                                            "Login",
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          )),
                                     ),
                                   ),
                                   Center(
                                     child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          15, 30, 15, 5),
+                                      padding: const EdgeInsets.only(top: 20),
                                       child: Text("OR"),
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        15, 15, 15, 15),
+                                    padding: const EdgeInsets.all(15),
                                     child: ElevatedButton(
                                       onPressed: () {
                                         showDialog(
