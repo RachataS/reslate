@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:reslate/controllers/question_controller.dart';
 import 'package:reslate/models/getDocument.dart';
 import 'package:reslate/screens/review/multipleChoice/components/body.dart';
+import 'dart:math' as math;
 
 class multipleChoice extends StatefulWidget {
   final String? docID;
@@ -46,14 +47,76 @@ class _multipleChoiceState extends State<multipleChoice> {
             backgroundColor: Colors.transparent,
             elevation: 0,
             title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextButton(
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  margin: const EdgeInsets.all(10),
+                  color: Colors.blue[300]!,
+                  child: TextButton(
                     onPressed: _controller.nextQuestion,
-                    child: Text(
-                      "Exit",
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    )),
+                    child: SizedBox(
+                      width: 80,
+                      height: 30,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Transform(
+                            alignment: Alignment.center,
+                            transform:
+                                Matrix4.rotationY(math.pi), // Flip horizontally
+                            child: Icon(
+                              Icons.exit_to_app,
+                              color: Colors.black,
+                              size: 18,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            "Exit",
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(), // Add Spacer to push Helper button to the right
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  margin: const EdgeInsets.all(10),
+                  color: Colors.orange[300]!,
+                  child: TextButton(
+                    onPressed: () {},
+                    child: SizedBox(
+                      width: 80,
+                      height: 30,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.access_alarm_outlined,
+                            color: Colors.black,
+                            size: 18,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            "3/3",
+                            style: TextStyle(color: Colors.black, fontSize: 14),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

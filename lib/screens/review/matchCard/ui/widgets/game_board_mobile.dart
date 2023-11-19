@@ -122,7 +122,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                     margin: const EdgeInsets.all(20),
                     color: (game.matching <= 8)
                         ? Colors.red[200]!
-                        : Colors.blue[200]!, // Conditional color assignment
+                        : Colors.green[200]!, // Conditional color assignment
                     child: SizedBox(
                       width: 120,
                       height: 50,
