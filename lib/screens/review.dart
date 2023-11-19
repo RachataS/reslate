@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:reslate/models/getDocument.dart';
-import 'package:reslate/screens/review/matchCard.dart';
-import 'package:reslate/screens/review/multipleChoice.dart';
+import 'package:reslate/screens/review/multipleChoice/multipleChoice.dart';
+import 'package:reslate/screens/review/matchCard/ui/widgets/game_options.dart';
 
 class reviewPage extends StatefulWidget {
   final String? docID;
@@ -46,7 +46,7 @@ class _reviewPageState extends State<reviewPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 100, 20, 40),
+              padding: const EdgeInsets.fromLTRB(20, 80, 20, 20),
               child: Text(
                 "Saved Words",
                 style: TextStyle(
@@ -61,7 +61,7 @@ class _reviewPageState extends State<reviewPage> {
                   borderRadius: BorderRadius.circular(15)),
               margin: const EdgeInsets.all(20),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 10, 40),
+                padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
                   children: [
                     Text(
@@ -198,7 +198,10 @@ class _reviewPageState extends State<reviewPage> {
                                   transition: Transition.topLevel);
                             }
                           },
-                          child: Text("Let’s play"),
+                          child: Text(
+                            "Let’s play",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue[400],
                               fixedSize: const Size(300, 50),
@@ -216,7 +219,7 @@ class _reviewPageState extends State<reviewPage> {
                   borderRadius: BorderRadius.circular(15)),
               margin: const EdgeInsets.all(20),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 10, 40),
+                padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
                   children: [
                     Text(
@@ -231,22 +234,8 @@ class _reviewPageState extends State<reviewPage> {
                       padding: const EdgeInsets.all(20),
                       child: SizedBox(
                         width: 250,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            SystemSound.play(SystemSoundType.click);
-
-                            //match card random method
-                            Get.to(matchCard(
-                              docID: widget.docID,
-                              savedWordsData: true,
-                            ));
-                          },
-                          child: Text("Let’s play"),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue[400],
-                              fixedSize: const Size(300, 50),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50))),
+                        child: GameOptions(
+                          docID: widget.docID,
                         ),
                       ),
                     ),
@@ -255,14 +244,14 @@ class _reviewPageState extends State<reviewPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
               child: Text(
                 "Note : This mode takes the user's recorded words and turns them into questions.",
                 style: TextStyle(color: Colors.blue[600]!),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -295,7 +284,7 @@ class _reviewPageState extends State<reviewPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 100, 20, 40),
+              padding: const EdgeInsets.fromLTRB(20, 80, 20, 20),
               child: Text(
                 "Wrong Answer",
                 style: TextStyle(
@@ -310,7 +299,7 @@ class _reviewPageState extends State<reviewPage> {
                   borderRadius: BorderRadius.circular(15)),
               margin: const EdgeInsets.all(20),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 10, 40),
+                padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
                   children: [
                     Text(
@@ -447,7 +436,10 @@ class _reviewPageState extends State<reviewPage> {
                                   transition: Transition.topLevel);
                             }
                           },
-                          child: Text("Let’s play"),
+                          child: Text(
+                            "Let’s play",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue[400],
                               fixedSize: const Size(300, 50),
@@ -465,7 +457,7 @@ class _reviewPageState extends State<reviewPage> {
                   borderRadius: BorderRadius.circular(15)),
               margin: const EdgeInsets.all(20),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 10, 40),
+                padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
                   children: [
                     Text(
@@ -480,22 +472,8 @@ class _reviewPageState extends State<reviewPage> {
                       padding: const EdgeInsets.all(20),
                       child: SizedBox(
                         width: 250,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            SystemSound.play(SystemSoundType.click);
-
-                            //match card random method
-                            Get.to(matchCard(
-                              docID: widget.docID,
-                              savedWordsData: false,
-                            ));
-                          },
-                          child: Text("Let’s play"),
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue[400],
-                              fixedSize: const Size(300, 50),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50))),
+                        child: GameOptions(
+                          docID: widget.docID,
                         ),
                       ),
                     ),
@@ -504,14 +482,14 @@ class _reviewPageState extends State<reviewPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
               child: Text(
                 "Note : This mode takes the words that the user answered incorrectly and turns them into questions.",
                 style: TextStyle(color: Colors.blue[600]!),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(top: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

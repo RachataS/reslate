@@ -64,6 +64,10 @@ class _menuPageState extends State<menuPage> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
         child: FloatingActionButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50.0),
+          ),
+          backgroundColor: Colors.blue,
           onPressed: () async {
             // Show a dialog to confirm logout
             showDialog(
@@ -116,7 +120,10 @@ class _menuPageState extends State<menuPage> {
               },
             );
           },
-          child: Icon(Icons.logout),
+          child: Icon(
+            Icons.logout,
+            color: Colors.white,
+          ),
         ),
       ),
     );

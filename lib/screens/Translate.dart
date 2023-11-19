@@ -43,263 +43,276 @@ class _translate_screenState extends State<translate_screen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  width: 120,
-                  child: Text(
-                    appbarInput,
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 19,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(shape: CircleBorder()),
-                  child: CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.blue[400]!,
-                    child: Icon(Icons.swap_horiz_outlined, color: Colors.white),
-                  ),
-                  onPressed: () {
-                    SystemSound.play(SystemSoundType.click);
-                    if (inputLanguage == 'en' || inputLanguage == null) {
-                      language.input = 'th';
-                      language.output = 'en';
-                      language.label = "ภาษาไทย";
-                      language.inbox = "โปรดป้อนข้อความ";
-                      language.outbox = 'Translated';
-                      language.appbarInput = "Thai";
-                      language.appberOutput = "English";
-                    } else {
-                      language.input = 'en';
-                      language.output = 'th';
-                      language.label = "English";
-                      language.inbox = "Enter text";
-                      language.outbox = 'คำแปล';
-                      language.appbarInput = "English";
-                      language.appberOutput = "Thai";
-                    }
-                    changeLanguage();
-                    wordsList.clear();
-                    wordsListWithoutDuplicates.clear();
-                  },
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  width: 120,
-                  child: Text(
-                    appbarOutput,
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 19,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ],
-            )),
-      ),
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-            Colors.blue[600]!,
-            Colors.blue[300]!,
-            Colors.blue[100]!,
-            // Colors.blue[50]!,
-          ]),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 120),
-          child: Card(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-            key: formKey,
-            margin: const EdgeInsets.fromLTRB(12, 12, 12, 120),
-            child: ListView(
-              padding: const EdgeInsets.all(20),
-              children: [
-                Text(label),
-                const SizedBox(
-                  height: 8,
-                ),
-                TextFormField(
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: inputbox,
-                  ),
-                  controller: rawtxt,
-                  maxLines: null,
-                  onChanged: (rawtxt) async {
-                    if (rawtxt == null || rawtxt == '') {
-                      setState(() {
-                        translated = outputbox;
-                      });
-                      wordsList.clear();
-                      wordsListWithoutDuplicates.clear();
-                    } else {
-                      try {
-                        formKey.currentState?.save();
-                        await translator
-                            .translate('${rawtxt}',
-                                from: inputLanguage, to: outputLanguage)
-                            .then((translation) {
-                          // Future.delayed(Duration(milliseconds: 500), () {
-                          setState(() {
-                            translated = translation.toString();
-                            if (rawtxt.contains(' ')) {
-                              wordsList = rawtxt.toLowerCase().split(' ');
-                            }
-                            // });
-                          });
-                        });
-                      } catch (e) {
-                        print(e);
-                      }
-                    }
-                    // Split special characters and update the list
-                    wordsList = splitSpecialChars(wordsList);
-                    // Deduplicate the list
-                    wordsListWithoutDuplicates =
-                        List<String>.from(wordsList.toSet());
-                    wordsListWithoutDuplicates.sort();
-                  },
-                ),
-                const Divider(
-                  height: 32,
-                ),
-                Text(
-                  translated,
-                  style: const TextStyle(
-                      fontSize: 28,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        for (int i = 0;
-                            i < wordsListWithoutDuplicates.length;
-                            i += 5)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              for (int j = i;
-                                  j < i + 5 &&
-                                      j < wordsListWithoutDuplicates.length;
-                                  j++)
-                                Flexible(
-                                  child: Stack(
-                                    alignment: Alignment.topRight,
-                                    children: [
-                                      SizedBox(
-                                        // height: 55,
-                                        width: 80,
-                                        child: TextButton(
-                                          onPressed: () async {
-                                            setState(() {
-                                              if (selecttxt.contains(
-                                                  wordsListWithoutDuplicates[
-                                                      j])) {
-                                                selecttxt.remove(
-                                                    wordsListWithoutDuplicates[
-                                                        j]);
-                                                checkWords--;
-                                              } else {
-                                                selecttxt.add(
-                                                    wordsListWithoutDuplicates[
-                                                        j]);
-                                                checkWords++;
-                                              }
-                                            });
-                                          },
-                                          child: Text(
-                                            wordsListWithoutDuplicates[j],
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              color: selecttxt.contains(
-                                                      wordsListWithoutDuplicates[
-                                                          j])
-                                                  ? Colors.blue[400]
-                                                  : Colors.black54,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      if (selecttxt.contains(
-                                          wordsListWithoutDuplicates[j]))
-                                        Container(
-                                          padding: EdgeInsets.all(4),
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.red,
-                                          ),
-                                          child: Text(
-                                            (selecttxt.indexOf(
-                                                        wordsListWithoutDuplicates[
-                                                            j]) +
-                                                    1)
-                                                .toString(),
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                            ],
-                          ),
-                      ],
+    final Size screenSize = MediaQuery.of(context).size;
+    final double appBarHeight = kToolbarHeight;
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          title: Card(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    width: screenSize.width / 4,
+                    child: Text(
+                      appbarInput,
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
-                ),
-              ],
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(shape: CircleBorder()),
+                    child: CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.blue[400]!,
+                      child:
+                          Icon(Icons.swap_horiz_outlined, color: Colors.white),
+                    ),
+                    onPressed: () {
+                      SystemSound.play(SystemSoundType.click);
+                      if (inputLanguage == 'en' || inputLanguage == null) {
+                        language.input = 'th';
+                        language.output = 'en';
+                        language.label = "ภาษาไทย";
+                        language.inbox = "โปรดป้อนข้อความ";
+                        language.outbox = 'Translated';
+                        language.appbarInput = "Thai";
+                        language.appberOutput = "English";
+                      } else {
+                        language.input = 'en';
+                        language.output = 'th';
+                        language.label = "English";
+                        language.inbox = "Enter text";
+                        language.outbox = 'คำแปล';
+                        language.appbarInput = "English";
+                        language.appberOutput = "Thai";
+                      }
+                      changeLanguage();
+                      wordsList.clear();
+                      wordsListWithoutDuplicates.clear();
+                    },
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    width: screenSize.width / 4,
+                    child: Text(
+                      appbarOutput,
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ],
+              )),
+        ),
+        body: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+              Colors.blue[600]!,
+              Colors.blue[300]!,
+              Colors.blue[100]!,
+              // Colors.blue[50]!,
+            ]),
+          ),
+          child: Padding(
+            padding: EdgeInsets.only(top: screenSize.height * 0.12),
+            child: Card(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              key: formKey,
+              margin: const EdgeInsets.fromLTRB(12, 12, 12, 120),
+              child: ListView(
+                padding: const EdgeInsets.all(20),
+                children: [
+                  Text(label),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  TextFormField(
+                    style: const TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: inputbox,
+                    ),
+                    controller: rawtxt,
+                    maxLines: null,
+                    onChanged: (rawtxt) async {
+                      if (rawtxt == null || rawtxt == '') {
+                        setState(() {
+                          translated = outputbox;
+                        });
+                        wordsList.clear();
+                        wordsListWithoutDuplicates.clear();
+                      } else {
+                        try {
+                          formKey.currentState?.save();
+                          await translator
+                              .translate('${rawtxt}',
+                                  from: inputLanguage, to: outputLanguage)
+                              .then((translation) {
+                            // Future.delayed(Duration(milliseconds: 500), () {
+                            setState(() {
+                              translated = translation.toString();
+                              if (rawtxt.contains(' ')) {
+                                wordsList = rawtxt.toLowerCase().split(' ');
+                              }
+                              // });
+                            });
+                          });
+                        } catch (e) {
+                          print(e);
+                        }
+                      }
+                      // Split special characters and update the list
+                      wordsList = splitSpecialChars(wordsList);
+                      // Deduplicate the list
+                      wordsListWithoutDuplicates =
+                          List<String>.from(wordsList.toSet());
+                      wordsListWithoutDuplicates.sort();
+                    },
+                  ),
+                  const Divider(
+                    height: 32,
+                  ),
+                  Text(
+                    translated,
+                    style: const TextStyle(
+                        fontSize: 28,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          for (int i = 0;
+                              i < wordsListWithoutDuplicates.length;
+                              i += 5)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                for (int j = i;
+                                    j < i + 5 &&
+                                        j < wordsListWithoutDuplicates.length;
+                                    j++)
+                                  Flexible(
+                                    child: Stack(
+                                      alignment: Alignment.topRight,
+                                      children: [
+                                        SizedBox(
+                                          // height: 55,
+                                          width: 80,
+                                          child: TextButton(
+                                            onPressed: () async {
+                                              setState(() {
+                                                if (selecttxt.contains(
+                                                    wordsListWithoutDuplicates[
+                                                        j])) {
+                                                  selecttxt.remove(
+                                                      wordsListWithoutDuplicates[
+                                                          j]);
+                                                  checkWords--;
+                                                } else {
+                                                  selecttxt.add(
+                                                      wordsListWithoutDuplicates[
+                                                          j]);
+                                                  checkWords++;
+                                                }
+                                              });
+                                            },
+                                            child: Text(
+                                              wordsListWithoutDuplicates[j],
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: selecttxt.contains(
+                                                        wordsListWithoutDuplicates[
+                                                            j])
+                                                    ? Colors.blue[400]
+                                                    : Colors.black54,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        if (selecttxt.contains(
+                                            wordsListWithoutDuplicates[j]))
+                                          Container(
+                                            padding: EdgeInsets.all(4),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.red,
+                                            ),
+                                            child: Text(
+                                              (selecttxt.indexOf(
+                                                          wordsListWithoutDuplicates[
+                                                              j]) +
+                                                      1)
+                                                  .toString(),
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                              ],
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
-        child: FloatingActionButton(
-          // backgroundColor: Colors.white,
-          onPressed: () async {
-            if (selecttxt.length > 0) {
-              dialogTranslate();
-            } else {
-              QuerySnapshot<Map<String, dynamic>> oldWordLengthQury =
-                  await FirebaseFirestore.instance
-                      .collection("Profile")
-                      .doc(widget.docID)
-                      .collection("savedWords")
-                      .get();
-              var oldWordLength = oldWordLengthQury.size;
-              saveWords(rawtxt.text, translated, oldWordLength);
-            }
-          },
-          child: Icon(
-            selecttxt.isNotEmpty ? Icons.translate : Icons.bookmark,
-            // color: Colors.blue,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
+          child: FloatingActionButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50.0), // Set a circular shape
+            ),
+            backgroundColor: Colors.blue,
+            onPressed: () async {
+              if (selecttxt.length > 0) {
+                dialogTranslate();
+              } else {
+                QuerySnapshot<Map<String, dynamic>> oldWordLengthQury =
+                    await FirebaseFirestore.instance
+                        .collection("Profile")
+                        .doc(widget.docID)
+                        .collection("savedWords")
+                        .get();
+                var oldWordLength = oldWordLengthQury.size;
+                saveWords(rawtxt.text, translated, oldWordLength);
+              }
+            },
+            child: Icon(
+              selecttxt.isNotEmpty ? Icons.translate : Icons.bookmark,
+              color: Colors.white,
+            ),
           ),
         ),
       ),

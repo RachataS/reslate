@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:reslate/models/getDocument.dart';
 import '/models/Questions.dart';
-import '/screens/score/score_screen.dart';
+import '../screens/review/multipleChoice/score_screen.dart';
 
 // We use get package for our state management
 
