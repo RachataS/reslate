@@ -97,6 +97,9 @@ class _ScoreScreenState extends State<ScoreScreen> {
               ),
               child: Center(
                 child: Card(
+                  // color: (_qnController.correctAnswer < maxQuestion)
+                  //     ? Colors.red[200]
+                  //     : Colors.blue[200]!,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -167,11 +170,13 @@ class _ScoreScreenState extends State<ScoreScreen> {
                               onPressed: () {
                                 _qnController.correctAnswer = 0;
                                 _qnController.resetQuiz();
+                                _qnController.stopEverything();
+
                                 Get.to(bottombar(),
                                     transition: Transition.topLevel);
                               },
                               child: Text(
-                                "Return",
+                                "Exit",
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),

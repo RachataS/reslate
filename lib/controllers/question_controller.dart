@@ -387,12 +387,115 @@ class QuestionController extends GetxController
     _animationController.stop();
   }
 
+  void stopEverything() {
+    // Stop the animation controller
+    _animationController.stop();
+
+    // Stop the timer
+    _animationController.dispose();
+  }
+
   void startTimer() {
-    // Start the animation again
+    _animationController =
+        AnimationController(duration: Duration(seconds: 15), vsync: this);
+    _animation = Tween<double>(begin: 1, end: 0).animate(_animationController)
+      ..addListener(() {
+        update();
+      });
     _animationController.forward().whenComplete(nextQuestion);
   }
 
   void getNumberOfQuestion(getnumber) {
     numberOfQuestion = getnumber;
+  }
+
+  Future<void> showConfirmationDialog(
+      int answerCorrectCount, int correctStrike) async {
+    final subcollectionReference = FirebaseFirestore.instance
+        .collection('Profile')
+        .doc(docID)
+        .collection("savedWords");
+
+    await Get.dialog(
+      AlertDialog(
+        backgroundColor: Colors.amber[100]!,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+        title: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.star,
+                  color: Colors.yellow[700]!,
+                  size: 50,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Colors.yellow[700]!,
+                  size: 50,
+                ),
+                Icon(
+                  Icons.star,
+                  color: Colors.yellow[700]!,
+                  size: 50,
+                ),
+              ],
+            ),
+            Text('You have answered this word correctly 3 times.'),
+          ],
+        ),
+        content: Text('Do you want to delete this word?'),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  await subcollectionReference
+                      .doc('${_questions[_questionNumber.value - 1].question}')
+                      .update({
+                    'answerCorrect': answerCorrectCount = 0,
+                    "correctStrike": correctStrike = 0,
+                  });
+                  Get.back(); // Close the dialog
+                  _animationController.reset();
+                  _animationController.forward().whenComplete(nextQuestion);
+                },
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final savedWordsQuerySnapshot = await FirebaseFirestore
+                      .instance
+                      .collection("Profile")
+                      .doc(docID)
+                      .collection("savedWords")
+                      .get();
+
+                  await FirebaseFirestore.instance
+                      .collection('Profile')
+                      .doc(docID)
+                      .update({'wordLength': savedWordsQuerySnapshot.size - 1});
+
+                  await subcollectionReference
+                      .doc('${_questions[_questionNumber.value - 1].question}')
+                      .delete();
+                  Get.back(); // Close the dialog
+                  _animationController.reset();
+                  _animationController.forward().whenComplete(nextQuestion);
+                },
+                child: Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

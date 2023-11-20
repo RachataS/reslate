@@ -116,104 +116,81 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RestartGame(
-                    isGameOver: game.isGameOver,
-                    pauseGame: () => pauseTimer(),
-                    restartGame: () => _resetGame(),
-                    continueGame: () => startTimer(),
-                    color: Colors.amberAccent[700]!,
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                  Expanded(
+                    child: RestartGame(
+                      isGameOver: game.isGameOver,
+                      pauseGame: () => pauseTimer(),
+                      restartGame: () => _resetGame(),
+                      continueGame: () => startTimer(),
+                      color: Colors.amberAccent[700]!,
                     ),
-                    margin: const EdgeInsets.all(20),
-                    color: Colors.amber[200]!,
-                    child: SizedBox(
-                      width: 100,
-                      height: 50,
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.star,
-                              color: Colors.amber[800]!,
-                              size: 22,
-                            ),
-                            SizedBox(width: 10),
-                            Text(
-                              '${game.score}',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
+                  ),
+                  Flexible(
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                    ),
-                  ),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    margin: const EdgeInsets.all(10),
-                    color: (game.matching <= 8)
-                        ? Colors.red[200]!
-                        : Colors.green[200]!,
-                    child: TextButton(
-                      onPressed: () {},
+                      margin: const EdgeInsets.all(20),
+                      color: Colors.amber[200]!,
                       child: SizedBox(
                         width: 100,
-                        height: 30,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset('assets/icons/card.png',
-                                width: 26, height: 26),
-                            SizedBox(width: 10),
-                            Text(
-                              '${game.matching}',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                        height: 50,
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.star,
+                                color: Colors.amber[800]!,
+                                size: 22,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                '${game.score}',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  // Card(
-                  //   shape: RoundedRectangleBorder(
-                  //     borderRadius: BorderRadius.circular(15),
-                  //   ),
-                  //   margin: const EdgeInsets.all(20),
-                  //   color: (game.matching <= 8)
-                  //       ? Colors.red[200]!
-                  //       : Colors.green[200]!, // Conditional color assignment
-                  //   child: SizedBox(
-                  //     width: 90,
-                  //     height: 50,
-                  //     child: Center(
-                  //       child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           Image.asset('assets/icons/card.png',
-                  //               width: 26, height: 26),
-                  //           SizedBox(width: 10),
-                  //           Text(
-                  //             '${game.matching}',
-                  //             style: TextStyle(
-                  //                 fontSize: 18, fontWeight: FontWeight.bold),
-                  //             textAlign: TextAlign.center,
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  Expanded(
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      margin: const EdgeInsets.all(10),
+                      color: (game.matching <= 8)
+                          ? Colors.red[200]!
+                          : Colors.green[200]!,
+                      child: TextButton(
+                        onPressed: () {},
+                        child: SizedBox(
+                          width: 100,
+                          height: 30,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('assets/icons/card.png',
+                                  width: 26, height: 26),
+                              SizedBox(width: 10),
+                              Text(
+                                '${game.matching}',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               Expanded(

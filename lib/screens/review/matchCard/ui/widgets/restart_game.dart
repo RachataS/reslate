@@ -59,7 +59,7 @@ class RestartGame extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.settings,
+                Icons.pause,
                 color: Colors.black,
                 size: 22,
               ),
@@ -67,7 +67,7 @@ class RestartGame extends StatelessWidget {
                 width: 8,
               ),
               Text(
-                'Setting',
+                'Pause',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 18,

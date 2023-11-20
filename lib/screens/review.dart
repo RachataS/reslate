@@ -251,7 +251,7 @@ class _reviewPageState extends State<reviewPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 5),
+              padding: const EdgeInsets.only(bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -489,7 +489,7 @@ class _reviewPageState extends State<reviewPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 5),
+              padding: const EdgeInsets.only(bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
