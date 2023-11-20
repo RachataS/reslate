@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reslate/screens/bottomBar.dart';
@@ -23,11 +21,9 @@ class RestartGame extends StatelessWidget {
 
   Future<void> showGameControls(BuildContext context) async {
     pauseGame();
-    var value = await showModalBottomSheet<bool>(
-      isScrollControlled: true,
-      elevation: 5,
+    var value = await showDialog<bool>(
       context: context,
-      builder: (sheetContext) {
+      builder: (context) {
         return const GameControlsBottomSheet();
       },
     );
@@ -41,20 +37,47 @@ class RestartGame extends StatelessWidget {
     }
   }
 
-  void navigateback(BuildContext context) {
+  void navigateBack(BuildContext context) {
     Get.to(bottombar(), transition: Transition.topLevel);
   }
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      color: color,
-      icon: (isGameOver)
-          ? const Icon(Icons.replay_circle_filled)
-          : const Icon(Icons.pause_circle_filled),
-      iconSize: 40,
-      onPressed: () =>
-          isGameOver ? navigateback(context) : showGameControls(context),
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(50),
+      ),
+      margin: const EdgeInsets.all(10),
+      color: Colors.blue[300]!,
+      child: TextButton(
+        onPressed: () =>
+            isGameOver ? navigateBack(context) : showGameControls(context),
+        child: SizedBox(
+          width: 100,
+          height: 30,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.settings,
+                color: Colors.black,
+                size: 22,
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Text(
+                'Setting',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

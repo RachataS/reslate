@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:reslate/screens/bottomBar.dart';
 import 'package:reslate/screens/review/multipleChoice/components/progress_bar.dart';
 import 'package:reslate/screens/review/multipleChoice/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:reslate/models/game.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/memory_card.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/restart_game.dart';
+import 'dart:math' as math;
 
 class GameBoardMobile extends StatefulWidget {
   const GameBoardMobile({
@@ -110,44 +113,15 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
               const SizedBox(
                 height: 20,
               ),
-              RestartGame(
-                isGameOver: game.isGameOver,
-                pauseGame: () => pauseTimer(),
-                restartGame: () => _resetGame(),
-                continueGame: () => startTimer(),
-                color: Colors.amberAccent[700]!,
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    margin: const EdgeInsets.all(20),
-                    color: (game.matching <= 8)
-                        ? Colors.red[200]!
-                        : Colors.blue[200]!, // Conditional color assignment
-                    child: SizedBox(
-                      width: 120,
-                      height: 50,
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset('assets/icons/card.png',
-                                width: 30, height: 30),
-                            SizedBox(width: 10),
-                            Text(
-                              '${game.matching}',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  RestartGame(
+                    isGameOver: game.isGameOver,
+                    pauseGame: () => pauseTimer(),
+                    restartGame: () => _resetGame(),
+                    continueGame: () => startTimer(),
+                    color: Colors.amberAccent[700]!,
                   ),
                   Card(
                     shape: RoundedRectangleBorder(
@@ -156,7 +130,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                     margin: const EdgeInsets.all(20),
                     color: Colors.amber[200]!,
                     child: SizedBox(
-                      width: 120,
+                      width: 100,
                       height: 50,
                       child: Center(
                         child: Row(
@@ -165,12 +139,13 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                             Icon(
                               Icons.star,
                               color: Colors.amber[800]!,
+                              size: 22,
                             ),
                             SizedBox(width: 10),
                             Text(
                               '${game.score}',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                                  fontSize: 18, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.center,
                             ),
                           ],
@@ -178,6 +153,67 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                       ),
                     ),
                   ),
+                  Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    margin: const EdgeInsets.all(10),
+                    color: (game.matching <= 8)
+                        ? Colors.red[200]!
+                        : Colors.green[200]!,
+                    child: TextButton(
+                      onPressed: () {},
+                      child: SizedBox(
+                        width: 100,
+                        height: 30,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset('assets/icons/card.png',
+                                width: 26, height: 26),
+                            SizedBox(width: 10),
+                            Text(
+                              '${game.matching}',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Card(
+                  //   shape: RoundedRectangleBorder(
+                  //     borderRadius: BorderRadius.circular(15),
+                  //   ),
+                  //   margin: const EdgeInsets.all(20),
+                  //   color: (game.matching <= 8)
+                  //       ? Colors.red[200]!
+                  //       : Colors.green[200]!, // Conditional color assignment
+                  //   child: SizedBox(
+                  //     width: 90,
+                  //     height: 50,
+                  //     child: Center(
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           Image.asset('assets/icons/card.png',
+                  //               width: 26, height: 26),
+                  //           SizedBox(width: 10),
+                  //           Text(
+                  //             '${game.matching}',
+                  //             style: TextStyle(
+                  //                 fontSize: 18, fontWeight: FontWeight.bold),
+                  //             textAlign: TextAlign.center,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               Expanded(

@@ -40,6 +40,7 @@ class _translate_screenState extends State<translate_screen> {
   var appbarOutput = "Thai";
   List<String> wordsListWithoutDuplicates = [];
   int checkWords = 0;
+  bool isButtonDisabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -289,32 +290,42 @@ class _translate_screenState extends State<translate_screen> {
           ),
         ),
         floatingActionButton: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
-          child: FloatingActionButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50.0), // Set a circular shape
-            ),
-            backgroundColor: Colors.blue,
-            onPressed: () async {
-              if (selecttxt.length > 0) {
-                dialogTranslate();
-              } else {
-                QuerySnapshot<Map<String, dynamic>> oldWordLengthQury =
-                    await FirebaseFirestore.instance
-                        .collection("Profile")
-                        .doc(widget.docID)
-                        .collection("savedWords")
-                        .get();
-                var oldWordLength = oldWordLengthQury.size;
-                saveWords(rawtxt.text, translated, oldWordLength);
-              }
-            },
-            child: Icon(
-              selecttxt.isNotEmpty ? Icons.translate : Icons.bookmark,
-              color: Colors.white,
-            ),
-          ),
-        ),
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
+            child: FloatingActionButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50.0),
+              ),
+              backgroundColor: Colors.blue,
+              onPressed: () async {
+                if (!isButtonDisabled) {
+                  // Disable the button
+                  setState(() {
+                    isButtonDisabled = true;
+                  });
+
+                  if (selecttxt.length > 0) {
+                    await dialogTranslate();
+                  } else {
+                    QuerySnapshot<Map<String, dynamic>> oldWordLengthQury =
+                        await FirebaseFirestore.instance
+                            .collection("Profile")
+                            .doc(widget.docID)
+                            .collection("savedWords")
+                            .get();
+                    var oldWordLength = oldWordLengthQury.size;
+                    await saveWords(rawtxt.text, translated, oldWordLength);
+                  }
+
+                  setState(() {
+                    isButtonDisabled = false;
+                  });
+                }
+              },
+              child: Icon(
+                selecttxt.isNotEmpty ? Icons.translate : Icons.bookmark,
+                color: Colors.white,
+              ),
+            )),
       ),
     );
   }
