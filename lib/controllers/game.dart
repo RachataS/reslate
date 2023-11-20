@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reslate/models/card_item.dart';
@@ -23,6 +24,7 @@ class Game {
 
   int matching = 24;
   int score = 0;
+  int topScore = 0;
 
   Future<void> getWordsList() async {
     try {
@@ -125,10 +127,11 @@ class Game {
 
     // Reset the game state
     isGameOver = false;
-    matching += 5;
+    matching += 10;
   }
 
-  void _showGameOverDialog(BuildContext context) {
+  void _showGameOverDialog(BuildContext context) async {
+    await fetchTopScore();
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -140,7 +143,22 @@ class Game {
           title: Text('Game Over',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.red[900]!)),
-          content: Text('Your score is ${score}'),
+          content: SizedBox(
+            height: 150,
+            child: Column(children: [
+              Text(
+                'Top Score\n${topScore}',
+                style: TextStyle(fontSize: 30),
+                textAlign: TextAlign.center,
+              ),
+              Spacer(),
+              Text(
+                'Your score is ${score}',
+                style: TextStyle(fontSize: 22),
+                textAlign: TextAlign.center,
+              )
+            ]),
+          ),
           actions: <Widget>[
             Align(
               alignment: Alignment.center,
@@ -206,5 +224,23 @@ class Game {
 
   bool _isGameOver() {
     return cards.every((card) => card.state == CardState.guessed);
+  }
+
+  Future<void> fetchTopScore() async {
+    DocumentSnapshot<Map<String, dynamic>> userDocument =
+        await FirebaseFirestore.instance.collection("Profile").doc(docID).get();
+
+    if (userDocument.exists) {
+      topScore = await userDocument.data()?['cardTopScore'] ?? 0;
+      print(topScore);
+      if (topScore < score) {
+        topScore = score;
+
+        await FirebaseFirestore.instance
+            .collection("Profile")
+            .doc(docID)
+            .update({'cardTopScore': topScore});
+      }
+    }
   }
 }

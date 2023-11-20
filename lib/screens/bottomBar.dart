@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:reslate/screens/authentication/login.dart';
 import 'package:reslate/screens/menu.dart';
-import 'package:reslate/screens/review.dart';
+import 'package:reslate/screens/review/review.dart';
 import 'package:reslate/screens/Translate.dart';
 
 import '../models/getDocument.dart';

@@ -84,7 +84,7 @@ class _translate_screenState extends State<translate_screen> {
                           Icon(Icons.swap_horiz_outlined, color: Colors.white),
                     ),
                     onPressed: () {
-                      SystemSound.play(SystemSoundType.click);
+                      // SystemSound.play(SystemSoundType.click);
                       if (inputLanguage == 'en' || inputLanguage == null) {
                         language.input = 'th';
                         language.output = 'en';

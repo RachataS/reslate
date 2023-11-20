@@ -291,6 +291,7 @@ class _loginPageState extends State<loginPage> {
       "password": password,
       "wordLength": 0,
       "topScore": 0,
+      "cardTopScore": 0,
     });
   }
 

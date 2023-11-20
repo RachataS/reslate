@@ -171,7 +171,7 @@ class _reviewPageState extends State<reviewPage> {
                         width: 250,
                         child: ElevatedButton(
                           onPressed: () async {
-                            SystemSound.play(SystemSoundType.click);
+                            // SystemSound.play(SystemSoundType.click);
 
                             showDialog(
                               context: context,
@@ -409,7 +409,7 @@ class _reviewPageState extends State<reviewPage> {
                         width: 250,
                         child: ElevatedButton(
                           onPressed: () async {
-                            SystemSound.play(SystemSoundType.click);
+                            // SystemSound.play(SystemSoundType.click);
 
                             showDialog(
                               context: context,

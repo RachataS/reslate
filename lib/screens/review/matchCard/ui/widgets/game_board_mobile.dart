@@ -5,7 +5,7 @@ import 'package:reslate/screens/bottomBar.dart';
 import 'package:reslate/screens/review/multipleChoice/components/progress_bar.dart';
 import 'package:reslate/screens/review/multipleChoice/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:reslate/models/game.dart';
+import 'package:reslate/controllers/game.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/memory_card.dart';
 import 'package:reslate/screens/review/matchCard/ui/widgets/restart_game.dart';
 import 'dart:math' as math;
