@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reslate/controllers/question_controller.dart';
-import 'package:reslate/models/getDocument.dart';
+import 'package:reslate/controllers/getDocument.dart';
 import 'package:reslate/screens/review/multipleChoice/components/body.dart';
 import 'dart:math' as math;
 

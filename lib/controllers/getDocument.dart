@@ -107,6 +107,7 @@ class firebaseDoc {
       Map<String, dynamic> data = doc.data();
       savedWords.add(data);
     });
+    savedWords.shuffle(Random());
 
     if (savedWords.isNotEmpty) {
       // Sort the savedWords list based on the chosen field and order

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
-import 'package:reslate/models/getDocument.dart';
+import 'package:reslate/controllers/getDocument.dart';
+
 import '/models/Questions.dart';
 import '../screens/review/multipleChoice/score_screen.dart';
 

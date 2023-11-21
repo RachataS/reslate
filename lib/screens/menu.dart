@@ -7,7 +7,7 @@ import 'package:reslate/models/profile.dart';
 import 'package:reslate/models/signOut.dart';
 import 'package:reslate/screens/authentication/login.dart';
 
-import '../models/getDocument.dart';
+import '../controllers/getDocument.dart';
 
 class menuPage extends StatefulWidget {
   final Profile profile;
@@ -33,32 +33,60 @@ class _menuPageState extends State<menuPage> {
     var words = data?['wordLength'];
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(30, 120, 10, 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Builder(builder: (context) {
-              return CircleAvatar(
-                backgroundColor: Colors.blue[400],
-                radius: 30,
-                child: Text(
-                  '${words ?? '0'}',
-                  style: TextStyle(fontSize: 25, color: Colors.white),
-                ),
-              );
-            }),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                child: Text(
-                  'Username : ${username ?? 'Loading...'}\nEmail : ${email ?? 'Loading...'}',
-                  style: TextStyle(fontSize: 16),
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+            Colors.blue[600]!,
+            Colors.blue[300]!,
+            Colors.blue[100]!,
+            // Colors.blue[50]!,
+          ]),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  // color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  margin: const EdgeInsets.all(5),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Builder(builder: (context) {
+                          return CircleAvatar(
+                            backgroundColor: Colors.blue[400],
+                            radius: 30,
+                            child: Text(
+                              '${words ?? '0'}',
+                              style:
+                                  TextStyle(fontSize: 25, color: Colors.white),
+                            ),
+                          );
+                        }),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: Text(
+                              'Username : ${username ?? 'Loading...'}\nEmail : ${email ?? 'Loading...'}',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       floatingActionButton: Padding(

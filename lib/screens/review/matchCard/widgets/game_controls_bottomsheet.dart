@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reslate/controllers/game.dart';
 import 'package:reslate/screens/bottomBar.dart';
-import 'package:reslate/screens/review/matchCard/ui/widgets/game_button.dart';
-import 'package:reslate/screens/review/matchCard/utils/constants.dart';
+import 'package:reslate/screens/review/matchCard/widgets/game_button.dart';
+import 'package:reslate/screens/review/matchCard/constants.dart';
 
 class GameControlsBottomSheet extends StatelessWidget {
   const GameControlsBottomSheet({
@@ -52,14 +53,6 @@ class GameControlsBottomSheet extends StatelessWidget {
               const SizedBox(height: 10),
               GameButton(
                 onPressed: () {
-                  // Navigator.of(context).pushAndRemoveUntil(
-                  //   MaterialPageRoute(
-                  //     builder: (BuildContext context) {
-                  //       return const StartUpPage();
-                  //     },
-                  //   ),
-                  //   (Route<dynamic> route) => false,
-                  // );
                   Get.to(bottombar(), transition: Transition.topLevel);
                 },
                 title: 'QUIT',

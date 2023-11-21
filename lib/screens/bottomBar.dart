@@ -6,7 +6,7 @@ import 'package:reslate/screens/menu.dart';
 import 'package:reslate/screens/review/review.dart';
 import 'package:reslate/screens/Translate.dart';
 
-import '../models/getDocument.dart';
+import '../controllers/getDocument.dart';
 import '../models/profile.dart';
 
 class bottombar extends StatefulWidget {

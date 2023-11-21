@@ -18,7 +18,8 @@ class MemoryCard extends StatelessWidget {
 
   void _handleCardTap() {
     if (card.state == CardState.hidden) {
-      Timer(const Duration(milliseconds: 100), () {
+      Timer(const Duration(milliseconds: 0), () {
+        //edit open card delay time
         onCardPressed(index);
       });
     }

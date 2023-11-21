@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reslate/screens/review/matchCard/ui/widgets/game_board_mobile.dart';
+import 'package:reslate/screens/review/matchCard/widgets/game_board_mobile.dart';
 
 class MemoryMatchPage extends StatelessWidget {
   const MemoryMatchPage({

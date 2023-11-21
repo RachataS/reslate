@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:reslate/models/getDocument.dart';
-import 'package:reslate/screens/review/matchCard/ui/pages/memory_match_page.dart';
-import 'package:reslate/screens/review/matchCard/ui/widgets/game_button.dart';
-import 'package:reslate/screens/review/matchCard/utils/constants.dart';
+import 'package:reslate/controllers/getDocument.dart';
+import 'package:reslate/screens/review/matchCard/memory_match_page.dart';
+import 'package:reslate/screens/review/matchCard/widgets/game_button.dart';
+import 'package:reslate/screens/review/matchCard/constants.dart';
 
 class GameOptions extends StatelessWidget {
   final docID;

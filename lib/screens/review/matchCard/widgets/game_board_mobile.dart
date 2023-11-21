@@ -6,8 +6,8 @@ import 'package:reslate/screens/review/multipleChoice/components/progress_bar.da
 import 'package:reslate/screens/review/multipleChoice/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:reslate/controllers/game.dart';
-import 'package:reslate/screens/review/matchCard/ui/widgets/memory_card.dart';
-import 'package:reslate/screens/review/matchCard/ui/widgets/restart_game.dart';
+import 'package:reslate/screens/review/matchCard/widgets/memory_card.dart';
+import 'package:reslate/screens/review/matchCard/widgets/restart_game.dart';
 import 'dart:math' as math;
 
 class GameBoardMobile extends StatefulWidget {

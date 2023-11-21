@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:reslate/models/getDocument.dart';
+import 'package:reslate/controllers/getDocument.dart';
 import 'package:reslate/screens/review/multipleChoice/multipleChoice.dart';
-import 'package:reslate/screens/review/matchCard/ui/widgets/game_options.dart';
+import 'package:reslate/screens/review/matchCard/widgets/game_options.dart';
 
 class reviewPage extends StatefulWidget {
   final String? docID;
@@ -244,10 +244,11 @@ class _reviewPageState extends State<reviewPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+              padding: const EdgeInsets.only(
+                  top: 10, left: 20, right: 20, bottom: 10),
               child: Text(
                 "Note : This mode takes the user's recorded words and turns them into questions.",
-                style: TextStyle(color: Colors.blue[600]!),
+                style: TextStyle(color: Colors.blue[600]!, fontSize: 13),
               ),
             ),
             Padding(
@@ -482,10 +483,11 @@ class _reviewPageState extends State<reviewPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
+              padding: const EdgeInsets.only(
+                  top: 10, left: 20, right: 20, bottom: 10),
               child: Text(
                 "Note : This mode takes the words that the user answered incorrectly and turns them into questions.",
-                style: TextStyle(color: Colors.blue[600]!),
+                style: TextStyle(color: Colors.blue[600]!, fontSize: 13),
               ),
             ),
             Padding(

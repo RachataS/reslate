@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reslate/screens/bottomBar.dart';
-import 'package:reslate/screens/review/matchCard/ui/widgets/game_controls_bottomsheet.dart';
+import 'package:reslate/screens/review/matchCard/widgets/game_controls_bottomsheet.dart';
 
 class RestartGame extends StatelessWidget {
   const RestartGame({

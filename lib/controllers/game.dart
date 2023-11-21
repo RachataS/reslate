@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reslate/models/card_item.dart';
-import 'package:reslate/models/getDocument.dart';
+import 'package:reslate/controllers/getDocument.dart';
 import 'package:reslate/screens/bottomBar.dart';
 
 class Game {
