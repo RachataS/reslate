@@ -189,6 +189,7 @@ class _WordsCollectionState extends State<WordsCollection> {
                   await subcollectionReference
                       .doc('${filteredWords[index]['question']}')
                       .delete();
+                  getWords();
                   Get.back(); // Close the dialog
                 },
                 child: Text(
