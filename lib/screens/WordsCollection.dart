@@ -14,6 +14,7 @@ class _WordsCollectionState extends State<WordsCollection> {
   firebaseDoc firebasedoc = firebaseDoc();
   var docID, WordsCollection;
   List<dynamic> filteredWords = [];
+  List<Map<String, dynamic>> selectedWords = [];
 
   @override
   void initState() {
@@ -76,62 +77,97 @@ class _WordsCollectionState extends State<WordsCollection> {
                   child: ListView.builder(
                     itemCount: filteredWords.length,
                     itemBuilder: (context, index) {
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        margin: const EdgeInsets.all(5),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      '${index + 1} : ${filteredWords[index]['question']}',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                      return SizedBox(
+                        height: 135,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          margin: const EdgeInsets.all(5),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        '${index + 1} : ${filteredWords[index]['question']}',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      '${filteredWords[index]['thai']}',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            '${filteredWords[index]['thai']}',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          Spacer(),
+                                          IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                toggleSelectWord(index);
+                                              });
+                                            },
+                                            icon: Icon(Icons
+                                                .check_circle_outline_outlined),
+                                            color: isSelected(index)
+                                                ? Colors
+                                                    .green // Change to green when selected
+                                                : Colors.grey,
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      'Correct: ${filteredWords[index]['answerCorrect']}',
-                                      style: TextStyle(fontSize: 16),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        'Correct: ${filteredWords[index]['answerCorrect']}',
+                                        style: TextStyle(fontSize: 16),
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'Wrong: ${filteredWords[index]['answerWrong']}',
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                        Spacer(),
-                                        IconButton(
-                                          onPressed: () => deleteWord(index),
-                                          icon: Icon(Icons.delete),
-                                          color: Colors.red,
-                                        )
-                                      ],
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'Wrong: ${filteredWords[index]['answerWrong']}',
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                          Spacer(),
+                                          // if (selectedWords.isEmpty)
+                                          IconButton(
+                                            onPressed: () {
+                                              // If the word is selected, remove it from selectedWords
+                                              if (isSelected(index)) {
+                                                setState(() {
+                                                  selectedWords.removeWhere(
+                                                      (word) =>
+                                                          word['question'] ==
+                                                          filteredWords[index]
+                                                              ['question']);
+                                                });
+                                              }
+                                              // Now, proceed with the deleteWord function
+                                              deleteWord(index);
+                                            },
+                                            icon: Icon(Icons.delete),
+                                            color: Colors.red,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -142,8 +178,97 @@ class _WordsCollectionState extends State<WordsCollection> {
             ),
           ),
         ),
+        floatingActionButton: selectedWords.isNotEmpty
+            ? FloatingActionButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50.0),
+                ),
+                backgroundColor: Colors.red,
+                onPressed: () async {
+                  await deleteSelectedWords();
+                },
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                ),
+              )
+            : null,
       ),
     );
+  }
+
+  void toggleSelectWord(int index) {
+    if (isSelected(index)) {
+      selectedWords.removeWhere(
+          (word) => word['question'] == filteredWords[index]['question']);
+    } else {
+      selectedWords.add({'question': filteredWords[index]['question']});
+    }
+  }
+
+  bool isSelected(int index) {
+    return selectedWords
+        .any((word) => word['question'] == filteredWords[index]['question']);
+  }
+
+  Future<void> deleteSelectedWords() async {
+    final subcollectionReference = FirebaseFirestore.instance
+        .collection('Profile')
+        .doc(docID)
+        .collection("savedWords");
+
+    await Get.dialog(
+      AlertDialog(
+        backgroundColor: Colors.red[100]!,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50),
+        ),
+        title: Text('Do you want to delete the selected words?'),
+        content: Text('If you delete the selected words, they will disappear.'),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  Get.back(); // Close the dialog
+                },
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final savedWordsQuerySnapshot = await FirebaseFirestore
+                      .instance
+                      .collection("Profile")
+                      .doc(docID)
+                      .collection("savedWords")
+                      .get();
+
+                  for (var word in selectedWords) {
+                    await subcollectionReference
+                        .doc('${word['question']}')
+                        .delete();
+                    await FirebaseFirestore.instance
+                        .collection('Profile')
+                        .doc(docID)
+                        .update(
+                            {'wordLength': savedWordsQuerySnapshot.size - 1});
+                  }
+                  selectedWords.clear();
+                  getWords();
+                  Get.back(); // Close the dialog
+                },
+                child: Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+    setState(() {});
   }
 
   Future<void> deleteWord(index) async {
