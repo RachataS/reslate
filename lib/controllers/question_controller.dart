@@ -81,7 +81,7 @@ class QuestionController extends GetxController
     _animationController.reset();
     // start our animation
 
-    _animationController.forward().whenComplete(nextQuestion);
+    // _animationController.forward().whenComplete(nextQuestion);
     _pageController = PageController();
     super.onInit();
   }

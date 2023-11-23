@@ -100,8 +100,9 @@ class _menuPageState extends State<menuPage> {
                     margin: const EdgeInsets.all(5),
                     child: TextButton(
                         onPressed: () {
-                          Get.to(WordsCollection(),
-                              transition: Transition.topLevel);
+                          Get.to(
+                            WordsCollection(),
+                          );
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,

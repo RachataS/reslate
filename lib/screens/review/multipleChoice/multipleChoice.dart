@@ -25,6 +25,7 @@ class _multipleChoiceState extends State<multipleChoice> {
       FirebaseFirestore.instance.collection("Profile");
 
   firebaseDoc firebasedoc = firebaseDoc();
+  QuestionController _controller = Get.put(QuestionController());
 
   @override
   void initState() {
@@ -33,8 +34,6 @@ class _multipleChoiceState extends State<multipleChoice> {
   }
 
   Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController());
-
     _controller.updateSavedWordsData(widget.savedWordsData);
     _controller.startTimer();
     _controller.getNumberOfQuestion(widget.numberOfQuestion);
