@@ -7,6 +7,7 @@ import 'package:reslate/models/profile.dart';
 import 'package:reslate/models/signOut.dart';
 import 'package:reslate/screens/WordsCollection.dart';
 import 'package:reslate/screens/authentication/login.dart';
+import 'package:reslate/screens/notification.dart';
 
 import '../controllers/getDocument.dart';
 
@@ -109,7 +110,7 @@ class _menuPageState extends State<menuPage> {
                           children: [
                             Icon(
                               Icons.book,
-                              color: Colors.black,
+                              color: Colors.blue,
                               size: 40,
                             ),
                             Text(
@@ -121,7 +122,45 @@ class _menuPageState extends State<menuPage> {
                             ),
                             Icon(
                               Icons.book,
-                              color: Colors.black,
+                              color: Colors.blue,
+                              size: 40,
+                            ),
+                          ],
+                        )),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: SizedBox(
+                  height: 90,
+                  child: Card(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    margin: const EdgeInsets.all(5),
+                    child: TextButton(
+                        onPressed: () {
+                          Get.to(NotificationScreen());
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.notifications_active,
+                              color: Colors.yellow[700]!,
+                              size: 40,
+                            ),
+                            Text(
+                              '  Notification  ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Icon(
+                              Icons.notifications_active,
+                              color: Colors.yellow[700]!,
                               size: 40,
                             ),
                           ],
