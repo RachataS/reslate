@@ -217,14 +217,26 @@ class _WordsCollectionState extends State<WordsCollection> {
         .doc(docID)
         .collection("savedWords");
 
+    // Create a variable to store the content
+    String contentText = '';
+
+    // Build the contentText
+    for (var word in selectedWords) {
+      contentText += '- ${word['question']}\n';
+    }
+
     await Get.dialog(
       AlertDialog(
         backgroundColor: Colors.red[100]!,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),
-        title: Text('Do you want to delete the selected words?'),
-        content: Text('If you delete the selected words, they will disappear.'),
+        title: Text('Do you want to delete the this words?'),
+        // Set the contentText as the content of the AlertDialog
+        content: Text(
+          contentText,
+          style: TextStyle(fontSize: 18),
+        ),
         actions: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -251,8 +263,10 @@ class _WordsCollectionState extends State<WordsCollection> {
                     await FirebaseFirestore.instance
                         .collection('Profile')
                         .doc(docID)
-                        .update(
-                            {'wordLength': savedWordsQuerySnapshot.size - 1});
+                        .update({
+                      'wordLength':
+                          savedWordsQuerySnapshot.size - selectedWords.length
+                    });
                   }
                   selectedWords.clear();
                   getWords();

@@ -291,9 +291,8 @@ class firebaseDoc {
       for (QueryDocumentSnapshot<Map<String, dynamic>> document
           in querySnapshot.docs) {
         Map<String, dynamic> data = document.data();
-        if (data['options'] != null && data['options'].length > 1) {
-          firestoreData.add(data);
-        }
+
+        firestoreData.add(data);
       }
 
       // Determine whether to sort by answerCorrect or answerWrong

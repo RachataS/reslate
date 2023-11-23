@@ -476,6 +476,18 @@ class _translate_screenState extends State<translate_screen> {
       '\"',
       '\n',
       '!',
+      '(',
+      ')',
+      '0',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
     ];
 
     for (var char in specialChars) {
@@ -510,6 +522,18 @@ class _translate_screenState extends State<translate_screen> {
       '\"',
       '\n',
       '!',
+      '(',
+      ')',
+      '0',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
     ];
 
     List<String> wordsWithoutSpecialChars = [];
