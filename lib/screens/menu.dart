@@ -102,7 +102,11 @@ class _menuPageState extends State<menuPage> {
                     child: TextButton(
                         onPressed: () {
                           Get.to(
-                            WordsCollection(),
+                            WordsCollection(sendData: (data) {
+                              setState(() {
+                                widget.profile.data = data;
+                              });
+                            }),
                           );
                         },
                         child: Row(
@@ -165,6 +169,83 @@ class _menuPageState extends State<menuPage> {
                             ),
                           ],
                         )),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: SizedBox(
+                  height: 90,
+                  child: Card(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    margin: const EdgeInsets.all(5),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.workspace_premium,
+                            color: Colors.yellow[700]!,
+                            size: 50,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                'TranslateWords 1  ',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                'Translate 10 words to unlock multiple choice',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 10,
+                                    width: 200, // Adjust the width as needed
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          10), // Adjust this for the outer shape
+                                      color: Colors.grey[300],
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                          10), // Adjust this for the inner shape
+                                      child: LinearProgressIndicator(
+                                        value: words != null
+                                            ? (words > 10 ? 1.0 : words / 10)
+                                            : 0,
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          Colors.green,
+                                        ),
+                                        backgroundColor: Colors.transparent,
+                                      ),
+                                    ),
+                                  ),
+                                  Text('${words > 10 ? 10 : words}/10')
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),

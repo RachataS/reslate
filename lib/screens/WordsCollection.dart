@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reslate/controllers/getDocument.dart';
+import 'package:reslate/models/profile.dart';
 
 class WordsCollection extends StatefulWidget {
-  const WordsCollection({Key? key}) : super(key: key);
+  final Function(Map<String, dynamic>) sendData;
+  const WordsCollection({Key? key, required this.sendData}) : super(key: key);
 
   @override
   State<WordsCollection> createState() => _WordsCollectionState();
@@ -283,6 +285,21 @@ class _WordsCollectionState extends State<WordsCollection> {
       ),
     );
     setState(() {});
+    updateProfile();
+  }
+
+  Future<void> updateProfile() async {
+    Profile profile = Profile();
+    DocumentReference<Map<String, dynamic>> userDocumentRef =
+        FirebaseFirestore.instance.collection("Profile").doc(docID);
+
+    Map<String, dynamic>? data = (await userDocumentRef.get()).data();
+
+    if (data != null) {
+      profile.data = data;
+      widget.sendData(data);
+    }
+    print(data?['wordLength']);
   }
 
   Future<void> deleteWord(index) async {
@@ -328,6 +345,7 @@ class _WordsCollectionState extends State<WordsCollection> {
                   await subcollectionReference
                       .doc('${filteredWords[index]['question']}')
                       .delete();
+
                   getWords();
                   Get.back(); // Close the dialog
                 },
@@ -342,5 +360,6 @@ class _WordsCollectionState extends State<WordsCollection> {
       ),
     );
     setState(() {});
+    updateProfile();
   }
 }

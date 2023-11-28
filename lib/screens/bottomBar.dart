@@ -1,6 +1,7 @@
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:reslate/screens/WordsCollection.dart';
 import 'package:reslate/screens/authentication/login.dart';
 import 'package:reslate/screens/menu.dart';
 import 'package:reslate/screens/review/review.dart';
@@ -80,6 +81,11 @@ class _bottombarState extends State<bottombar> {
           docID: firebaseDocument.id,
         ),
         menuPage(profile: profile),
+        WordsCollection(sendData: (data) {
+          setState(() {
+            profile.data = data;
+          });
+        }),
       ];
       isLoading = false;
     });
