@@ -299,7 +299,6 @@ class _WordsCollectionState extends State<WordsCollection> {
       profile.data = data;
       widget.sendData(data);
     }
-    print(data?['wordLength']);
   }
 
   Future<void> deleteWord(index) async {

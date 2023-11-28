@@ -1,18 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:reslate/controllers/getDocument.dart';
+import 'package:reslate/models/profile.dart';
 import 'package:reslate/screens/review/matchCard/memory_match_page.dart';
 import 'package:reslate/screens/review/matchCard/widgets/game_button.dart';
 import 'package:reslate/screens/review/matchCard/constants.dart';
 
 class GameOptions extends StatelessWidget {
-  final docID;
-  const GameOptions({
-    super.key,
-    this.docID,
-  });
+  final Profile profile;
+  const GameOptions({super.key, required this.profile});
 
   static Widget _routeBuilder(BuildContext context, int gameLevel) {
     return MemoryMatchPage(gameLevel: gameLevel);
@@ -20,23 +16,14 @@ class GameOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int wordsLength = profile.data?['wordLength'];
     return Column(
       children: gameLevels.map((level) {
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: GameButton(
             onPressed: () async {
-              List<Map<String, dynamic>> savedWords = (await FirebaseFirestore
-                      .instance
-                      .collection("Profile")
-                      .doc(docID)
-                      .collection("savedWords")
-                      .get())
-                  .docs
-                  .map((doc) => doc.data() as Map<String, dynamic>)
-                  .toList();
-
-              if (savedWords.length >= 70) {
+              if (wordsLength >= 70) {
                 Get.to(
                   () => _routeBuilder(context, level['level']),
                   transition: Transition.topLevel,
@@ -47,7 +34,7 @@ class GameOptions extends StatelessWidget {
               }
             },
             title: level['title'],
-            color: level['color']![400]!,
+            color: (wordsLength >= 70 ? level['color']![400]! : Colors.red),
             width: 250,
           ),
         );

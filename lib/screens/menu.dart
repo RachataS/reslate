@@ -46,205 +46,452 @@ class _menuPageState extends State<menuPage> {
           ]),
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10, left: 8, right: 8),
           child: ListView(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 90,
-                  child: Card(
-                    // color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    margin: const EdgeInsets.all(5),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Builder(builder: (context) {
-                            return CircleAvatar(
-                              backgroundColor: Colors.blue[400],
-                              radius: 30,
-                              child: Text(
-                                '${words ?? '0'}',
-                                style: TextStyle(
-                                    fontSize: 25, color: Colors.white),
-                              ),
-                            );
-                          }),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                              child: Text(
-                                'Username : ${username ?? 'Loading...'}\nEmail : ${email ?? 'Loading...'}',
-                                style: TextStyle(fontSize: 16),
-                              ),
+              SizedBox(
+                height: 90,
+                child: Card(
+                  // color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  margin: const EdgeInsets.all(5),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Builder(builder: (context) {
+                          return CircleAvatar(
+                            backgroundColor: Colors.blue[400],
+                            radius: 30,
+                            child: Text(
+                              '${words ?? '0'}',
+                              style:
+                                  TextStyle(fontSize: 25, color: Colors.white),
+                            ),
+                          );
+                        }),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                            child: Text(
+                              'Username : ${username ?? 'Loading...'}\nEmail : ${email ?? 'Loading...'}',
+                              style: TextStyle(fontSize: 16),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: SizedBox(
-                  height: 90,
-                  child: Card(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    margin: const EdgeInsets.all(5),
-                    child: TextButton(
-                        onPressed: () {
-                          Get.to(
-                            WordsCollection(sendData: (data) {
-                              setState(() {
-                                widget.profile.data = data;
-                              });
-                            }),
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.book,
-                              color: Colors.blue,
-                              size: 40,
-                            ),
-                            Text(
-                              '  Words Collection  ',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Icon(
-                              Icons.book,
-                              color: Colors.blue,
-                              size: 40,
-                            ),
-                          ],
-                        )),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: SizedBox(
-                  height: 90,
-                  child: Card(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    margin: const EdgeInsets.all(5),
-                    child: TextButton(
-                        onPressed: () {
-                          Get.to(NotificationScreen());
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.notifications_active,
-                              color: Colors.yellow[700]!,
-                              size: 40,
-                            ),
-                            Text(
-                              '  Notification  ',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Icon(
-                              Icons.notifications_active,
-                              color: Colors.yellow[700]!,
-                              size: 40,
-                            ),
-                          ],
-                        )),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: SizedBox(
-                  height: 90,
-                  child: Card(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    margin: const EdgeInsets.all(5),
-                    child: TextButton(
-                      onPressed: () {},
+              SizedBox(
+                height: 90,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  margin: const EdgeInsets.all(5),
+                  child: TextButton(
+                      onPressed: () {
+                        Get.to(
+                          WordsCollection(sendData: (data) {
+                            setState(() {
+                              widget.profile.data = data;
+                            });
+                          }),
+                        );
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            Icons.workspace_premium,
-                            color: Colors.yellow[700]!,
-                            size: 50,
+                            Icons.book,
+                            color: Colors.blue,
+                            size: 40,
                           ),
-                          SizedBox(
-                            width: 20,
+                          Text(
+                            '  Words Collection  ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                'TranslateWords 1  ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                'Translate 10 words to unlock multiple choice',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 10,
-                                    width: 200, // Adjust the width as needed
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(
-                                          10), // Adjust this for the outer shape
-                                      color: Colors.grey[300],
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                          10), // Adjust this for the inner shape
-                                      child: LinearProgressIndicator(
-                                        value: words != null
-                                            ? (words > 10 ? 1.0 : words / 10)
-                                            : 0,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          Colors.green,
-                                        ),
-                                        backgroundColor: Colors.transparent,
-                                      ),
-                                    ),
-                                  ),
-                                  Text('${words > 10 ? 10 : words}/10')
-                                ],
-                              ),
-                            ],
+                          Icon(
+                            Icons.book,
+                            color: Colors.blue,
+                            size: 40,
                           ),
                         ],
-                      ),
+                      )),
+                ),
+              ),
+              SizedBox(
+                height: 90,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  margin: const EdgeInsets.all(5),
+                  child: TextButton(
+                      onPressed: () {
+                        Get.to(NotificationScreen());
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.notifications_active,
+                            color: Colors.yellow[700]!,
+                            size: 40,
+                          ),
+                          Text(
+                            '  Notification  ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Icon(
+                            Icons.notifications_active,
+                            color: Colors.yellow[700]!,
+                            size: 40,
+                          ),
+                        ],
+                      )),
+                ),
+              ),
+              SizedBox(
+                height: 90,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  margin: const EdgeInsets.all(5),
+                  child: TextButton(
+                    onPressed: () async {
+                      await Get.dialog(
+                        AlertDialog(
+                          backgroundColor: Colors.blue[100]!,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          title: Text(
+                            'Translate Words 1',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                          content: Text(
+                              'Bookmark 10 words to unlock multiple choice mode.'),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                  onPressed: () async {
+                                    Get.back(); // Close the dialog
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.workspace_premium,
+                          color: words >= 10 ? Colors.amber[500]! : Colors.grey,
+                          size: 50,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Translate Words 1  ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: words >= 10 ? Colors.black : Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Bookmark 10 words to unlock multiple choice.',
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: words >= 10 ? Colors.black : Colors.grey,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 10,
+                                  width: 200, // Adjust the width as needed
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Adjust this for the outer shape
+                                    color: Colors.grey[300],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Adjust this for the inner shape
+                                    child: LinearProgressIndicator(
+                                      value: words != null
+                                          ? (words > 10 ? 1.0 : words / 10)
+                                          : 0,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        words >= 10
+                                            ? Colors.green!
+                                            : Colors.grey,
+                                      ),
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '${words > 10 ? 10 : words}/10',
+                                  style: TextStyle(
+                                    color: words >= 10
+                                        ? Colors.black
+                                        : Colors.grey,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 90,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  margin: const EdgeInsets.all(5),
+                  child: TextButton(
+                    onPressed: () async {
+                      await Get.dialog(
+                        AlertDialog(
+                          backgroundColor: Colors.blue[100]!,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          title: Text(
+                            'Translate Words 2',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                          content: Text(
+                              'bookmark 50 words to unlock review aids. When unlocked, You will receive aid 1 time. If you want more aids, you must answer 10 questions in a row correctly in the multiple choice mode.'),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                  onPressed: () async {
+                                    Get.back(); // Close the dialog
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.workspace_premium,
+                          color: words >= 50 ? Colors.amber[500]! : Colors.grey,
+                          size: 50,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Translate Words 2',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: words >= 50 ? Colors.black : Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Bookmark 50 words to unlock aids.',
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: words >= 50 ? Colors.black : Colors.grey,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 10,
+                                  width: 200, // Adjust the width as needed
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Adjust this for the outer shape
+                                    color: Colors.grey[300],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Adjust this for the inner shape
+                                    child: LinearProgressIndicator(
+                                      value: words != null
+                                          ? (words > 50 ? 1.0 : words / 50)
+                                          : 0,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        words >= 50
+                                            ? Colors.green!
+                                            : Colors.grey,
+                                      ),
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '${words > 50 ? 50 : words}/50',
+                                  style: TextStyle(
+                                    color: words >= 50
+                                        ? Colors.black
+                                        : Colors.grey,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 90,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  margin: const EdgeInsets.all(5),
+                  child: TextButton(
+                    onPressed: () async {
+                      await Get.dialog(
+                        AlertDialog(
+                          backgroundColor: Colors.blue[100]!,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          title: Text(
+                            'Translate Words 3',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                          content: Text(
+                              'Bookmark 70 words to unlock match card mode.'),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                  onPressed: () async {
+                                    Get.back(); // Close the dialog
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.workspace_premium,
+                          color: words >= 70 ? Colors.amber[500]! : Colors.grey,
+                          size: 50,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Translate Words 3',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: words >= 70 ? Colors.black : Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              'Bookmark 70 words to unlock match card.',
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: words >= 70 ? Colors.black : Colors.grey,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 10,
+                                  width: 200, // Adjust the width as needed
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Adjust this for the outer shape
+                                    color: Colors.grey[300],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Adjust this for the inner shape
+                                    child: LinearProgressIndicator(
+                                      value: words != null
+                                          ? (words > 70 ? 1.0 : words / 70)
+                                          : 0,
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        words >= 70
+                                            ? Colors.green!
+                                            : Colors.grey,
+                                      ),
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '${words > 70 ? 70 : words}/70',
+                                  style: TextStyle(
+                                    color: words >= 70
+                                        ? Colors.black
+                                        : Colors.grey,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),

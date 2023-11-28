@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:reslate/controllers/getDocument.dart';
+import 'package:reslate/models/profile.dart';
 import 'package:reslate/screens/review/multipleChoice/multipleChoice.dart';
 import 'package:reslate/screens/review/matchCard/widgets/game_options.dart';
 
 class reviewPage extends StatefulWidget {
   final String? docID;
+  final Profile profile;
 
-  reviewPage({required this.docID});
+  reviewPage({required this.docID, required this.profile});
 
   @override
   State<reviewPage> createState() => _reviewPageState();
@@ -40,6 +43,10 @@ class _reviewPageState extends State<reviewPage> {
   }
 
   Scaffold savedWordsMode() {
+    int wordsLength = widget.profile.data?['wordLength'];
+    if (wordsLength < 10) {
+      numberOfQuestion = 0;
+    }
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
@@ -67,7 +74,7 @@ class _reviewPageState extends State<reviewPage> {
                     Text(
                       'Multiple Choice',
                       style: TextStyle(
-                        color: Colors.blue[400]!,
+                        color: (wordsLength >= 10 ? Colors.blue : Colors.red),
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
@@ -81,20 +88,25 @@ class _reviewPageState extends State<reviewPage> {
                           ElevatedButton(
                             onPressed: () {
                               numberOfQuestion = 10;
-                              setState(() {});
+                              if (wordsLength >= 10) {
+                                setState(() {});
+                              }
                             },
                             child: Text(
                               '10',
                               style: TextStyle(
-                                  fontSize: 16,
-                                  color: numberOfQuestion == 10
-                                      ? Colors.blue
-                                      : Colors.white),
+                                fontSize: 16,
+                                color: numberOfQuestion == 10
+                                    ? Colors.blue
+                                    : Colors.white,
+                              ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: numberOfQuestion == 10
-                                  ? Colors.white
-                                  : Colors.blue[400],
+                              backgroundColor: wordsLength < 10
+                                  ? Colors.red
+                                  : (numberOfQuestion == 10
+                                      ? Colors.white
+                                      : Colors.blue[400]),
                               shape: CircleBorder(),
                               padding: EdgeInsets.all(15),
                             ),
@@ -102,20 +114,25 @@ class _reviewPageState extends State<reviewPage> {
                           ElevatedButton(
                             onPressed: () {
                               numberOfQuestion = 20;
-                              setState(() {});
+                              if (wordsLength >= 20) {
+                                setState(() {});
+                              }
                             },
                             child: Text(
                               '20',
                               style: TextStyle(
-                                  fontSize: 16,
-                                  color: numberOfQuestion == 20
-                                      ? Colors.blue
-                                      : Colors.white),
+                                fontSize: 16,
+                                color: numberOfQuestion == 20
+                                    ? Colors.blue
+                                    : Colors.white,
+                              ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: numberOfQuestion == 20
-                                  ? Colors.white
-                                  : Colors.blue[400],
+                              backgroundColor: wordsLength < 20
+                                  ? Colors.red
+                                  : (numberOfQuestion == 20
+                                      ? Colors.white
+                                      : Colors.blue[400]),
                               shape: CircleBorder(),
                               padding: EdgeInsets.all(15),
                             ),
@@ -123,20 +140,25 @@ class _reviewPageState extends State<reviewPage> {
                           ElevatedButton(
                             onPressed: () {
                               numberOfQuestion = 40;
-                              setState(() {});
+                              if (wordsLength >= 40) {
+                                setState(() {});
+                              }
                             },
                             child: Text(
                               '40',
                               style: TextStyle(
-                                  fontSize: 16,
-                                  color: numberOfQuestion == 40
-                                      ? Colors.blue
-                                      : Colors.white),
+                                fontSize: 16,
+                                color: numberOfQuestion == 40
+                                    ? Colors.blue
+                                    : Colors.white,
+                              ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: numberOfQuestion == 40
-                                  ? Colors.white
-                                  : Colors.blue[400],
+                              backgroundColor: wordsLength < 40
+                                  ? Colors.red
+                                  : (numberOfQuestion == 40
+                                      ? Colors.white
+                                      : Colors.blue[400]),
                               shape: CircleBorder(),
                               padding: EdgeInsets.all(15),
                             ),
@@ -144,20 +166,25 @@ class _reviewPageState extends State<reviewPage> {
                           ElevatedButton(
                             onPressed: () {
                               numberOfQuestion = 60;
-                              setState(() {});
+                              if (wordsLength >= 60) {
+                                setState(() {});
+                              }
                             },
                             child: Text(
                               '60',
                               style: TextStyle(
-                                  fontSize: 16,
-                                  color: numberOfQuestion == 60
-                                      ? Colors.blue
-                                      : Colors.white),
+                                fontSize: 16,
+                                color: numberOfQuestion == 60
+                                    ? Colors.blue
+                                    : Colors.white,
+                              ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: numberOfQuestion == 60
-                                  ? Colors.white
-                                  : Colors.blue[400],
+                              backgroundColor: wordsLength < 60
+                                  ? Colors.red
+                                  : (numberOfQuestion == 60
+                                      ? Colors.white
+                                      : Colors.blue[400]),
                               shape: CircleBorder(),
                               padding: EdgeInsets.all(15),
                             ),
@@ -188,14 +215,20 @@ class _reviewPageState extends State<reviewPage> {
 
                             Navigator.of(context, rootNavigator: true).pop();
 
-                            if (numberOfQuestion <= savedWords) {
-                              Get.to(
-                                  multipleChoice(
-                                    docID: widget.docID,
-                                    savedWordsData: true,
-                                    numberOfQuestion: numberOfQuestion,
-                                  ),
-                                  transition: Transition.topLevel);
+                            if (wordsLength >= 10) {
+                              if (numberOfQuestion <= savedWords) {
+                                Get.to(
+                                    multipleChoice(
+                                      docID: widget.docID,
+                                      savedWordsData: true,
+                                      numberOfQuestion: numberOfQuestion,
+                                    ),
+                                    transition: Transition.topLevel);
+                              }
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "คุณมีคำศัพท์ไม่ถึง 10 คำ",
+                                  gravity: ToastGravity.TOP);
                             }
                           },
                           child: Text(
@@ -203,7 +236,9 @@ class _reviewPageState extends State<reviewPage> {
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue[400],
+                              backgroundColor: (wordsLength >= 10
+                                  ? Colors.blue
+                                  : Colors.red),
                               fixedSize: const Size(300, 50),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50))),
@@ -225,7 +260,7 @@ class _reviewPageState extends State<reviewPage> {
                     Text(
                       'Match Card',
                       style: TextStyle(
-                        color: Colors.blue[400]!,
+                        color: (wordsLength >= 70 ? Colors.blue : Colors.red),
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
@@ -235,7 +270,7 @@ class _reviewPageState extends State<reviewPage> {
                       child: SizedBox(
                         width: 250,
                         child: GameOptions(
-                          docID: widget.docID,
+                          profile: widget.profile,
                         ),
                       ),
                     ),
@@ -279,6 +314,7 @@ class _reviewPageState extends State<reviewPage> {
   }
 
   Scaffold WroongAnswerMode() {
+    int wordsLength = widget.profile.data?['wordLength'];
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
@@ -306,7 +342,7 @@ class _reviewPageState extends State<reviewPage> {
                     Text(
                       'Multiple Choice',
                       style: TextStyle(
-                        color: Colors.blue[400]!,
+                        color: (wordsLength >= 10 ? Colors.blue : Colors.red),
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
@@ -320,20 +356,25 @@ class _reviewPageState extends State<reviewPage> {
                           ElevatedButton(
                             onPressed: () {
                               numberOfQuestion = 10;
-                              setState(() {});
+                              if (wordsLength >= 10) {
+                                setState(() {});
+                              }
                             },
                             child: Text(
                               '10',
                               style: TextStyle(
-                                  fontSize: 16,
-                                  color: numberOfQuestion == 10
-                                      ? Colors.blue
-                                      : Colors.white),
+                                fontSize: 16,
+                                color: numberOfQuestion == 10
+                                    ? Colors.blue
+                                    : Colors.white,
+                              ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: numberOfQuestion == 10
-                                  ? Colors.white
-                                  : Colors.blue[400],
+                              backgroundColor: wordsLength < 10
+                                  ? Colors.red
+                                  : (numberOfQuestion == 10
+                                      ? Colors.white
+                                      : Colors.blue[400]),
                               shape: CircleBorder(),
                               padding: EdgeInsets.all(15),
                             ),
@@ -341,20 +382,25 @@ class _reviewPageState extends State<reviewPage> {
                           ElevatedButton(
                             onPressed: () {
                               numberOfQuestion = 20;
-                              setState(() {});
+                              if (wordsLength >= 20) {
+                                setState(() {});
+                              }
                             },
                             child: Text(
                               '20',
                               style: TextStyle(
-                                  fontSize: 16,
-                                  color: numberOfQuestion == 20
-                                      ? Colors.blue
-                                      : Colors.white),
+                                fontSize: 16,
+                                color: numberOfQuestion == 20
+                                    ? Colors.blue
+                                    : Colors.white,
+                              ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: numberOfQuestion == 20
-                                  ? Colors.white
-                                  : Colors.blue[400],
+                              backgroundColor: wordsLength < 20
+                                  ? Colors.red
+                                  : (numberOfQuestion == 20
+                                      ? Colors.white
+                                      : Colors.blue[400]),
                               shape: CircleBorder(),
                               padding: EdgeInsets.all(15),
                             ),
@@ -362,20 +408,25 @@ class _reviewPageState extends State<reviewPage> {
                           ElevatedButton(
                             onPressed: () {
                               numberOfQuestion = 40;
-                              setState(() {});
+                              if (wordsLength >= 40) {
+                                setState(() {});
+                              }
                             },
                             child: Text(
                               '40',
                               style: TextStyle(
-                                  fontSize: 16,
-                                  color: numberOfQuestion == 40
-                                      ? Colors.blue
-                                      : Colors.white),
+                                fontSize: 16,
+                                color: numberOfQuestion == 40
+                                    ? Colors.blue
+                                    : Colors.white,
+                              ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: numberOfQuestion == 40
-                                  ? Colors.white
-                                  : Colors.blue[400],
+                              backgroundColor: wordsLength < 40
+                                  ? Colors.red
+                                  : (numberOfQuestion == 40
+                                      ? Colors.white
+                                      : Colors.blue[400]),
                               shape: CircleBorder(),
                               padding: EdgeInsets.all(15),
                             ),
@@ -383,20 +434,25 @@ class _reviewPageState extends State<reviewPage> {
                           ElevatedButton(
                             onPressed: () {
                               numberOfQuestion = 60;
-                              setState(() {});
+                              if (wordsLength >= 60) {
+                                setState(() {});
+                              }
                             },
                             child: Text(
                               '60',
                               style: TextStyle(
-                                  fontSize: 16,
-                                  color: numberOfQuestion == 60
-                                      ? Colors.blue
-                                      : Colors.white),
+                                fontSize: 16,
+                                color: numberOfQuestion == 60
+                                    ? Colors.blue
+                                    : Colors.white,
+                              ),
                             ),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: numberOfQuestion == 60
-                                  ? Colors.white
-                                  : Colors.blue[400],
+                              backgroundColor: wordsLength < 60
+                                  ? Colors.red
+                                  : (numberOfQuestion == 60
+                                      ? Colors.white
+                                      : Colors.blue[400]),
                               shape: CircleBorder(),
                               padding: EdgeInsets.all(15),
                             ),
@@ -426,15 +482,20 @@ class _reviewPageState extends State<reviewPage> {
                                 numberOfQuestion, false, widget.docID);
 
                             Navigator.of(context, rootNavigator: true).pop();
-
-                            if (numberOfQuestion <= savedWords) {
-                              Get.to(
-                                  multipleChoice(
-                                    docID: widget.docID,
-                                    savedWordsData: false,
-                                    numberOfQuestion: numberOfQuestion,
-                                  ),
-                                  transition: Transition.topLevel);
+                            if (wordsLength >= 10) {
+                              if (numberOfQuestion <= savedWords) {
+                                Get.to(
+                                    multipleChoice(
+                                      docID: widget.docID,
+                                      savedWordsData: false,
+                                      numberOfQuestion: numberOfQuestion,
+                                    ),
+                                    transition: Transition.topLevel);
+                              }
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "คุณมีคำศัพท์ไม่ถึง 10 คำ",
+                                  gravity: ToastGravity.TOP);
                             }
                           },
                           child: Text(
@@ -442,7 +503,9 @@ class _reviewPageState extends State<reviewPage> {
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue[400],
+                              backgroundColor: (wordsLength >= 10
+                                  ? Colors.blue
+                                  : Colors.red),
                               fixedSize: const Size(300, 50),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50))),
@@ -464,7 +527,7 @@ class _reviewPageState extends State<reviewPage> {
                     Text(
                       'Match Card',
                       style: TextStyle(
-                        color: Colors.blue[400]!,
+                        color: (wordsLength >= 70 ? Colors.blue : Colors.red),
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                       ),
@@ -474,7 +537,7 @@ class _reviewPageState extends State<reviewPage> {
                       child: SizedBox(
                         width: 250,
                         child: GameOptions(
-                          docID: widget.docID,
+                          profile: widget.profile,
                         ),
                       ),
                     ),
