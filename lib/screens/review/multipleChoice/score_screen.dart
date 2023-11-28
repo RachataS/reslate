@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:reslate/controllers/question_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:reslate/controllers/getDocument.dart';
+import 'package:reslate/models/profile.dart';
 import 'package:reslate/screens/bottomBar.dart';
 import 'package:reslate/screens/review/multipleChoice/multipleChoice.dart';
 
@@ -28,6 +29,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
   late String buttonText;
   late QuestionController _qnController;
   var maxQuestion;
+  int? aids;
 
   @override
   void initState() {
@@ -60,6 +62,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
     if (userDocument.exists) {
       setState(() {
         topScore = userDocument.data()?['topScore'] ?? 0;
+        aids = userDocument.data()?['aids'] ?? 0;
       });
       if (topScore < _qnController.correctAnswer) {
         setState(() {
@@ -219,6 +222,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                                         docID: widget.docID,
                                         numberOfQuestion:
                                             widget.numberOfQuestion,
+                                        aids: aids,
                                       ),
                                       transition: Transition.topLevel,
                                     );
@@ -246,6 +250,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                                         docID: widget.docID,
                                         numberOfQuestion:
                                             widget.numberOfQuestion,
+                                        aids: aids,
                                       ),
                                       transition: Transition.topLevel,
                                     );

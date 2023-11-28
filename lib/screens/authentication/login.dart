@@ -292,6 +292,8 @@ class _loginPageState extends State<loginPage> {
       "wordLength": 0,
       "topScore": 0,
       "cardTopScore": 0,
+      "aids": 0,
+      "archiveLevel": 0,
     });
   }
 

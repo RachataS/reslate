@@ -257,6 +257,9 @@ class _menuPageState extends State<menuPage> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(
+                                  width: 5,
+                                ),
                                 Text(
                                   '${words > 10 ? 10 : words}/10',
                                   style: TextStyle(
@@ -368,6 +371,9 @@ class _menuPageState extends State<menuPage> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(
+                                  width: 5,
+                                ),
                                 Text(
                                   '${words > 50 ? 50 : words}/50',
                                   style: TextStyle(
@@ -478,6 +484,9 @@ class _menuPageState extends State<menuPage> {
                                       backgroundColor: Colors.transparent,
                                     ),
                                   ),
+                                ),
+                                SizedBox(
+                                  width: 5,
                                 ),
                                 Text(
                                   '${words > 70 ? 70 : words}/70',

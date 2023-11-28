@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,6 +23,12 @@ class _reviewPageState extends State<reviewPage> {
   var numberOfQuestion = 10;
 
   @override
+  void initState() {
+    super.initState();
+    checkArchive();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -44,6 +51,7 @@ class _reviewPageState extends State<reviewPage> {
 
   Scaffold savedWordsMode() {
     int wordsLength = widget.profile.data?['wordLength'];
+    int aids = widget.profile.data?["aids"];
     if (wordsLength < 10) {
       numberOfQuestion = 0;
     }
@@ -222,6 +230,7 @@ class _reviewPageState extends State<reviewPage> {
                                       docID: widget.docID,
                                       savedWordsData: true,
                                       numberOfQuestion: numberOfQuestion,
+                                      aids: aids,
                                     ),
                                     transition: Transition.topLevel);
                               }
@@ -315,6 +324,7 @@ class _reviewPageState extends State<reviewPage> {
 
   Scaffold WroongAnswerMode() {
     int wordsLength = widget.profile.data?['wordLength'];
+    int aids = widget.profile.data?["aids"];
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
@@ -489,6 +499,7 @@ class _reviewPageState extends State<reviewPage> {
                                       docID: widget.docID,
                                       savedWordsData: false,
                                       numberOfQuestion: numberOfQuestion,
+                                      aids: aids,
                                     ),
                                     transition: Transition.topLevel);
                               }
@@ -578,6 +589,24 @@ class _reviewPageState extends State<reviewPage> {
         ),
       ),
     );
+  }
+
+  Future<void> checkArchive() async {
+    int archiveLevel = widget.profile.data?["archiveLevel"];
+    int wordsLength = widget.profile.data?["wordLength"];
+
+    if (archiveLevel < 2) {
+      if (wordsLength >= 50) {
+        await FirebaseFirestore.instance
+            .collection('Profile')
+            .doc(widget.docID)
+            .update({'archiveLevel': 2});
+        await FirebaseFirestore.instance
+            .collection('Profile')
+            .doc(widget.docID)
+            .update({'aids': 1});
+      }
+    }
   }
 
   // Scaffold oldStyle() {

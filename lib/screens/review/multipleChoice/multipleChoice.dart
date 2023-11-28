@@ -10,10 +10,12 @@ class multipleChoice extends StatefulWidget {
   final String? docID;
   final bool? savedWordsData;
   late int? numberOfQuestion;
+  late int? aids;
   multipleChoice({
     this.docID,
     this.savedWordsData,
     this.numberOfQuestion,
+    this.aids,
   });
 
   @override
@@ -92,7 +94,18 @@ class _multipleChoiceState extends State<multipleChoice> {
                   margin: const EdgeInsets.all(10),
                   color: Colors.orange[300]!,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (widget.aids! > 0) {
+                        _controller.resetTimer();
+                        await FirebaseFirestore.instance
+                            .collection('Profile')
+                            .doc(widget.docID)
+                            .update({'aids': widget.aids! - 1});
+                        setState(() {
+                          widget.aids! - 1;
+                        });
+                      }
+                    },
                     child: SizedBox(
                       width: 80,
                       height: 30,
@@ -108,7 +121,7 @@ class _multipleChoiceState extends State<multipleChoice> {
                             width: 8,
                           ),
                           Text(
-                            "3/3",
+                            "${widget.aids}/3",
                             style: TextStyle(color: Colors.black, fontSize: 14),
                           ),
                         ],

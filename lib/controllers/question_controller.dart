@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:reslate/controllers/getDocument.dart';
-
 import '/models/Questions.dart';
 import '../screens/review/multipleChoice/score_screen.dart';
 
@@ -394,6 +393,11 @@ class QuestionController extends GetxController
 
     // Stop the timer
     _animationController.dispose();
+  }
+
+  void resetTimer() {
+    _animationController.reset();
+    _animationController.forward().whenComplete(nextQuestion);
   }
 
   void startTimer() {
