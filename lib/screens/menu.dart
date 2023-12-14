@@ -250,7 +250,7 @@ class _menuPageState extends State<menuPage> {
                                           : 0,
                                       valueColor: AlwaysStoppedAnimation<Color>(
                                         words >= 10
-                                            ? Colors.green!
+                                            ? Colors.green
                                             : Colors.grey,
                                       ),
                                       backgroundColor: Colors.transparent,
@@ -364,7 +364,7 @@ class _menuPageState extends State<menuPage> {
                                           : 0,
                                       valueColor: AlwaysStoppedAnimation<Color>(
                                         words >= 50
-                                            ? Colors.green!
+                                            ? Colors.green
                                             : Colors.grey,
                                       ),
                                       backgroundColor: Colors.transparent,
@@ -478,7 +478,7 @@ class _menuPageState extends State<menuPage> {
                                           : 0,
                                       valueColor: AlwaysStoppedAnimation<Color>(
                                         words >= 70
-                                            ? Colors.green!
+                                            ? Colors.green
                                             : Colors.grey,
                                       ),
                                       backgroundColor: Colors.transparent,

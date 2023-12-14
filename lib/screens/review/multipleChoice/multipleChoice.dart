@@ -6,14 +6,16 @@ import 'package:reslate/controllers/getDocument.dart';
 import 'package:reslate/screens/review/multipleChoice/components/body.dart';
 import 'dart:math' as math;
 
+import 'package:reslate/screens/review/multipleChoice/score_screen.dart';
+
 class multipleChoice extends StatefulWidget {
   final String? docID;
-  final bool? savedWordsData;
+  final bool savedWordsData;
   late int? numberOfQuestion;
   late int? aids;
   multipleChoice({
     this.docID,
-    this.savedWordsData,
+    required this.savedWordsData,
     this.numberOfQuestion,
     this.aids,
   });
@@ -57,7 +59,16 @@ class _multipleChoiceState extends State<multipleChoice> {
                   margin: const EdgeInsets.all(10),
                   color: Colors.blue[300]!,
                   child: TextButton(
-                    onPressed: _controller.nextQuestion,
+                    onPressed: () async {
+                      _controller.resetQuiz();
+                      Get.to(
+                          () => ScoreScreen(
+                                savedWordsData: widget.savedWordsData,
+                                numberOfQuestion: widget.numberOfQuestion,
+                                docID: widget.docID,
+                              ),
+                          transition: Transition.topLevel);
+                    },
                     child: SizedBox(
                       width: 80,
                       height: 30,

@@ -396,8 +396,11 @@ class QuestionController extends GetxController
   }
 
   void resetTimer() {
-    _animationController.reset();
-    _animationController.forward().whenComplete(nextQuestion);
+    if (_animationController.isAnimating) {
+      _animationController.stop();
+      _animationController.value = 1;
+      _animationController.forward();
+    }
   }
 
   void startTimer() {

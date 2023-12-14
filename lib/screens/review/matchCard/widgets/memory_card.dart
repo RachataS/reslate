@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:reslate/models/card_item.dart';
 
 class MemoryCard extends StatelessWidget {
@@ -49,7 +47,7 @@ class MemoryCard extends StatelessWidget {
                       card.question,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -58,7 +56,7 @@ class MemoryCard extends StatelessWidget {
                       card.thai,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 20,
                       ),
                     ),
                   ],

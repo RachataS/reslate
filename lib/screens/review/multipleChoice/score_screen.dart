@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:reslate/controllers/question_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:reslate/controllers/getDocument.dart';
-import 'package:reslate/models/profile.dart';
+
 import 'package:reslate/screens/bottomBar.dart';
 import 'package:reslate/screens/review/multipleChoice/multipleChoice.dart';
 
