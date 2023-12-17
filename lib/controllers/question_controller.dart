@@ -189,20 +189,20 @@ class QuestionController extends GetxController
       if (_isAnswered) {
         _isAnswered = false;
         _pageController.nextPage(
-          duration: Duration(milliseconds: 100),
+          duration: Duration(milliseconds: 200),
           curve: Curves.ease,
         );
       } else {
-        // Future.delayed(const Duration(seconds: 1), () {
-        resetQuiz();
-        Get.to(
-            () => ScoreScreen(
-                  savedWordsData: savedWordsData,
-                  numberOfQuestion: numberOfQuestion,
-                  docID: docID,
-                ),
-            transition: Transition.topLevel);
-        // });
+        Future.delayed(const Duration(seconds: 1), () {
+          resetQuiz();
+          Get.to(
+              () => ScoreScreen(
+                    savedWordsData: savedWordsData,
+                    numberOfQuestion: numberOfQuestion,
+                    docID: docID,
+                  ),
+              transition: Transition.topLevel);
+        });
         return;
       }
 

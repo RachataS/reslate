@@ -148,7 +148,7 @@ class _translate_screenState extends State<translate_screen> {
                   ),
                   TextFormField(
                     style: const TextStyle(
-                      fontSize: 28,
+                      fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
                     decoration: InputDecoration(
@@ -193,29 +193,32 @@ class _translate_screenState extends State<translate_screen> {
                     },
                   ),
                   const Divider(
-                    height: 32,
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   Text(
                     translated,
                     style: const TextStyle(
-                        fontSize: 28,
+                        fontSize: 25,
                         color: Colors.black54,
                         fontWeight: FontWeight.bold),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           for (int i = 0;
                               i < wordsListWithoutDuplicates.length;
-                              i += 5)
+                              i += 4)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 for (int j = i;
-                                    j < i + 5 &&
+                                    j < i + 4 &&
                                         j < wordsListWithoutDuplicates.length;
                                     j++)
                                   Flexible(
@@ -224,7 +227,7 @@ class _translate_screenState extends State<translate_screen> {
                                       children: [
                                         SizedBox(
                                           // height: 55,
-                                          width: 80,
+                                          width: 120,
                                           child: TextButton(
                                             onPressed: () async {
                                               setState(() {
@@ -615,7 +618,7 @@ class _translate_screenState extends State<translate_screen> {
                         textStyle: Theme.of(context).textTheme.labelLarge,
                       ),
                       child: Text(
-                        'Close',
+                        'Cancel',
                         style: TextStyle(color: Colors.red),
                       ),
                     ),
