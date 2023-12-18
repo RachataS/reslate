@@ -395,14 +395,6 @@ class QuestionController extends GetxController
     _animationController.dispose();
   }
 
-  void resetTimer() {
-    if (_animationController.isAnimating) {
-      _animationController.stop();
-      _animationController.value = 1;
-      _animationController.forward();
-    }
-  }
-
   void startTimer() {
     _animationController =
         AnimationController(duration: Duration(seconds: 15), vsync: this);

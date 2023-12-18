@@ -107,14 +107,15 @@ class _multipleChoiceState extends State<multipleChoice> {
                   child: TextButton(
                     onPressed: () async {
                       if (widget.aids! > 0) {
-                        _controller.resetTimer();
+                        _controller.stopEverything();
+                        _controller.startTimer();
                         await FirebaseFirestore.instance
                             .collection('Profile')
                             .doc(widget.docID)
                             .update({'aids': widget.aids! - 1});
-                        setState(() {
-                          widget.aids! - 1;
-                        });
+                        // setState(() {
+                        //   widget.aids! - 1;
+                        // });
                       }
                     },
                     child: SizedBox(
