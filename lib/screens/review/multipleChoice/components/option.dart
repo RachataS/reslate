@@ -29,7 +29,7 @@ class Option extends StatelessWidget {
                 return kRedColor;
               }
             }
-            return kBlackColor; //Change options colors
+            return Colors.blue; //Change options colors
           }
 
           IconData getTheRightIcon() {
@@ -56,13 +56,13 @@ class Option extends StatelessWidget {
                     height: 26,
                     width: 26,
                     decoration: BoxDecoration(
-                      color: getTheRightColor() == kBlackColor
+                      color: getTheRightColor() == Colors.blue
                           ? Colors.transparent
                           : getTheRightColor(),
                       borderRadius: BorderRadius.circular(50),
                       border: Border.all(color: getTheRightColor()),
                     ),
-                    child: getTheRightColor() == kBlackColor
+                    child: getTheRightColor() == Colors.blue
                         ? null
                         : Icon(getTheRightIcon(), size: 16),
                   )
