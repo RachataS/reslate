@@ -47,17 +47,10 @@ class MemoryCard extends StatelessWidget {
                       card.question,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      card.thai,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

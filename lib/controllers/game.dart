@@ -49,7 +49,6 @@ class Game {
       final cardData = jsonData[i];
       final CardItem questionCard = CardItem(
         id: cardData['id'],
-        thai: "",
         question: cardData['question'],
         color: Colors.green,
         check: i,
@@ -57,8 +56,7 @@ class Game {
 
       final CardItem thaiCard = CardItem(
         id: cardData['id'],
-        thai: cardData['thai'],
-        question: "",
+        question: cardData['thai'],
         color: Colors.red,
         check: i,
       );
@@ -198,14 +196,12 @@ class Game {
     return [
       CardItem(
           id: questionCard.id,
-          thai: questionCard.thai,
           question: questionCard.question,
           state: CardState.hidden,
           color: cardColor,
           check: questionCard.check),
       CardItem(
           id: thaiCard.id,
-          thai: thaiCard.thai,
           question: thaiCard.question,
           state: CardState.hidden,
           color: cardColor,
