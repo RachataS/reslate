@@ -273,7 +273,7 @@ class firebaseDoc {
       //   await firebasedoc.getSavedWords(
       //       numberOfQuestion, widget.savedWordsData ?? true, widget.docID);
       // }
-
+      firestoreData.shuffle();
       return firestoreData;
     } catch (e) {
       print("Error fetching data: $e");

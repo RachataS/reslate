@@ -37,6 +37,29 @@ class _ScoreScreenState extends State<ScoreScreen> {
     _qnController = Get.put(QuestionController());
     fetchTopScore();
     _updateButtonText();
+    updateAids();
+  }
+
+  Future<void> updateAids() async {
+    print(_qnController.correctAnswer);
+    if (_qnController.correctAnswer != 0 &&
+        _qnController.correctAnswer % 10 == 0) {
+      final collectionReference =
+          FirebaseFirestore.instance.collection('Profile').doc(widget.docID);
+
+      // Fetch the current 'aids' value
+      DocumentSnapshot<Map<String, dynamic>> userDocument =
+          await collectionReference.get();
+      int currentAids = userDocument.data()?['aids'] ?? 0;
+      int level = userDocument.data()?['archiveLevel'] ?? 0;
+
+      // Check if 'aids' is less than 3 before updating
+      if (currentAids < 3 && level <= 2) {
+        await collectionReference.update({
+          'aids': FieldValue.increment(1),
+        });
+      }
+    }
   }
 
   void _updateButtonText() {
@@ -249,7 +272,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
                                         savedWordsData: widget.savedWordsData,
                                         docID: widget.docID,
                                         numberOfQuestion:
-                                            widget.numberOfQuestion,
+                                            widget.numberOfQuestion! * 2,
                                         aids: aids,
                                       ),
                                       transition: Transition.topLevel,
