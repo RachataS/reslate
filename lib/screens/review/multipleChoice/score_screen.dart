@@ -54,9 +54,23 @@ class _ScoreScreenState extends State<ScoreScreen> {
 
       // Check if 'aids' is less than 3 before updating
       if (currentAids < 3 && level <= 2) {
-        await collectionReference.update({
-          'aids': FieldValue.increment(1),
-        });
+        if (_qnController.correctAnswer >= 10 &&
+            _qnController.correctAnswer <= 19) {
+          await collectionReference.update({
+            'aids': FieldValue.increment(1),
+          });
+        }
+        if (_qnController.correctAnswer >= 20 &&
+            _qnController.correctAnswer <= 29) {
+          await collectionReference.update({
+            'aids': FieldValue.increment(2),
+          });
+        }
+        if (_qnController.correctAnswer >= 30) {
+          await collectionReference.update({
+            'aids': FieldValue.increment(3),
+          });
+        }
       }
     }
   }
@@ -224,17 +238,18 @@ class _ScoreScreenState extends State<ScoreScreen> {
                                 ),
                               ),
                               onPressed: () async {
+                                widget.docID =
+                                    await firebasedoc.getDocumentId();
+                                var savedWordsLength =
+                                    await firebasedoc.getSavedWords(
+                                  widget.numberOfQuestion,
+                                  widget.savedWordsData,
+                                  widget.docID,
+                                );
+
                                 if (widget.numberOfQuestion! >
                                     _qnController.correctAnswer) {
                                   _qnController.correctAnswer = 0;
-                                  widget.docID =
-                                      await firebasedoc.getDocumentId();
-                                  var savedWordsLength =
-                                      await firebasedoc.getSavedWords(
-                                    widget.numberOfQuestion,
-                                    widget.savedWordsData,
-                                    widget.docID,
-                                  );
 
                                   if (savedWordsLength >=
                                       (widget.numberOfQuestion ?? 0)) {
@@ -255,15 +270,6 @@ class _ScoreScreenState extends State<ScoreScreen> {
                                     );
                                   }
                                 } else {
-                                  widget.docID =
-                                      await firebasedoc.getDocumentId();
-                                  var savedWordsLength =
-                                      await firebasedoc.getSavedWords(
-                                    widget.numberOfQuestion,
-                                    widget.savedWordsData,
-                                    widget.docID,
-                                  );
-
                                   if (savedWordsLength >=
                                       (widget.numberOfQuestion ?? 0)) {
                                     Get.to(
