@@ -41,7 +41,6 @@ class _ScoreScreenState extends State<ScoreScreen> {
   }
 
   Future<void> updateAids() async {
-    print(_qnController.correctAnswer);
     if (_qnController.correctAnswer != 0 &&
         _qnController.correctAnswer % 10 == 0) {
       final collectionReference =

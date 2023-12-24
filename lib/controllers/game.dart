@@ -76,7 +76,7 @@ class Game {
     score = 0;
   }
 
-  void addMatchingTime() {
+  void addMatchingTime() async {
     matching = matching + 10;
   }
 
@@ -96,7 +96,7 @@ class Game {
       final CardItem card1 = cards[visibleCardIndexes[0]];
       final CardItem card2 = cards[visibleCardIndexes[1]];
 
-      Future.delayed(const Duration(milliseconds: 1000), () {
+      Future.delayed(const Duration(milliseconds: 1000), () async {
         //edit delay time when open card
         if (card1.check == card2.check) {
           card1.state = CardState.guessed;
@@ -114,6 +114,34 @@ class Game {
 
         if (matching == 0) {
           _showGameOverDialog(context);
+          final collectionReference =
+              FirebaseFirestore.instance.collection('Profile').doc(docID);
+
+          // Fetch the current 'aids' value
+          DocumentSnapshot<Map<String, dynamic>> userDocument =
+              await collectionReference.get();
+          int currentAids = userDocument.data()?['aids'] ?? 0;
+          int level = userDocument.data()?['archiveLevel'] ?? 0;
+
+          if (score >= 8 && score <= 15) {
+            if (currentAids < 3 && level <= 2) {
+              await collectionReference.update({
+                'aids': FieldValue.increment(1),
+              });
+            }
+          } else if (score >= 16 && score <= 23) {
+            if (currentAids < 3 && level <= 2) {
+              await collectionReference.update({
+                'aids': FieldValue.increment(2),
+              });
+            }
+          } else if (score >= 24) {
+            if (currentAids < 3 && level <= 2) {
+              await collectionReference.update({
+                'aids': FieldValue.increment(3),
+              });
+            }
+          }
         } else if (_isGameOver()) {
           // If all cards are matched, reset the game randomly
           resetGameRandomly();
