@@ -76,6 +76,10 @@ class Game {
     score = 0;
   }
 
+  void addMatchingTime() {
+    matching = matching + 10;
+  }
+
   void onCardPressed(int index, BuildContext context) {
     if (isGameOver) {
       return; // Game is already over, no need to process further

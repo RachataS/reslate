@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reslate/controllers/getDocument.dart';
 import 'package:reslate/screens/bottomBar.dart';
 import 'package:reslate/screens/review/multipleChoice/components/progress_bar.dart';
 import 'package:reslate/screens/review/multipleChoice/constants.dart';
@@ -28,6 +30,8 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   late Duration duration;
   int bestTime = 0;
   bool showConfetti = false;
+  firebaseDoc firebasedoc = firebaseDoc();
+  var docID, aids;
 
   @override
   void initState() {
@@ -41,6 +45,18 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     await game.getWordsList();
     startTimer();
     getBestTime();
+    docID = await firebasedoc.getDocumentId();
+
+    DocumentSnapshot documentSnapshot =
+        await FirebaseFirestore.instance.collection('Profile').doc(docID).get();
+    if (documentSnapshot.exists) {
+      Map<String, dynamic> data =
+          documentSnapshot.data() as Map<String, dynamic>;
+
+      aids = data['aids'];
+    } else {
+      print('Document does not exist');
+    }
   }
 
   @override
@@ -167,7 +183,66 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                           ? Colors.red[200]!
                           : Colors.green[200]!,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                backgroundColor: Colors.blue[100]!,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      40), // Adjust the radius as needed
+                                ),
+                                title: Text(
+                                  "Add matching time\n${aids}/3",
+                                  textAlign: TextAlign.center,
+                                ),
+                                content: Text(
+                                  "Are you sure you want to add matching 10 time",
+                                  textAlign: TextAlign.center,
+                                ),
+                                actions: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                        },
+                                        child: Text(
+                                          "Cancel",
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          if (aids > 0) {
+                                            game.addMatchingTime();
+
+                                            await FirebaseFirestore.instance
+                                                .collection('Profile')
+                                                .doc(docID)
+                                                .update({'aids': aids - 1});
+
+                                            setState(() {
+                                              aids = aids - 1;
+                                            });
+                                          }
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          "Use",
+                                          style: TextStyle(color: Colors.blue),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        },
                         child: SizedBox(
                           width: 100,
                           height: 30,
