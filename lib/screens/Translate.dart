@@ -502,7 +502,6 @@ class _translate_screenState extends State<translate_screen> {
     return false;
   }
 
-  // Function to split special characters from a list of words
   List<String> splitSpecialChars(List<String> words) {
     final List<String> specialChars = [
       '.',
@@ -543,12 +542,17 @@ class _translate_screenState extends State<translate_screen> {
 
     List<String> wordsWithoutSpecialChars = [];
     for (var word in words) {
-      String wordWithoutSpecialChars = word;
-      for (var char in specialChars) {
-        wordWithoutSpecialChars = wordWithoutSpecialChars.replaceAll(char, ' ');
-      }
-      if (wordWithoutSpecialChars.isNotEmpty) {
-        wordsWithoutSpecialChars.add(wordWithoutSpecialChars);
+      // Split the word into individual words using special characters and space
+      List<String> splitWords = word.split(RegExp(r'[,\s]+'));
+      for (var splitWord in splitWords) {
+        String wordWithoutSpecialChars = splitWord;
+        for (var char in specialChars) {
+          wordWithoutSpecialChars =
+              wordWithoutSpecialChars.replaceAll(char, '');
+        }
+        if (wordWithoutSpecialChars.isNotEmpty) {
+          wordsWithoutSpecialChars.add(wordWithoutSpecialChars);
+        }
       }
     }
 
