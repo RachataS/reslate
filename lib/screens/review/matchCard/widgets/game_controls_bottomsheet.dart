@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:reslate/controllers/game.dart';
 import 'package:reslate/screens/bottomBar.dart';
 import 'package:reslate/screens/review/matchCard/widgets/game_button.dart';
 import 'package:reslate/screens/review/matchCard/constants.dart';

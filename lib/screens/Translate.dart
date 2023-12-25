@@ -491,6 +491,7 @@ class _translate_screenState extends State<translate_screen> {
       '7',
       '8',
       '9',
+      '?',
     ];
 
     for (var char in specialChars) {
@@ -537,13 +538,14 @@ class _translate_screenState extends State<translate_screen> {
       '7',
       '8',
       '9',
+      '?',
     ];
 
     List<String> wordsWithoutSpecialChars = [];
     for (var word in words) {
       String wordWithoutSpecialChars = word;
       for (var char in specialChars) {
-        wordWithoutSpecialChars = wordWithoutSpecialChars.replaceAll(char, '');
+        wordWithoutSpecialChars = wordWithoutSpecialChars.replaceAll(char, ' ');
       }
       if (wordWithoutSpecialChars.isNotEmpty) {
         wordsWithoutSpecialChars.add(wordWithoutSpecialChars);

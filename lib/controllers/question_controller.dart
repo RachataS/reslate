@@ -279,7 +279,7 @@ class QuestionController extends GetxController
                           .doc(
                               '${_questions[_questionNumber.value - 1].question}')
                           .update({
-                        'answerCorrect': answerCorrectCount = 0,
+                        // 'answerCorrect': answerCorrectCount = 0,
                         "correctStrike": correctStrike = 0,
                       });
                       Get.back(); // Close the dialog
@@ -457,7 +457,7 @@ class QuestionController extends GetxController
                   await subcollectionReference
                       .doc('${_questions[_questionNumber.value - 1].question}')
                       .update({
-                    'answerCorrect': answerCorrectCount = 0,
+                    // 'answerCorrect': answerCorrectCount = 0,
                     "correctStrike": correctStrike = 0,
                   });
                   Get.back(); // Close the dialog
