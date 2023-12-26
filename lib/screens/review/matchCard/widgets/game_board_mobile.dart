@@ -198,7 +198,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                                   textAlign: TextAlign.center,
                                 ),
                                 content: Text(
-                                  "Do you sure you want to add matching 10 time",
+                                  "Do you want to add matching 10 time",
                                   textAlign: TextAlign.center,
                                 ),
                                 actions: [

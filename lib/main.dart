@@ -7,10 +7,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       // options: FirebaseOptions(
-      //     apiKey: 'AIzaSyCCOBglvd14ORH2RrCjO1nosCPkE7yIYTE',
-      //     appId: '1:400328617499:web:7a1fcb9943002caaaf12be',
-      //     messagingSenderId: '400328617499',
-      //     projectId: 'reslate-7d93b')
+      // apiKey: 'AIzaSyCCOBglvd14ORH2RrCjO1nosCPkE7yIYTE',
+      // appId: '1:400328617499:web:7a1fcb9943002caaaf12be',
+      // messagingSenderId: '400328617499',
+      // projectId: 'reslate-7d93b')
       );
   runApp(MyApp());
 }

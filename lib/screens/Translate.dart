@@ -158,6 +158,7 @@ class _translate_screenState extends State<translate_screen> {
                     controller: rawtxt,
                     maxLines: null,
                     onChanged: (rawtxt) async {
+                      // Future.delayed(Duration(milliseconds: 100), () async {
                       if (rawtxt == null || rawtxt == '') {
                         setState(() {
                           translated = outputbox;
@@ -171,13 +172,11 @@ class _translate_screenState extends State<translate_screen> {
                               .translate('${rawtxt}',
                                   from: inputLanguage, to: outputLanguage)
                               .then((translation) {
-                            // Future.delayed(Duration(milliseconds: 500), () {
                             setState(() {
                               translated = translation.toString();
                               if (rawtxt.contains(' ')) {
                                 wordsList = rawtxt.toLowerCase().split(' ');
                               }
-                              // });
                             });
                           });
                         } catch (e) {
@@ -190,6 +189,7 @@ class _translate_screenState extends State<translate_screen> {
                       wordsListWithoutDuplicates =
                           List<String>.from(wordsList.toSet());
                       wordsListWithoutDuplicates.sort();
+                      // });
                     },
                   ),
                   const Divider(
@@ -543,7 +543,8 @@ class _translate_screenState extends State<translate_screen> {
     List<String> wordsWithoutSpecialChars = [];
     for (var word in words) {
       // Split the word into individual words using special characters and space
-      List<String> splitWords = word.split(RegExp(r'[,\s]+'));
+      List<String> splitWords =
+          word.split(RegExp(r'[\s' + specialChars.join('') + ']+'));
       for (var splitWord in splitWords) {
         String wordWithoutSpecialChars = splitWord;
         for (var char in specialChars) {
