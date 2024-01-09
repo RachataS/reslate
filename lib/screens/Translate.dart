@@ -206,7 +206,7 @@ class _translate_screenState extends State<translate_screen> {
                         fontWeight: FontWeight.bold),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: const EdgeInsets.only(top: 10),
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -293,7 +293,7 @@ class _translate_screenState extends State<translate_screen> {
           ),
         ),
         floatingActionButton: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
+            padding: const EdgeInsets.only(bottom: 80),
             child: FloatingActionButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50.0),

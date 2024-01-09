@@ -1,4 +1,3 @@
-import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:reslate/screens/WordsCollection.dart';
@@ -28,7 +27,6 @@ class _bottombarState extends State<bottombar> {
   var docID;
 
   final _pageController = PageController(initialPage: 0);
-  final _controller = NotchBottomBarController(index: 0);
 
   @override
   void initState() {

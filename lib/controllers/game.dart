@@ -25,6 +25,7 @@ class Game {
   int matching = 24;
   int score = 0;
   int topScore = 0;
+  bool isCardMatchCheckInProgress = false;
 
   Future<void> getWordsList() async {
     try {
@@ -80,9 +81,9 @@ class Game {
     matching = matching + 10;
   }
 
-  void onCardPressed(int index, BuildContext context) {
-    if (isGameOver) {
-      return; // Game is already over, no need to process further
+  Future<void> onCardPressed(int index, BuildContext context) async {
+    if (isGameOver || isCardMatchCheckInProgress) {
+      return; // Game is already over or card match check is in progress
     }
 
     if (cards[index].state == CardState.visible ||
@@ -93,23 +94,24 @@ class Game {
     cards[index].state = CardState.visible;
     final List<int> visibleCardIndexes = _getVisibleCardIndexes();
     if (visibleCardIndexes.length == 2) {
+      // Set the flag to indicate that card match check is in progress
+      isCardMatchCheckInProgress = true;
+
       final CardItem card1 = cards[visibleCardIndexes[0]];
       final CardItem card2 = cards[visibleCardIndexes[1]];
 
       Future.delayed(const Duration(milliseconds: 1000), () async {
-        //edit delay time when open card
         if (card1.check == card2.check) {
           card1.state = CardState.guessed;
           card2.state = CardState.guessed;
           isGameOver = _isGameOver();
-
-          // Increment the score when a pair is matched
           score++;
         } else {
           card1.state = CardState.hidden;
           card2.state = CardState.hidden;
         }
-
+        // Reset the flag after the card match check is done
+        isCardMatchCheckInProgress = false;
         matching--;
 
         if (matching == 0) {
