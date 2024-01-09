@@ -106,7 +106,9 @@ class _reviewPageState extends State<reviewPage> {
                                 fontSize: 16,
                                 color: numberOfQuestion == 10
                                     ? Colors.white
-                                    : Colors.blue,
+                                    : (wordsLength < 10
+                                        ? Colors.white
+                                        : Colors.blue),
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
@@ -132,7 +134,9 @@ class _reviewPageState extends State<reviewPage> {
                                 fontSize: 16,
                                 color: numberOfQuestion == 20
                                     ? Colors.white
-                                    : Colors.blue,
+                                    : (wordsLength < 20
+                                        ? Colors.white
+                                        : Colors.blue),
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
@@ -158,7 +162,9 @@ class _reviewPageState extends State<reviewPage> {
                                 fontSize: 16,
                                 color: numberOfQuestion == 40
                                     ? Colors.white
-                                    : Colors.blue,
+                                    : (wordsLength < 40
+                                        ? Colors.white
+                                        : Colors.blue),
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
@@ -184,7 +190,9 @@ class _reviewPageState extends State<reviewPage> {
                                 fontSize: 16,
                                 color: numberOfQuestion == 60
                                     ? Colors.white
-                                    : Colors.blue,
+                                    : (wordsLength < 60
+                                        ? Colors.white
+                                        : Colors.blue),
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
@@ -376,7 +384,9 @@ class _reviewPageState extends State<reviewPage> {
                                 fontSize: 16,
                                 color: numberOfQuestion == 10
                                     ? Colors.white
-                                    : Colors.blue,
+                                    : (wordsLength < 10
+                                        ? Colors.white
+                                        : Colors.blue),
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
@@ -402,7 +412,9 @@ class _reviewPageState extends State<reviewPage> {
                                 fontSize: 16,
                                 color: numberOfQuestion == 20
                                     ? Colors.white
-                                    : Colors.blue,
+                                    : (wordsLength < 20
+                                        ? Colors.white
+                                        : Colors.blue),
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
@@ -428,7 +440,9 @@ class _reviewPageState extends State<reviewPage> {
                                 fontSize: 16,
                                 color: numberOfQuestion == 40
                                     ? Colors.white
-                                    : Colors.blue,
+                                    : (wordsLength < 40
+                                        ? Colors.white
+                                        : Colors.blue),
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
@@ -454,7 +468,9 @@ class _reviewPageState extends State<reviewPage> {
                                 fontSize: 16,
                                 color: numberOfQuestion == 60
                                     ? Colors.white
-                                    : Colors.blue,
+                                    : (wordsLength < 60
+                                        ? Colors.red
+                                        : Colors.blue),
                               ),
                             ),
                             style: ElevatedButton.styleFrom(
