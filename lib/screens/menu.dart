@@ -33,6 +33,7 @@ class _menuPageState extends State<menuPage> {
     var username = data?['Username'];
     var email = data?['Email'];
     var words = data?['wordLength'];
+    var aids = data?['aids'];
 
     return Scaffold(
       body: Container(
@@ -294,7 +295,7 @@ class _menuPageState extends State<menuPage> {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           title: Text(
-                            'Translate Words 2',
+                            'Translate Words 2\n${aids}/3',
                             style: TextStyle(fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                           ),

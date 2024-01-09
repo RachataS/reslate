@@ -45,7 +45,7 @@ class _translate_screenState extends State<translate_screen> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    final double appBarHeight = kToolbarHeight;
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();

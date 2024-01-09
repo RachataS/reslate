@@ -25,7 +25,7 @@ class Game {
   int matching = 24;
   int score = 0;
   int topScore = 0;
-  bool isCardMatchCheckInProgress = false;
+  // bool isCardMatchCheckInProgress = false;
 
   Future<void> getWordsList() async {
     try {
@@ -82,7 +82,9 @@ class Game {
   }
 
   Future<void> onCardPressed(int index, BuildContext context) async {
-    if (isGameOver || isCardMatchCheckInProgress) {
+    if (isGameOver
+        // || isCardMatchCheckInProgress
+        ) {
       return; // Game is already over or card match check is in progress
     }
 
@@ -94,8 +96,7 @@ class Game {
     cards[index].state = CardState.visible;
     final List<int> visibleCardIndexes = _getVisibleCardIndexes();
     if (visibleCardIndexes.length == 2) {
-      // Set the flag to indicate that card match check is in progress
-      isCardMatchCheckInProgress = true;
+      // isCardMatchCheckInProgress = true;
 
       final CardItem card1 = cards[visibleCardIndexes[0]];
       final CardItem card2 = cards[visibleCardIndexes[1]];
@@ -110,8 +111,7 @@ class Game {
           card1.state = CardState.hidden;
           card2.state = CardState.hidden;
         }
-        // Reset the flag after the card match check is done
-        isCardMatchCheckInProgress = false;
+        // isCardMatchCheckInProgress = false;
         matching--;
 
         if (matching == 0) {
@@ -164,6 +164,7 @@ class Game {
 
   void _showGameOverDialog(BuildContext context) async {
     await fetchTopScore();
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -172,24 +173,28 @@ class Game {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
-          title: Text('Game Over',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.red[900]!)),
+          title: Text(
+            'Game Over',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.red[900]!),
+          ),
           content: SizedBox(
             height: 150,
-            child: Column(children: [
-              Text(
-                'Top Score\n${topScore}',
-                style: TextStyle(fontSize: 30),
-                textAlign: TextAlign.center,
-              ),
-              Spacer(),
-              Text(
-                'Your score is ${score}',
-                style: TextStyle(fontSize: 22),
-                textAlign: TextAlign.center,
-              )
-            ]),
+            child: Column(
+              children: [
+                Text(
+                  'Top Score\n${topScore}',
+                  style: TextStyle(fontSize: 30),
+                  textAlign: TextAlign.center,
+                ),
+                Spacer(),
+                Text(
+                  'Your score is ${score}',
+                  style: TextStyle(fontSize: 22),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
           actions: <Widget>[
             Align(
@@ -213,8 +218,10 @@ class Game {
                       Navigator.of(context).pop(); // Close the dialog
                       Get.to(bottombar(), transition: Transition.topLevel);
                     },
-                    child:
-                        Text('Exit', style: TextStyle(color: Colors.red[700]!)),
+                    child: Text(
+                      'Exit',
+                      style: TextStyle(color: Colors.red[700]!),
+                    ),
                   ),
                 ],
               ),
@@ -222,7 +229,12 @@ class Game {
           ],
         );
       },
-    );
+    ).then((value) {
+      if (value == null) {
+        // Handle taps outside the AlertDialog, in this case, go to bottom bar
+        Get.to(bottombar(), transition: Transition.topLevel);
+      }
+    });
   }
 
   List<CardItem> _createCardItems(
