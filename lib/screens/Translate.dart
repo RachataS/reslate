@@ -307,6 +307,15 @@ class _translate_screenState extends State<translate_screen> {
                   });
 
                   if (selecttxt.length > 0) {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
                     await dialogTranslate();
                   } else {
                     QuerySnapshot<Map<String, dynamic>> oldWordLengthQury =
@@ -678,6 +687,15 @@ class _translate_screenState extends State<translate_screen> {
     showDialog(
       context: context,
       builder: (BuildContext context) => saveWordsDialog,
-    );
+    ).then((value) {
+      if (value == null) {
+        setState(() {
+          selecttxt.clear();
+          selecttranslated.clear();
+          checkWords = 0;
+          Navigator.of(context).pop();
+        });
+      }
+    });
   }
 }

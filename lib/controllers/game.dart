@@ -229,12 +229,14 @@ class Game {
           ],
         );
       },
-    ).then((value) {
-      if (value == null) {
-        // Handle taps outside the AlertDialog, in this case, go to bottom bar
-        Get.to(bottombar(), transition: Transition.topLevel);
-      }
-    });
+    )
+        // .then((value) {
+        //   if (value == null) {
+        //     // Handle taps outside the AlertDialog, in this case, go to bottom bar
+        //     Get.to(bottombar(), transition: Transition.topLevel);
+        //   }
+        // })
+        ;
   }
 
   List<CardItem> _createCardItems(
