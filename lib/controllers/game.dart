@@ -30,13 +30,36 @@ class Game {
   FlutterTts flutterTts = FlutterTts();
   Future<void> speak(String text) async {
     try {
-      await flutterTts
-          .setLanguage("en-US"); // Set the language (adjust as needed)
+      // Check the language of the input text
+      String language = _detectLanguage(text);
+
+      // Set the appropriate language for TTS
+      await flutterTts.setLanguage(language);
+
+      // Other TTS settings
+      await flutterTts.awaitSpeakCompletion(true);
+      await flutterTts.awaitSynthCompletion(true);
       await flutterTts.setPitch(1.0);
       await flutterTts.setSpeechRate(0.5);
+
+      // Speak the text
       await flutterTts.speak(text);
     } catch (e) {
       print(e);
+    }
+  }
+
+// Helper function to detect the language of the text
+  String _detectLanguage(String text) {
+    // Implement your language detection logic here
+    // For example, you could use a language detection library or simple heuristics
+    // based on character ranges for common languages
+
+    // Example using a basic heuristic for Thai:
+    if (text.contains(RegExp(r'[\u0E00-\u0E7F]+'))) {
+      return "th-TH"; // Thai language code
+    } else {
+      return "en-US"; // Default language
     }
   }
 
@@ -103,9 +126,10 @@ class Game {
         cards[index].state == CardState.guessed) {
       return;
     }
-    speak(cards[index].question);
+
     cards[index].state = CardState.visible;
     final List<int> visibleCardIndexes = _getVisibleCardIndexes();
+    speak(cards[index].question);
     if (visibleCardIndexes.length == 2) {
       isCardMatchCheckInProgress = true;
 
