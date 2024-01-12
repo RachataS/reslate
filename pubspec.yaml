@@ -20,6 +20,7 @@ dependencies:
   flutter_html: ^3.0.0-beta.2
   flutter_launcher_icons: ^0.13.1
   flutter_local_notifications: ^16.1.0
+  flutter_tts: ^3.8.5
   fluttertoast: ^8.2.2
   form_field_validator: ^1.1.0
   get: ^4.6.6

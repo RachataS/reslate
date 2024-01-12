@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:math';
-
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +25,19 @@ class Game {
   int matching = 24;
   int score = 0;
   int topScore = 0;
-  // bool isCardMatchCheckInProgress = false;
+  bool isCardMatchCheckInProgress = false;
+
+  FlutterTts flutterTts = FlutterTts();
+  Future<void> speak(String text) async {
+    try {
+      await flutterTts
+          .setLanguage("en-US"); // Set the language (adjust as needed)
+      await flutterTts.setPitch(1.0); // Set pitch (adjust as needed)
+      await flutterTts.speak(text);
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future<void> getWordsList() async {
     try {
@@ -82,9 +94,7 @@ class Game {
   }
 
   Future<void> onCardPressed(int index, BuildContext context) async {
-    if (isGameOver
-        // || isCardMatchCheckInProgress
-        ) {
+    if (isGameOver || isCardMatchCheckInProgress) {
       return; // Game is already over or card match check is in progress
     }
 
@@ -92,11 +102,11 @@ class Game {
         cards[index].state == CardState.guessed) {
       return;
     }
-
+    speak(cards[index].question);
     cards[index].state = CardState.visible;
     final List<int> visibleCardIndexes = _getVisibleCardIndexes();
     if (visibleCardIndexes.length == 2) {
-      // isCardMatchCheckInProgress = true;
+      isCardMatchCheckInProgress = true;
 
       final CardItem card1 = cards[visibleCardIndexes[0]];
       final CardItem card2 = cards[visibleCardIndexes[1]];
@@ -111,7 +121,7 @@ class Game {
           card1.state = CardState.hidden;
           card2.state = CardState.hidden;
         }
-        // isCardMatchCheckInProgress = false;
+        isCardMatchCheckInProgress = false;
         matching--;
 
         if (matching == 0) {
