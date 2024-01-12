@@ -32,7 +32,8 @@ class Game {
     try {
       await flutterTts
           .setLanguage("en-US"); // Set the language (adjust as needed)
-      await flutterTts.setPitch(1.0); // Set pitch (adjust as needed)
+      await flutterTts.setPitch(1.0);
+      await flutterTts.setSpeechRate(0.5);
       await flutterTts.speak(text);
     } catch (e) {
       print(e);
