@@ -78,8 +78,17 @@ class Game {
 
   Future<void> generateCards(List<Map<String, dynamic>> jsonData) async {
     cards = [];
-    final List<Color> cardColors = Colors.primaries.toList();
-
+    // final List<Color> cardColors = Colors.primaries.toList();
+    final List<Color> cardColors = [
+      Colors.red,
+      Colors.blue,
+      Colors.green,
+      Colors.purple,
+      Colors.orange,
+      Colors.cyan,
+      Colors.grey,
+      Colors.pink,
+    ];
     jsonData.shuffle(Random());
 
     for (int i = 0; i < (gridSize * gridSize / 2); i++) {
@@ -264,14 +273,12 @@ class Game {
           ],
         );
       },
-    )
-        // .then((value) {
-        //   if (value == null) {
-        //     // Handle taps outside the AlertDialog, in this case, go to bottom bar
-        //     Get.to(bottombar(), transition: Transition.topLevel);
-        //   }
-        // })
-        ;
+    ).then((value) {
+      if (matching <= 0) {
+        // Handle taps outside the AlertDialog, in this case, go to bottom bar
+        Get.to(bottombar(), transition: Transition.topLevel);
+      }
+    });
   }
 
   List<CardItem> _createCardItems(
