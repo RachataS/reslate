@@ -78,7 +78,7 @@ class Game {
 
   Future<void> generateCards(List<Map<String, dynamic>> jsonData) async {
     cards = [];
-    // final List<Color> cardColors = Colors.primaries.toList();
+
     final List<Color> cardColors = [
       Colors.red,
       Colors.blue,
@@ -89,21 +89,25 @@ class Game {
       Colors.grey,
       Colors.pink,
     ];
-    jsonData.shuffle(Random());
+
+    jsonData.sort((a, b) => a['answerCorrect'].compareTo(b['answerCorrect']));
 
     for (int i = 0; i < (gridSize * gridSize / 2); i++) {
       final cardData = jsonData[i];
+      print(cardData['question']);
       final CardItem questionCard = CardItem(
         id: cardData['id'],
+        key: cardData['question'],
         question: cardData['question'],
-        color: Colors.green,
+        color: cardColors[i % cardColors.length],
         check: i,
       );
 
       final CardItem thaiCard = CardItem(
         id: cardData['id'],
+        key: cardData['question'],
         question: cardData['thai'],
-        color: Colors.red,
+        color: cardColors[i % cardColors.length],
         check: i,
       );
 
@@ -112,6 +116,7 @@ class Game {
           _createCardItems(questionCard, thaiCard, cardColor);
       cards.addAll(newCards);
     }
+
     cards.shuffle(Random());
   }
 
@@ -127,6 +132,9 @@ class Game {
   }
 
   Future<void> onCardPressed(int index, BuildContext context) async {
+    final collectionReference =
+        FirebaseFirestore.instance.collection('Profile').doc(docID);
+    final subcollectionReference = collectionReference.collection("savedWords");
     if (isGameOver || isCardMatchCheckInProgress) {
       return; // Game is already over or card match check is in progress
     }
@@ -150,6 +158,13 @@ class Game {
           card1.state = CardState.guessed;
           card2.state = CardState.guessed;
           isGameOver = _isGameOver();
+          try {
+            await subcollectionReference.doc(cards[index].key).update({
+              'answerCorrect': FieldValue.increment(1),
+            });
+          } catch (e) {
+            print(e);
+          }
           score++;
         } else {
           card1.state = CardState.hidden;
@@ -160,8 +175,6 @@ class Game {
 
         if (matching == 0) {
           _showGameOverDialog(context);
-          final collectionReference =
-              FirebaseFirestore.instance.collection('Profile').doc(docID);
 
           // Fetch the current 'aids' value
           DocumentSnapshot<Map<String, dynamic>> userDocument =
@@ -287,11 +300,13 @@ class Game {
       CardItem(
           id: questionCard.id,
           question: questionCard.question,
+          key: questionCard.key,
           state: CardState.hidden,
           color: cardColor,
           check: questionCard.check),
       CardItem(
           id: thaiCard.id,
+          key: questionCard.key,
           question: thaiCard.question,
           state: CardState.hidden,
           color: cardColor,
