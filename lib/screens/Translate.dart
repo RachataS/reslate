@@ -132,13 +132,14 @@ class _translate_screenState extends State<translate_screen> {
             ]),
           ),
           child: Padding(
-            padding: EdgeInsets.only(top: screenSize.height * 0.12),
+            padding:
+                EdgeInsets.only(top: screenSize.height * 0.09), //for ios 0.12
             child: Card(
               color: Colors.white,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
               key: formKey,
-              margin: const EdgeInsets.fromLTRB(12, 12, 12, 120),
+              margin: const EdgeInsets.fromLTRB(12, 12, 12, 110),
               child: ListView(
                 padding: const EdgeInsets.all(20),
                 children: [

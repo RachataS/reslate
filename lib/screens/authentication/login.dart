@@ -60,7 +60,7 @@ class _loginPageState extends State<loginPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 20, top: 100),
+                          padding: const EdgeInsets.only(left: 20, top: 90),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment
                                 .start, // Aligns children to the start (left) of the column
