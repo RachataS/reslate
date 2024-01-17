@@ -94,8 +94,8 @@ class Game {
 
     for (int i = 0; i < (gridSize * gridSize / 2); i++) {
       final cardData = jsonData[i];
-      print(cardData['question']);
       final CardItem questionCard = CardItem(
+        // language: 'eng',
         id: cardData['id'],
         key: cardData['question'],
         question: cardData['question'],
@@ -105,6 +105,7 @@ class Game {
 
       final CardItem thaiCard = CardItem(
         id: cardData['id'],
+        // language: 'thai',
         key: cardData['question'],
         question: cardData['thai'],
         color: cardColors[i % cardColors.length],
@@ -299,6 +300,7 @@ class Game {
     return [
       CardItem(
           id: questionCard.id,
+          // language: 'eng',
           question: questionCard.question,
           key: questionCard.key,
           state: CardState.hidden,
@@ -306,6 +308,7 @@ class Game {
           check: questionCard.check),
       CardItem(
           id: thaiCard.id,
+          // language: 'thai',
           key: questionCard.key,
           question: thaiCard.question,
           state: CardState.hidden,

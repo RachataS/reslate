@@ -8,12 +8,13 @@ class CardItem {
       required this.question,
       required this.color,
       required this.key,
+      // required this.language,
       this.state = CardState.hidden,
       this.matched = false,
       this.check});
 
   final int id;
-
+  // final String language;
   final String question;
   final String key;
   final Color color;

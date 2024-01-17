@@ -73,6 +73,7 @@ class firebaseDoc {
       return document;
     } catch (e) {
       print('Error initializing page: $e');
+      return null;
     }
   }
 
@@ -87,9 +88,11 @@ class firebaseDoc {
         return data;
       } else {
         print('Data is null or not a Map<String, dynamic>');
+        return null;
       }
     } else {
       print('Document does not exist');
+      return null;
     }
   }
 
