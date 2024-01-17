@@ -326,7 +326,7 @@ class QuestionController extends GetxController
         await subcollectionReference
             .doc('${_questions[_questionNumber.value - 1].question}')
             .update({
-          'answerCorrect': answerCorrectCount - 1,
+          'answerCorrect': answerCorrectCount + 1,
           "correctStrike": correctStrike + 1,
         });
       } catch (e) {
