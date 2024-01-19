@@ -225,7 +225,7 @@ class _loginPageState extends State<loginPage> {
                                             } catch (e) {
                                               Fluttertoast.showToast(
                                                   msg:
-                                                      "ไม่สามารถรับข้อมูลผู้ใช้ได้",
+                                                      "ไม่สามารถเข้าสู่ระบบได้ โปรดเข้าสู่ระบบด้วยวิธีอื่น",
                                                   gravity: ToastGravity.TOP);
                                             }
 
@@ -342,24 +342,39 @@ class GooglesignInProvider extends ChangeNotifier {
 
   _loginPageState login = _loginPageState();
 
-  Future googleLogin() async {
-    final googleUser = await GoogleSignIn().signIn();
-    if (googleUser == null) return;
-    _user = googleUser;
+  Future<void> googleLogin() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        // User canceled the Google Sign-In
+        return;
+      }
 
-    final googleAutn = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAutn.accessToken,
-      idToken: googleAutn.idToken,
-    );
-    var userCredential =
-        await FirebaseAuth.instance.signInWithCredential(credential);
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-    if (userCredential.additionalUserInfo!.isNewUser) {
-      await login.googleRegister(googleUser!.displayName!, googleUser!.email!);
-    } else {
-      print('this google account already used');
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        if (userCredential.additionalUserInfo!.isNewUser) {
+          await login.googleRegister(
+              googleUser.displayName!, googleUser.email!);
+        } else {
+          print('This Google account is already used.');
+        }
+      } else {
+        print('Failed to sign in with Google.');
+      }
+    } catch (e) {
+      print('Error during Google sign-in: $e');
     }
   }
 }
