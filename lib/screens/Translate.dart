@@ -642,6 +642,9 @@ class _translate_screenState extends State<translate_screen> {
                     TextButton(
                       onPressed: () async {
                         Navigator.of(context).pop();
+                        Center(
+                          child: CircularProgressIndicator(),
+                        );
                         for (int i = 0; i < selecttranslated.length; i++) {
                           String translation = selecttranslated[i];
                           List<String> parts = translation.split('=');
@@ -658,7 +661,7 @@ class _translate_screenState extends State<translate_screen> {
                             String eng = parts[0].trim();
                             String thai = parts[1].trim();
 
-                            saveWords(eng, thai, oldWordLength);
+                            await saveWords(eng, thai, oldWordLength);
                           }
                         }
 
@@ -691,9 +694,9 @@ class _translate_screenState extends State<translate_screen> {
     ).then((value) {
       if (value == null) {
         setState(() {
-          selecttxt.clear();
-          selecttranslated.clear();
-          checkWords = 0;
+          // selecttxt.clear();
+          // selecttranslated.clear();
+          // checkWords = 0;
           Navigator.of(context).pop();
         });
       }

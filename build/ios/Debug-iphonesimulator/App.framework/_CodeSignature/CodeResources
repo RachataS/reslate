@@ -4,10 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>.DS_Store</key>
-		<data>
-		setDZZs1cbaKLW7Em0fBdXqs0pU=
-		</data>
 		<key>Info.plist</key>
 		<data>
 		85iaADE5tc/NukRC+KGdiZaZ0ZA=
@@ -50,7 +46,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		6kChhNpkggnrCWiv3LlD5N/0d80=
+		FG6NyL/NNwmHaq0CcsD1wgKxf1I=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -4062,7 +4058,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			31GB9zBBjIMigmS9xbr05iuHewusO623yHrUxWh+g14=
+			zfI+4YJ1aukWA4jUEHFpB0nZlhSLYT32UGsn9nESfGI=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
