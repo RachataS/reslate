@@ -469,7 +469,7 @@ class _reviewPageState extends State<reviewPage> {
                                 color: numberOfQuestion == 60
                                     ? Colors.white
                                     : (wordsLength < 60
-                                        ? Colors.red
+                                        ? Colors.white
                                         : Colors.blue),
                               ),
                             ),

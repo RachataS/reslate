@@ -1,0 +1,20 @@
+2024/01/19-11:10:47.686 a003 Creating DB /private/var/folders/10/yqt2r0d93xl5tpj3fcv973br0000gn/T/flutter_tools.iXTuGo/flutter_tools_chrome_device.F0Djbk/Default/IndexedDB/http_localhost_55113.indexeddb.leveldb since it was missing.
+2024/01/19-11:10:47.696 a003 Reusing MANIFEST /private/var/folders/10/yqt2r0d93xl5tpj3fcv973br0000gn/T/flutter_tools.iXTuGo/flutter_tools_chrome_device.F0Djbk/Default/IndexedDB/http_localhost_55113.indexeddb.leveldb/MANIFEST-000001
+2024/01/19-11:10:47.710 a603 Level-0 table #5: started
+2024/01/19-11:10:47.723 a603 Level-0 table #5: 763 bytes OK
+2024/01/19-11:10:47.733 a603 Delete type=0 #3
+2024/01/19-11:10:47.733 a603 Manual compaction at level-0 from '\x00\x01\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x02\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/01/19-11:10:55.846 a003 Level-0 table #7: started
+2024/01/19-11:10:55.848 a003 Level-0 table #7: 3692 bytes OK
+2024/01/19-11:10:55.854 a003 Delete type=0 #4
+2024/01/19-11:10:55.855 a003 Manual compaction at level-0 from '\x00\x04\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x05\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/01/19-11:10:57.297 b003 Level-0 table #9: started
+2024/01/19-11:10:57.300 b003 Level-0 table #9: 2667 bytes OK
+2024/01/19-11:10:57.305 b003 Delete type=0 #6
+2024/01/19-11:10:57.307 a403 Manual compaction at level-0 from '\x00\x05\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at '\x00\x06\x00\x00\xc8\x14\x00f\x00i\x00r\x00e\x00b\x00a\x00s\x00e\x00L\x00o\x00c\x00a\x00l\x00S\x00t\x00o\x00r\x00a\x00g\x00e' @ 215 : 1
+2024/01/19-11:10:57.307 a403 Compacting 1@0 + 1@1 files
+2024/01/19-11:10:57.310 a403 Generated table #10@0: 114 keys, 2386 bytes
+2024/01/19-11:10:57.310 a403 Compacted 1@0 + 1@1 files => 2386 bytes
+2024/01/19-11:10:57.313 a403 compacted to: files[ 0 1 1 0 0 0 0 ]
+2024/01/19-11:10:57.313 a403 Delete type=2 #9
+2024/01/19-11:10:57.313 a403 Manual compaction at level-0 from '\x00\x06\x00\x00\xc8\x14\x00f\x00i\x00r\x00e\x00b\x00a\x00s\x00e\x00L\x00o\x00c\x00a\x00l\x00S\x00t\x00o\x00r\x00a\x00g\x00e' @ 215 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at (end)
