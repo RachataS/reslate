@@ -219,15 +219,15 @@ class _loginPageState extends State<loginPage> {
                                           GooglesignInProvider()
                                               .googleLogin()
                                               .then((value) {
-                                            try {
-                                              var user = FirebaseAuth
-                                                  .instance.currentUser!;
-                                            } catch (e) {
-                                              Fluttertoast.showToast(
-                                                  msg:
-                                                      "ไม่สามารถเข้าสู่ระบบได้ โปรดเข้าสู่ระบบด้วยวิธีอื่น",
-                                                  gravity: ToastGravity.TOP);
-                                            }
+                                            // try { // un comment for web
+                                            var user = FirebaseAuth
+                                                .instance.currentUser!;
+                                            // } catch (e) {
+                                            //   Fluttertoast.showToast(
+                                            //       msg:
+                                            //           "ไม่สามารถเข้าสู่ระบบได้ โปรดเข้าสู่ระบบด้วยวิธีอื่น",
+                                            //       gravity: ToastGravity.TOP);
+                                            // }
 
                                             Get.to(bottombar(),
                                                 transition:
