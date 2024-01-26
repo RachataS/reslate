@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:reslate/models/card_item.dart';
 import 'package:reslate/controllers/getDocument.dart';
 import 'package:reslate/screens/bottomBar.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class Game {
   Game(this.gridSize) {
@@ -37,8 +38,10 @@ class Game {
       await flutterTts.setLanguage(language);
 
       // Other TTS settings
-      await flutterTts.awaitSpeakCompletion(true);
-      await flutterTts.awaitSynthCompletion(true);
+      if (!kIsWeb) {
+        await flutterTts.awaitSpeakCompletion(true);
+        await flutterTts.awaitSynthCompletion(true);
+      }
       await flutterTts.setPitch(1.0);
       await flutterTts.setSpeechRate(0.5);
 
