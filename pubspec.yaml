@@ -9,6 +9,7 @@ environment:
 dependencies:
   animated_notch_bottom_bar: ^1.0.0
   auto_size_text: ^3.0.0
+  change_app_package_name: ^1.1.0
   cloud_firestore: ^4.8.4
   confetti: ^0.7.0
   cupertino_icons: ^1.0.5

@@ -1,4 +1,4 @@
-package com.example.reslate
+package com.rstn.reslate
 
 import io.flutter.embedding.android.FlutterActivity
 
