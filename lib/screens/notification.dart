@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class NotificationModel {
   late bool isEnabled;
@@ -40,11 +43,93 @@ class NotificationForm extends StatefulWidget {
 class _NotificationFormState extends State<NotificationForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late TimeOfDay _selectedTime;
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
     super.initState();
+    tz.initializeTimeZones(); // Initialize time zones
+    requestPermissions();
+    initializeNotifications();
     _selectedTime = TimeOfDay.now();
+  }
+
+  Future<void> requestPermissions() async {
+    // Request notification permissions here
+  }
+
+  Future<void> initializeNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('launch_background');
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  Future<void> scheduleNotification(TimeOfDay selectedTime) async {
+    // Convert the selectedTime to a TZDateTime using the local time zone
+    DateTime now = DateTime.now();
+    DateTime scheduledTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      selectedTime.hour,
+      selectedTime.minute,
+    );
+
+    tz.TZDateTime scheduledTZTime = tz.TZDateTime(
+      tz.local,
+      scheduledTime.year,
+      scheduledTime.month,
+      scheduledTime.day,
+      scheduledTime.hour,
+      scheduledTime.minute,
+    );
+
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      '1',
+      'reslate',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    // Calculate the repeat interval for daily notifications
+    const RepeatInterval repeatInterval = RepeatInterval.daily;
+
+    // Schedule the notification at the selected time
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      0,
+      'reslate',
+      'It\'s time to review words, just 2 min',
+      scheduledTZTime,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'full screen channel id',
+          'full screen channel name',
+          channelDescription: 'full screen channel description',
+          priority: Priority.high,
+          importance: Importance.high,
+          fullScreenIntent: true,
+        ),
+      ),
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Notification scheduled for ${selectedTime.hour}:${selectedTime.minute.toString().padLeft(2, '0')}',
+        ),
+      ),
+    );
   }
 
   @override
@@ -66,7 +151,7 @@ class _NotificationFormState extends State<NotificationForm> {
                     .isNotEmpty,
                 onChanged: (value) {
                   if (value) {
-                    _scheduleNotification();
+                    _scheduleNotification(_selectedTime);
                   } else {
                     _cancelNotification();
                   }
@@ -82,7 +167,7 @@ class _NotificationFormState extends State<NotificationForm> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
-                    _addNotification();
+                    _addNotification(_selectedTime);
                   }
                 },
                 child: Text('Add Notification'),
@@ -128,17 +213,18 @@ class _NotificationFormState extends State<NotificationForm> {
     }
   }
 
-  void _scheduleNotification() {
+  void _scheduleNotification(TimeOfDay selectedTime) {
     final provider = Provider.of<NotificationProvider>(context, listen: false);
     final notificationModel = NotificationModel(
       isEnabled: true,
-      notificationTime: _selectedTime,
+      notificationTime: selectedTime,
     );
 
     provider.addNotification(notificationModel);
 
     // Implement logic to schedule the notification using FlutterLocalNotifications
     // You can refer to the flutter_local_notifications documentation for details.
+    scheduleNotification(selectedTime);
   }
 
   void _cancelNotification() {
@@ -149,11 +235,11 @@ class _NotificationFormState extends State<NotificationForm> {
     // You can refer to the flutter_local_notifications documentation for details.
   }
 
-  void _addNotification() {
+  void _addNotification(TimeOfDay selectedTime) {
     final provider = Provider.of<NotificationProvider>(context, listen: false);
     final notificationModel = NotificationModel(
       isEnabled: true,
-      notificationTime: _selectedTime,
+      notificationTime: selectedTime,
     );
 
     provider.addNotification(notificationModel);
