@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -15,17 +14,18 @@ class LocalNotifications {
   }
 
   // initialize the local notifications
-  static Future init() async {
-    // initialise the plugin. app_icon needs to be added as a drawable resource to the Android head project
+  static Future<void> init() async {
+    // initialize the plugin. app_icon needs to be added as a drawable resource to the Android head project
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/launch_background');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     final InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
     );
-    _flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse: onNotificationTap,
-        onDidReceiveBackgroundNotificationResponse: onNotificationTap);
+
+    await _flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+    );
   }
 
   // show a simple notification
@@ -39,6 +39,7 @@ class LocalNotifications {
             channelDescription: 'your channel description',
             importance: Importance.max,
             priority: Priority.high,
+            icon: '@mipmap/ic_launcher',
             ticker: 'ticker');
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
@@ -57,6 +58,7 @@ class LocalNotifications {
             channelDescription: 'your channel description',
             importance: Importance.max,
             priority: Priority.high,
+            icon: '@mipmap/ic_launcher',
             ticker: 'ticker');
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
@@ -83,6 +85,7 @@ class LocalNotifications {
                 channelDescription: 'your channel description',
                 importance: Importance.max,
                 priority: Priority.high,
+                icon: '@mipmap/ic_launcher',
                 ticker: 'ticker')),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
@@ -110,6 +113,7 @@ class LocalNotifications {
           channelDescription: 'your channel description',
           importance: Importance.max,
           priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
           ticker: 'ticker',
         ),
       ),
