@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -28,69 +29,55 @@ class LocalNotifications {
     );
   }
 
-  // show a simple notification
-  static Future showSimpleNotification({
+  static Future<void> showPeriodicNotifications({
     required String title,
     required String body,
     required String payload,
-  }) async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('your channel id', 'your channel name',
-            channelDescription: 'your channel description',
-            importance: Importance.max,
-            priority: Priority.high,
-            icon: '@mipmap/ic_launcher',
-            ticker: 'ticker');
-    const NotificationDetails notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
-    await _flutterLocalNotificationsPlugin
-        .show(0, title, body, notificationDetails, payload: payload);
-  }
-
-  // to show periodic notification at regular interval
-  static Future showPeriodicNotifications({
-    required String title,
-    required String body,
-    required String payload,
-  }) async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('channel 2', 'your channel name',
-            channelDescription: 'your channel description',
-            importance: Importance.max,
-            priority: Priority.high,
-            icon: '@mipmap/ic_launcher',
-            ticker: 'ticker');
-    const NotificationDetails notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
-    await _flutterLocalNotificationsPlugin.periodicallyShow(
-        1, title, body, RepeatInterval.everyMinute, notificationDetails,
-        payload: payload);
-  }
-
-  // to schedule a local notification
-  static Future showScheduleNotification({
-    required String title,
-    required String body,
-    required String payload,
+    required TimeOfDay scheduledTime,
   }) async {
     tz.initializeTimeZones();
+
+    final now = DateTime.now();
+
+    // Use the default local time zone
+    final currentTimeZone = tz.local;
+
+    final scheduledDateTime = tz.TZDateTime(
+      currentTimeZone,
+      now.year,
+      now.month,
+      now.day,
+      scheduledTime.hour,
+      scheduledTime.minute,
+    );
+
+    // Calculate the time difference between now and the next scheduled time
+    final timeDifference = scheduledDateTime.isAfter(now)
+        ? scheduledDateTime.difference(now)
+        : scheduledDateTime.add(Duration(days: 1)).difference(now);
+
     await _flutterLocalNotificationsPlugin.zonedSchedule(
-        2,
-        title,
-        body,
-        tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-        const NotificationDetails(
-            android: AndroidNotificationDetails(
-                'channel 3', 'your channel name',
-                channelDescription: 'your channel description',
-                importance: Importance.max,
-                priority: Priority.high,
-                icon: '@mipmap/ic_launcher',
-                ticker: 'ticker')),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        payload: payload);
+      1,
+      title,
+      body,
+      tz.TZDateTime.now(currentTimeZone).add(timeDifference),
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'channel 2',
+          'your channel name',
+          channelDescription: 'your channel description',
+          importance: Importance.max,
+          priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
+          ticker: 'ticker',
+        ),
+      ),
+      androidScheduleMode: AndroidScheduleMode.exact,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      payload: payload,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
   }
 
   // show notification at a custom time

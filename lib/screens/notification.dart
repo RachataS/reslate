@@ -35,35 +35,28 @@ class _notificationScreenState extends State<notificationScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton.icon(
-                icon: Icon(Icons.notifications_outlined),
-                onPressed: () {
-                  LocalNotifications.showSimpleNotification(
-                      title: "Simple Notification",
-                      body: "This is a simple notification",
-                      payload: "This is simple data");
-                },
-                label: Text("Simple Notification"),
-              ),
-              ElevatedButton.icon(
                 icon: Icon(Icons.timer_outlined),
-                onPressed: () {
-                  LocalNotifications.showPeriodicNotifications(
-                      title: "Periodic Notification",
-                      body: "This is a Periodic Notification",
-                      payload: "This is periodic data");
+                onPressed: () async {
+                  // Show a time picker to get user-selected time
+                  final TimeOfDay? selectedTime = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.now(),
+                  );
+
+                  // Check if a time was selected
+                  if (selectedTime != null) {
+                    LocalNotifications.showPeriodicNotifications(
+                      title: "It time to review.",
+                      body:
+                          "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
+                      payload: "This is periodic data",
+                      scheduledTime: selectedTime,
+                    );
+                  }
                 },
                 label: Text("Periodic Notifications"),
               ),
-              ElevatedButton.icon(
-                icon: Icon(Icons.timer_outlined),
-                onPressed: () {
-                  LocalNotifications.showScheduleNotification(
-                      title: "Schedule Notification",
-                      body: "This is a Schedule Notification",
-                      payload: "This is schedule data");
-                },
-                label: Text("Schedule Notifications"),
-              ),
+
               // to close periodic notifications
               ElevatedButton.icon(
                   icon: Icon(Icons.delete_outline),

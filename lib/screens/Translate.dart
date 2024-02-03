@@ -133,7 +133,7 @@ class _translate_screenState extends State<translate_screen> {
           ),
           child: Padding(
             padding:
-                EdgeInsets.only(top: screenSize.height * 0.09), //for ios 0.12
+                EdgeInsets.only(top: screenSize.height * 0.11), //for ios 0.12
             child: Card(
               color: Colors.white,
               shape: RoundedRectangleBorder(
