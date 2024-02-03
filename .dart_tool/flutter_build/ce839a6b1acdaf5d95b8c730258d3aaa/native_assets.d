@@ -1,0 +1,1 @@
+ /Users/rachatasupanurak/myTask/reslate/.dart_tool/flutter_build/ce839a6b1acdaf5d95b8c730258d3aaa/native_assets.yaml: 

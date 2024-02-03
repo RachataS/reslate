@@ -1,107 +1,326 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:reslate/controllers/notification.dart';
 
-class notificationScreen extends StatefulWidget {
-  const notificationScreen({super.key});
+class NotificationScreen extends StatefulWidget {
+  const NotificationScreen({Key? key});
 
   @override
-  State<notificationScreen> createState() => _notificationScreenState();
+  State<NotificationScreen> createState() => _NotificationScreenState();
 }
 
-class _notificationScreenState extends State<notificationScreen> {
+class _NotificationScreenState extends State<NotificationScreen> {
+  late TimeOfDay notificationTime1;
+  late TimeOfDay notificationTime2;
+  late TimeOfDay notificationTime3;
+
   @override
   void initState() {
-    listenToNotifications();
+    loadPreferences();
     super.initState();
   }
 
-//  to listen to any notification clicked or not
+  Future<void> loadPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Load notification state and times from SharedPreferences
+    setState(() {
+      noti1On = prefs.getBool('noti1On') ?? false;
+      noti2On = prefs.getBool('noti2On') ?? false;
+      noti3On = prefs.getBool('noti3On') ?? false;
+
+      int hour1 =
+          prefs.getInt('notificationTime1_hour') ?? TimeOfDay.now().hour;
+      int minute1 =
+          prefs.getInt('notificationTime1_minute') ?? TimeOfDay.now().minute;
+      notificationTime1 = TimeOfDay(hour: hour1, minute: minute1);
+
+      int hour2 =
+          prefs.getInt('notificationTime2_hour') ?? TimeOfDay.now().hour;
+      int minute2 =
+          prefs.getInt('notificationTime2_minute') ?? TimeOfDay.now().minute;
+      notificationTime2 = TimeOfDay(hour: hour2, minute: minute2);
+
+      int hour3 =
+          prefs.getInt('notificationTime3_hour') ?? TimeOfDay.now().hour;
+      int minute3 =
+          prefs.getInt('notificationTime3_minute') ?? TimeOfDay.now().minute;
+      notificationTime3 = TimeOfDay(hour: hour3, minute: minute3);
+    });
+
+    listenToNotifications();
+  }
+
+  Future<void> savePreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Save notification state and times to SharedPreferences
+    prefs.setBool('noti1On', noti1On);
+    prefs.setBool('noti2On', noti2On);
+    prefs.setBool('noti3On', noti3On);
+
+    prefs.setInt('notificationTime1_hour', notificationTime1.hour);
+    prefs.setInt('notificationTime1_minute', notificationTime1.minute);
+
+    prefs.setInt('notificationTime2_hour', notificationTime2.hour);
+    prefs.setInt('notificationTime2_minute', notificationTime2.minute);
+
+    prefs.setInt('notificationTime3_hour', notificationTime3.hour);
+    prefs.setInt('notificationTime3_minute', notificationTime3.minute);
+  }
+
+  //  to listen to any notification clicked or not
   listenToNotifications() {
-    print("Listening to notification");
     LocalNotifications.onClickNotification.stream.listen((event) {
       print(event);
       Navigator.pushNamed(context, '/another', arguments: event);
     });
   }
 
+  bool noti1On = false;
+  bool noti2On = false;
+  bool noti3On = false;
+
+  // Function to get the time for notification 1
+  String getNotificationTimeText1() {
+    return noti1On ? 'Time: ${formatTime(notificationTime1)}' : 'Time: Not set';
+  }
+
+  // Function to get the time for notification 2
+  String getNotificationTimeText2() {
+    return noti2On ? 'Time: ${formatTime(notificationTime2)}' : 'Time: Not set';
+  }
+
+  // Function to get the time for notification 3
+  String getNotificationTimeText3() {
+    return noti3On ? 'Time: ${formatTime(notificationTime3)}' : 'Time: Not set';
+  }
+
+  // Function to format TimeOfDay as a string
+  String formatTime(TimeOfDay time) {
+    String hour = time.hour.toString().padLeft(2, '0');
+    String minute = time.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Flutter Local Notifications")),
       body: Container(
-        height: double.infinity,
-        child: Center(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            colors: [
+              Colors.blue[600]!,
+              Colors.blue[300]!,
+              Colors.blue[100]!,
+            ],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 10,
+            left: 8,
+            right: 8,
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ElevatedButton.icon(
-                icon: Icon(Icons.timer_outlined),
-                onPressed: () async {
-                  // Show a time picker to get user-selected time
-                  final TimeOfDay? selectedTime = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.now(),
-                  );
-
-                  // Check if a time was selected
-                  if (selectedTime != null) {
-                    LocalNotifications.showPeriodicNotifications(
-                      title: "It time to review.",
-                      body:
-                          "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
-                      payload: "This is periodic data",
-                      scheduledTime: selectedTime,
-                    );
-                  }
-                },
-                label: Text("Periodic Notifications"),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 70, 20, 20),
+                child: Row(
+                  children: [
+                    Text('Notification',
+                        style: TextStyle(fontSize: 35, color: Colors.white)),
+                    Spacer(),
+                    Icon(
+                      Icons.notifications_active,
+                      size: 50,
+                      color: Colors.yellow[700],
+                    )
+                  ],
+                ),
               ),
-
-              // to close periodic notifications
-              ElevatedButton.icon(
-                  icon: Icon(Icons.delete_outline),
-                  onPressed: () {
-                    LocalNotifications.cancel(1);
-                  },
-                  label: Text("Close Periodic Notifcations")),
-              ElevatedButton.icon(
-                  icon: Icon(Icons.delete_forever_outlined),
-                  onPressed: () {
-                    LocalNotifications.cancelAll();
-                  },
-                  label: Text("Cancel All Notifcations")),
-              ElevatedButton.icon(
-                icon: Icon(Icons.access_time),
-                onPressed: () async {
-                  // Show a time picker to get user-selected time
-                  final TimeOfDay? selectedTime = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.now(),
-                  );
-
-                  // Check if a time was selected
-                  if (selectedTime != null) {
-                    // Get the current date and combine it with the user-selected time
-                    DateTime currentDate = DateTime.now();
-                    DateTime scheduledTime = DateTime(
-                      currentDate.year,
-                      currentDate.month,
-                      currentDate.day,
-                      selectedTime.hour,
-                      selectedTime.minute,
-                    );
-
-                    // Call the showCustomTimeNotification method
-                    LocalNotifications.showCustomTimeNotification(
-                      title: "Custom Time Notification",
-                      body: "This is a notification with a custom time",
-                      payload: "Custom time payload",
-                      scheduledTime: scheduledTime,
-                    );
-                  }
-                },
-                label: Text("Custom Time Notification"),
+              SizedBox(
+                height: 110,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  margin: const EdgeInsets.all(5),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '\t\t${getNotificationTimeText1()}',
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Spacer(),
+                        CupertinoSwitch(
+                          activeColor: Colors.green,
+                          thumbColor: Colors.white,
+                          trackColor: Colors.grey,
+                          value: noti1On,
+                          onChanged: (value) async {
+                            setState(() => noti1On = value);
+                            if (noti1On) {
+                              final TimeOfDay? selectedTime =
+                                  await showTimePicker(
+                                context: context,
+                                initialTime: notificationTime1,
+                              );
+                              if (selectedTime != null) {
+                                notificationTime1 = selectedTime;
+                                LocalNotifications.showPeriodicNotifications(
+                                  id: 1,
+                                  title: "It's time to review.",
+                                  body:
+                                      "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
+                                  payload: "This is periodic data",
+                                  scheduledTime: selectedTime,
+                                );
+                              }
+                              savePreferences();
+                            } else {
+                              LocalNotifications.cancel(1);
+                              savePreferences();
+                            }
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
+              SizedBox(
+                height: 110,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  margin: const EdgeInsets.all(5),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '\t\t${getNotificationTimeText2()}',
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Spacer(),
+                        CupertinoSwitch(
+                          activeColor: Colors.green,
+                          thumbColor: Colors.white,
+                          trackColor: Colors.grey,
+                          value: noti2On,
+                          onChanged: (value) async {
+                            setState(() => noti2On = value);
+                            if (noti2On) {
+                              final TimeOfDay? selectedTime =
+                                  await showTimePicker(
+                                context: context,
+                                initialTime: notificationTime2,
+                              );
+                              if (selectedTime != null) {
+                                notificationTime2 = selectedTime;
+                                LocalNotifications.showPeriodicNotifications(
+                                  id: 2,
+                                  title: "It's time to review.",
+                                  body:
+                                      "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
+                                  payload: "This is periodic data",
+                                  scheduledTime: selectedTime,
+                                );
+                              }
+                              savePreferences();
+                            } else {
+                              LocalNotifications.cancel(2);
+                              savePreferences();
+                            }
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 110,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  margin: const EdgeInsets.all(5),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '\t\t${getNotificationTimeText3()}',
+                          style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Spacer(),
+                        CupertinoSwitch(
+                          activeColor: Colors.green,
+                          thumbColor: Colors.white,
+                          trackColor: Colors.grey,
+                          value: noti3On,
+                          onChanged: (value) async {
+                            setState(() => noti3On = value);
+                            if (noti3On) {
+                              final TimeOfDay? selectedTime =
+                                  await showTimePicker(
+                                context: context,
+                                initialTime: notificationTime3,
+                              );
+                              if (selectedTime != null) {
+                                notificationTime3 = selectedTime;
+                                LocalNotifications.showPeriodicNotifications(
+                                  id: 3,
+                                  title: "It's time to review.",
+                                  body:
+                                      "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
+                                  payload: "This is periodic data",
+                                  scheduledTime: selectedTime,
+                                );
+                              }
+                              savePreferences();
+                            } else {
+                              LocalNotifications.cancel(3);
+                              savePreferences();
+                            }
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     LocalNotifications.cancelAll();
+              //     setState(() {});
+              //   },
+              //   child: Icon(Icons.close),
+              // )
             ],
           ),
         ),

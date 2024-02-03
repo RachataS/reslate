@@ -30,6 +30,7 @@ class LocalNotifications {
   }
 
   static Future<void> showPeriodicNotifications({
+    required int id,
     required String title,
     required String body,
     required String payload,
@@ -57,7 +58,7 @@ class LocalNotifications {
         : scheduledDateTime.add(Duration(days: 1)).difference(now);
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
-      1,
+      id,
       title,
       body,
       tz.TZDateTime.now(currentTimeZone).add(timeDifference),
@@ -77,37 +78,6 @@ class LocalNotifications {
           UILocalNotificationDateInterpretation.absoluteTime,
       payload: payload,
       matchDateTimeComponents: DateTimeComponents.time,
-    );
-  }
-
-  // show notification at a custom time
-  static Future showCustomTimeNotification({
-    required String title,
-    required String body,
-    required String payload,
-    required DateTime scheduledTime,
-  }) async {
-    tz.initializeTimeZones();
-    await _flutterLocalNotificationsPlugin.zonedSchedule(
-      3,
-      title,
-      body,
-      tz.TZDateTime.from(scheduledTime, tz.local),
-      const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'channel 4',
-          'your channel name',
-          channelDescription: 'your channel description',
-          importance: Importance.max,
-          priority: Priority.high,
-          icon: '@mipmap/ic_launcher',
-          ticker: 'ticker',
-        ),
-      ),
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      payload: payload,
     );
   }
 

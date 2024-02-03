@@ -138,7 +138,7 @@ class _menuPageState extends State<menuPage> {
                   margin: const EdgeInsets.all(5),
                   child: TextButton(
                       onPressed: () {
-                        Get.to(notificationScreen());
+                        Get.to(NotificationScreen());
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
