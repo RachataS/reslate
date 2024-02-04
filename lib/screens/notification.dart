@@ -186,10 +186,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   payload: "This is periodic data",
                                   scheduledTime: selectedTime,
                                 );
+                                savePreferences();
+                              } else {
+                                noti1On = false;
+                                LocalNotifications.cancel(1);
+                                notificationTime1 = TimeOfDay.now();
+                                savePreferences();
                               }
-                              savePreferences();
                             } else {
                               LocalNotifications.cancel(1);
+                              notificationTime1 = TimeOfDay.now();
                               savePreferences();
                             }
                             setState(() {});
@@ -243,10 +249,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   payload: "This is periodic data",
                                   scheduledTime: selectedTime,
                                 );
+                                savePreferences();
+                              } else {
+                                noti2On = false;
+                                LocalNotifications.cancel(2);
+                                notificationTime2 = TimeOfDay.now();
+                                savePreferences();
                               }
-                              savePreferences();
                             } else {
                               LocalNotifications.cancel(2);
+                              notificationTime2 = TimeOfDay.now();
                               savePreferences();
                             }
                             setState(() {});
@@ -300,10 +312,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                   payload: "This is periodic data",
                                   scheduledTime: selectedTime,
                                 );
+                                savePreferences();
+                              } else {
+                                noti3On = false;
+                                LocalNotifications.cancel(3);
+                                notificationTime3 = TimeOfDay.now();
+                                savePreferences();
                               }
-                              savePreferences();
                             } else {
                               LocalNotifications.cancel(3);
+                              notificationTime3 = TimeOfDay.now();
                               savePreferences();
                             }
                             setState(() {});
@@ -314,13 +332,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   ),
                 ),
               ),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     LocalNotifications.cancelAll();
-              //     setState(() {});
-              //   },
-              //   child: Icon(Icons.close),
-              // )
             ],
           ),
         ),
