@@ -29,7 +29,7 @@ class LocalNotifications {
     );
   }
 
-  static Future<void> showPeriodicNotifications({
+  static Future<void> dailyNotifications({
     required int id,
     required String title,
     required String body,
@@ -52,10 +52,10 @@ class LocalNotifications {
       scheduledTime.minute,
     );
 
-    // Calculate the time difference between now and the next scheduled time
-    final timeDifference = scheduledDateTime.isAfter(now)
+    var timeDifference = scheduledDateTime.isAfter(now)
         ? scheduledDateTime.difference(now)
-        : scheduledDateTime.add(Duration(days: 1)).difference(now);
+        : scheduledDateTime.difference(now);
+    timeDifference = timeDifference - Duration(hours: 7);
 
     await _flutterLocalNotificationsPlugin.zonedSchedule(
       id,
@@ -79,6 +79,24 @@ class LocalNotifications {
       payload: payload,
       matchDateTimeComponents: DateTimeComponents.time,
     );
+  }
+
+  static Future showPeriodicNotifications({
+    required String title,
+    required String body,
+    required String payload,
+  }) async {
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails('channel 2', 'your channel name',
+            channelDescription: 'your channel description',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker');
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+    await _flutterLocalNotificationsPlugin.periodicallyShow(
+        1, title, body, RepeatInterval.everyMinute, notificationDetails,
+        payload: payload);
   }
 
   // close a specific channel notification
