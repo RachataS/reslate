@@ -43,7 +43,7 @@ class _reviewPageState extends State<reviewPage> {
         ),
         child: PageView(
           scrollDirection: Axis.horizontal,
-          children: [savedWordsMode(), WroongAnswerMode()],
+          children: [savedWordsMode(), WrongAnswerMode()],
         ),
       ),
     );
@@ -61,7 +61,7 @@ class _reviewPageState extends State<reviewPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 80, 20, 20),
+              padding: const EdgeInsets.fromLTRB(20, 55, 20, 20),
               child: Text(
                 "Saved Words",
                 style: TextStyle(
@@ -74,7 +74,7 @@ class _reviewPageState extends State<reviewPage> {
             Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
-              margin: const EdgeInsets.all(20),
+              margin: const EdgeInsets.only(top: 20),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
@@ -269,7 +269,7 @@ class _reviewPageState extends State<reviewPage> {
             Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
-              margin: const EdgeInsets.all(20),
+              margin: const EdgeInsets.only(top: 30),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
@@ -297,7 +297,7 @@ class _reviewPageState extends State<reviewPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  top: 10, left: 20, right: 20, bottom: 10),
+                  top: 20, left: 20, right: 20, bottom: 10),
               child: Text(
                 "Note : This mode takes the user's recorded words and turns them into questions.",
                 style: TextStyle(color: Colors.blue[600]!, fontSize: 13),
@@ -330,7 +330,7 @@ class _reviewPageState extends State<reviewPage> {
     );
   }
 
-  Scaffold WroongAnswerMode() {
+  Scaffold WrongAnswerMode() {
     int wordsLength = widget.profile.data?['wordLength'];
     int aids = widget.profile.data?["aids"];
     return Scaffold(
@@ -339,7 +339,7 @@ class _reviewPageState extends State<reviewPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 80, 20, 20),
+              padding: const EdgeInsets.fromLTRB(20, 55, 20, 20),
               child: Text(
                 "Wrong Answer",
                 style: TextStyle(
@@ -352,7 +352,7 @@ class _reviewPageState extends State<reviewPage> {
             Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
-              margin: const EdgeInsets.all(20),
+              margin: const EdgeInsets.only(top: 20),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
@@ -546,7 +546,7 @@ class _reviewPageState extends State<reviewPage> {
             Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
-              margin: const EdgeInsets.all(20),
+              margin: const EdgeInsets.only(top: 30),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 40, 10, 20),
                 child: Column(
@@ -574,7 +574,7 @@ class _reviewPageState extends State<reviewPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  top: 10, left: 20, right: 20, bottom: 10),
+                  top: 20, left: 20, right: 20, bottom: 10),
               child: Text(
                 "Note : This mode takes the words that the user answered incorrectly and turns them into questions.",
                 style: TextStyle(color: Colors.blue[600]!, fontSize: 13),

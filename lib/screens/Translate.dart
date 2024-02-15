@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +42,7 @@ class _translate_screenState extends State<translate_screen> {
   List<String> wordsListWithoutDuplicates = [];
   int checkWords = 0;
   bool isButtonDisabled = false;
+  Timer? _debounce;
 
   @override
   Widget build(BuildContext context) {
@@ -158,39 +160,41 @@ class _translate_screenState extends State<translate_screen> {
                     ),
                     controller: rawtxt,
                     maxLines: null,
-                    onChanged: (rawtxt) async {
-                      // Future.delayed(Duration(milliseconds: 100), () async {
-                      if (rawtxt == null || rawtxt == '') {
-                        setState(() {
-                          translated = outputbox;
-                        });
-                        wordsList.clear();
-                        wordsListWithoutDuplicates.clear();
-                      } else {
-                        try {
-                          formKey.currentState?.save();
-                          await translator
-                              .translate('${rawtxt}',
-                                  from: inputLanguage, to: outputLanguage)
-                              .then((translation) {
-                            setState(() {
-                              translated = translation.toString();
-                              if (rawtxt.contains(' ')) {
-                                wordsList = rawtxt.toLowerCase().split(' ');
-                              }
-                            });
+                    onChanged: (rawtxt) {
+                      if (_debounce?.isActive ?? false) _debounce!.cancel();
+                      _debounce =
+                          Timer(const Duration(milliseconds: 300), () async {
+                        if (rawtxt == null || rawtxt.isEmpty) {
+                          setState(() {
+                            translated = outputbox;
                           });
-                        } catch (e) {
-                          print(e);
+                          wordsList.clear();
+                          wordsListWithoutDuplicates.clear();
+                        } else {
+                          try {
+                            formKey.currentState?.save();
+                            await translator
+                                .translate(rawtxt,
+                                    from: inputLanguage, to: outputLanguage)
+                                .then((translation) {
+                              setState(() {
+                                translated = translation.toString();
+                                if (rawtxt.contains(' ')) {
+                                  wordsList = rawtxt.toLowerCase().split(' ');
+                                }
+                              });
+                            });
+                          } catch (e) {
+                            print(e);
+                          }
                         }
-                      }
-                      // Split special characters and update the list
-                      wordsList = splitSpecialChars(wordsList);
-                      // Deduplicate the list
-                      wordsListWithoutDuplicates =
-                          List<String>.from(wordsList.toSet());
-                      wordsListWithoutDuplicates.sort();
-                      // });
+                        // Split special characters and update the list
+                        wordsList = splitSpecialChars(wordsList);
+                        // Deduplicate the list
+                        wordsListWithoutDuplicates =
+                            List<String>.from(wordsList.toSet());
+                        wordsListWithoutDuplicates.sort();
+                      });
                     },
                   ),
                   const Divider(

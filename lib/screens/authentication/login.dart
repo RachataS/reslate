@@ -219,15 +219,16 @@ class _loginPageState extends State<loginPage> {
                                           GooglesignInProvider()
                                               .googleLogin()
                                               .then((value) {
-                                            // try { // un comment for web
-                                            var user = FirebaseAuth
-                                                .instance.currentUser!;
-                                            // } catch (e) {
-                                            //   Fluttertoast.showToast(
-                                            //       msg:
-                                            //           "ไม่สามารถเข้าสู่ระบบได้ โปรดเข้าสู่ระบบด้วยวิธีอื่น",
-                                            //       gravity: ToastGravity.TOP);
-                                            // }
+                                            try {
+                                              // un comment for web
+                                              var user = FirebaseAuth
+                                                  .instance.currentUser!;
+                                            } catch (e) {
+                                              Fluttertoast.showToast(
+                                                  msg:
+                                                      "ไม่สามารถเข้าสู่ระบบได้ โปรดเข้าสู่ระบบด้วยวิธีอื่น",
+                                                  gravity: ToastGravity.TOP);
+                                            }
 
                                             Get.to(bottombar(),
                                                 transition:
@@ -298,18 +299,23 @@ class _loginPageState extends State<loginPage> {
   }
 
   Future<void> handleLogin() async {
+    //ตรวจสอบความถูกต้องของ Input
     if (formKey.currentState!.validate()) {
+      //บันทึกข้อมูลผู้ใช้
       formKey.currentState?.save();
       try {
+        //เข้าสู่ระบบด้วย Firebase authentication
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: profile.email, password: profile.password)
             .then((value) {
+          //แสดงข้อความเข้าสุ่ระบบสำเร็ตจและรีเซ็ตฟอร์ม
           formKey.currentState?.reset();
           Fluttertoast.showToast(
               msg: "เข้าสู่ระบบสำเร็จ", gravity: ToastGravity.TOP);
           Get.to(bottombar(), transition: Transition.topLevel);
         });
+        //แสดง error กรณีที่ไม่สามารถเข้าสู่ระบบได้
       } on FirebaseAuthException catch (e) {
         var message;
         if (e.code == "user-not-found") {
