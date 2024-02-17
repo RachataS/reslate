@@ -65,14 +65,19 @@ class _menuPageState extends State<menuPage> {
                       children: [
                         Builder(builder: (context) {
                           return CircleAvatar(
-                            backgroundColor: Colors.blue[400],
-                            radius: 30,
-                            child: Text(
-                              '${words ?? '0'}',
-                              style:
-                                  TextStyle(fontSize: 25, color: Colors.white),
-                            ),
-                          );
+                              backgroundColor: Colors.blue[400],
+                              radius: 30,
+                              child: Icon(
+                                Icons.account_circle_rounded,
+                                color: Colors.white,
+                                size: 55,
+                              )
+                              // Text(
+                              //   '${words ?? '0'}',
+                              //   style:
+                              //       TextStyle(fontSize: 25, color: Colors.white),
+                              // ),
+                              );
                         }),
                         Expanded(
                           child: Padding(
@@ -113,12 +118,24 @@ class _menuPageState extends State<menuPage> {
                             color: Colors.blue,
                             size: 40,
                           ),
-                          Text(
-                            '  Words Collection  ',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '  Words Collection  ',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                '  you have ${words ?? '0'} words  ',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
                           Icon(
                             Icons.book,

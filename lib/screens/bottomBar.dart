@@ -117,7 +117,8 @@ class _bottombarState extends State<bottombar> {
                       Colors.transparent, // Set the canvas color to transparent
                 ),
                 child: BottomNavigationBar(
-                  fixedColor: Colors.blue[600]!,
+                  selectedItemColor:
+                      Colors.blue[600], // Define the selected item color
                   backgroundColor: Colors.transparent,
                   elevation: 0, // Set the elevation to 0 to remove the shadow
                   currentIndex: currentIndex,
@@ -133,11 +134,35 @@ class _bottombarState extends State<bottombar> {
                   },
                   items: [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.g_translate_outlined),
+                      icon: currentIndex == 0
+                          ? ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                  Colors.blue, BlendMode.srcIn),
+                              child: Image.asset('assets/icons/translating.png',
+                                  width: 30, height: 30),
+                            )
+                          : ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                  Colors.grey[600]!, BlendMode.srcIn),
+                              child: Image.asset('assets/icons/translating.png',
+                                  width: 30, height: 30),
+                            ),
                       label: 'Translate',
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.quiz_rounded),
+                      icon: currentIndex == 1
+                          ? ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                  Colors.blue, BlendMode.srcIn),
+                              child: Image.asset('assets/icons/book.png',
+                                  width: 29, height: 29),
+                            )
+                          : ColorFiltered(
+                              colorFilter: ColorFilter.mode(
+                                  Colors.grey[600]!, BlendMode.srcIn),
+                              child: Image.asset('assets/icons/book.png',
+                                  width: 29, height: 29),
+                            ),
                       label: 'Review',
                     ),
                     BottomNavigationBarItem(
@@ -151,86 +176,4 @@ class _bottombarState extends State<bottombar> {
       onWillPop: () async => false,
     );
   }
-
-  // old bottom bar style
-  // @override
-  // Widget build(BuildContext context) {
-  //   return WillPopScope(
-  //       child: GestureDetector(
-  //         onTap: () {
-  //           FocusScope.of(context).unfocus();
-  //         },
-  //         child: Scaffold(
-  //           resizeToAvoidBottomInset: false,
-  //           body: isLoading
-  //               ? Center(
-  //                   child: CircularProgressIndicator(),
-  //                 )
-  //               : screens.isNotEmpty
-  //                   ? Scaffold(
-  //                       body: screens[currentIndex],
-  //                     )
-  //                   : PageView(
-  //                       controller: _pageController,
-  //                       physics: const NeverScrollableScrollPhysics(),
-  //                       children: List.generate(
-  //                           screens.length, (index) => screens[index]),
-  //                     ),
-  //           extendBody: true,
-  //           bottomNavigationBar: isLoading || screens.isEmpty
-  //               ? null
-  //               : AnimatedNotchBottomBar(
-  //                   notchBottomBarController: _controller,
-  //                   color: Colors.blue[400]!,
-  //                   showLabel: true,
-  //                   itemLabelStyle:
-  //                       TextStyle(color: Colors.white, fontSize: 13),
-  //                   notchColor: Colors.white,
-  //                   removeMargins: false,
-  //                   bottomBarWidth: 400,
-  //                   durationInMilliSeconds: 100,
-  //                   bottomBarItems: [
-  //                     const BottomBarItem(
-  //                       inActiveItem: Icon(
-  //                         Icons.g_translate_outlined,
-  //                         color: Colors.white,
-  //                       ),
-  //                       activeItem: Icon(
-  //                         Icons.g_translate_outlined,
-  //                         color: Colors.blue,
-  //                       ),
-  //                       itemLabel: 'Translate',
-  //                     ),
-  //                     const BottomBarItem(
-  //                       inActiveItem: Icon(
-  //                         Icons.quiz_rounded,
-  //                         color: Colors.white,
-  //                       ),
-  //                       activeItem: Icon(
-  //                         Icons.quiz_rounded,
-  //                         color: Colors.blue,
-  //                       ),
-  //                       itemLabel: 'Review',
-  //                     ),
-  //                     const BottomBarItem(
-  //                       inActiveItem: Icon(
-  //                         Icons.menu,
-  //                         color: Colors.white,
-  //                       ),
-  //                       activeItem: Icon(
-  //                         Icons.menu,
-  //                         color: Colors.blue,
-  //                       ),
-  //                       itemLabel: 'Menu',
-  //                     ),
-  //                   ],
-  //                   onTap: (index) {
-  //                     setState(() => currentIndex = index);
-  //                     _controller.index = index;
-  //                   },
-  //                 ),
-  //         ),
-  //       ),
-  //       onWillPop: () async => false);
-  // }
 }

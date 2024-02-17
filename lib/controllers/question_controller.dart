@@ -120,7 +120,6 @@ class QuestionController extends GetxController
       _numOfCorrectAns++;
       correctAnswer++;
     }
-    ;
 
     // It will stop the counter
     _animationController.stop();
