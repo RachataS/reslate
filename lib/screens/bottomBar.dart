@@ -79,7 +79,7 @@ class _bottombarState extends State<bottombar> {
           profile: profile,
           docID: firebaseDocument.id,
         ),
-        menuPage(profile: profile),
+        MenuPage(profile: profile),
         WordsCollection(sendData: (data) {
           setState(() {
             profile.data = data;

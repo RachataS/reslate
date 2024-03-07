@@ -158,7 +158,9 @@ class Game {
       final CardItem card2 = cards[visibleCardIndexes[1]];
 
       Future.delayed(const Duration(milliseconds: 1000), () async {
+        //ตรวจสอบว่าการ์ดคู่กันหรือไม่
         if (card1.check == card2.check) {
+          //หากคู่กันจะเปิดการ์ดค้างไว้
           card1.state = CardState.guessed;
           card2.state = CardState.guessed;
           isGameOver = _isGameOver();

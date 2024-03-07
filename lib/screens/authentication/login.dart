@@ -132,7 +132,7 @@ class _loginPageState extends State<loginPage> {
                                         child: TextFormField(
                                             validator: MultiValidator([
                                               RequiredValidator(
-                                                  errorText: 'กรุณากรอก Email'),
+                                                  errorText: 'โปรดกรอกอีเมล'),
                                               EmailValidator(
                                                   errorText:
                                                       'รูปแบบ Email ไม่ถูกต้อง กรุณากรอกอีกครั้ง')
@@ -144,7 +144,7 @@ class _loginPageState extends State<loginPage> {
                                                 TextInputType.emailAddress,
                                             decoration: const InputDecoration(
                                               border: InputBorder.none,
-                                              labelText: 'Enter Email',
+                                              labelText: 'Email',
                                             )),
                                       ),
                                       Container(
@@ -321,7 +321,7 @@ class _loginPageState extends State<loginPage> {
         if (e.code == "user-not-found") {
           message = "ไม่พบบัญชีผู้ใช้";
         } else if (e.code == "wrong-password") {
-          message = "รหัสผ่านไม่ถูกต้อง";
+          message = "โปรดป้อนรหัสผ่านอีกครั้ง";
         } else {
           message = e.code;
         }

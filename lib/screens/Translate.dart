@@ -39,7 +39,7 @@ class _translate_screenState extends State<translate_screen> {
   var rawtxt = TextEditingController();
   var appbarInput = "English";
   var appbarOutput = "Thai";
-  List<String> wordsListWithoutDuplicates = [];
+
   int checkWords = 0;
   bool isButtonDisabled = false;
   Timer? _debounce;
@@ -106,7 +106,6 @@ class _translate_screenState extends State<translate_screen> {
                       }
                       changeLanguage();
                       wordsList.clear();
-                      wordsListWithoutDuplicates.clear();
                     },
                   ),
                   Container(
@@ -135,7 +134,7 @@ class _translate_screenState extends State<translate_screen> {
           ),
           child: Padding(
             padding:
-                EdgeInsets.only(top: screenSize.height * 0.11), //for ios 0.12
+                EdgeInsets.only(top: screenSize.height * 0.10), //for ios 0.12
             child: Card(
               color: Colors.white,
               shape: RoundedRectangleBorder(
@@ -169,7 +168,7 @@ class _translate_screenState extends State<translate_screen> {
                             translated = outputbox;
                           });
                           wordsList.clear();
-                          wordsListWithoutDuplicates.clear();
+                          wordsList.clear();
                         } else {
                           try {
                             formKey.currentState?.save();
@@ -179,6 +178,7 @@ class _translate_screenState extends State<translate_screen> {
                                 .then((translation) {
                               setState(() {
                                 translated = translation.toString();
+                                //หากเจอการเว้นวรรคในประโยคจะเพิ่มลงใน WordsList
                                 if (rawtxt.contains(' ')) {
                                   wordsList = rawtxt.toLowerCase().split(' ');
                                 }
@@ -188,12 +188,12 @@ class _translate_screenState extends State<translate_screen> {
                             print(e);
                           }
                         }
-                        // Split special characters and update the list
+                        // แยกตัวอักษรพิเศษออกจากคำศัพท์ใน wordsList
                         wordsList = splitSpecialChars(wordsList);
-                        // Deduplicate the list
-                        wordsListWithoutDuplicates =
-                            List<String>.from(wordsList.toSet());
-                        wordsListWithoutDuplicates.sort();
+                        // ลบคำศัพท์ที่ซ้ำกันใน wordsList โดยการแปลง wordsList เป็น Set เพื่อลบคำที่ซ้ำกัน แล้วแปลงกลับเป็น List
+                        wordsList = List<String>.from(wordsList.toSet());
+                        // เรียงลำดับคำศัพท์ใน wordsList ตามลำดับอักขระ
+                        wordsList.sort();
                       });
                     },
                   ),
@@ -216,70 +216,70 @@ class _translate_screenState extends State<translate_screen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          for (int i = 0;
-                              i < wordsListWithoutDuplicates.length;
-                              i += 4)
+                          for (int i = 0; i < wordsList.length; i += 3)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
+                                // ใช้ loop เพื่อสร้างปุ่ม TextButton สำหรับแสดงคำศัพท์
                                 for (int j = i;
-                                    j < i + 4 &&
-                                        j < wordsListWithoutDuplicates.length;
+                                    j < i + 3 && j < wordsList.length;
                                     j++)
                                   Flexible(
                                     child: Stack(
                                       alignment: Alignment.topRight,
                                       children: [
                                         SizedBox(
-                                          // height: 55,
                                           width: 120,
                                           child: TextButton(
                                             onPressed: () async {
                                               setState(() {
-                                                if (selecttxt.contains(
-                                                    wordsListWithoutDuplicates[
-                                                        j])) {
-                                                  selecttxt.remove(
-                                                      wordsListWithoutDuplicates[
-                                                          j]);
+                                                if (selecttxt
+                                                    .contains(wordsList[j])) {
+                                                  // หรือถ้าคำศัพท์ถูกยกเลิกการเลือก จะลบออกจาก selecttxt และลดจำนวนคำที่ถูกเลือก
+                                                  selecttxt
+                                                      .remove(wordsList[j]);
                                                   checkWords--;
                                                 } else {
-                                                  selecttxt.add(
-                                                      wordsListWithoutDuplicates[
-                                                          j]);
+                                                  // เมื่อคำศัพท์ถูกเลือก จะทำการเพิ่มลงใน selecttxt และเพิ่มจำนวนคำที่ถูกเลือก
+                                                  selecttxt.add(wordsList[j]);
                                                   checkWords++;
                                                 }
                                               });
                                             },
+                                            //แสดงคำศัพท์บนปุ่ม
                                             child: Text(
-                                              wordsListWithoutDuplicates[j],
+                                              wordsList[j],
                                               style: TextStyle(
-                                                fontSize: 15,
-                                                color: selecttxt.contains(
-                                                        wordsListWithoutDuplicates[
-                                                            j])
+                                                fontSize:
+                                                    wordsList[j].length > 5
+                                                        ? 14
+                                                        : 15,
+                                                color: selecttxt
+                                                        .contains(wordsList[j])
                                                     ? Colors.blue[400]
                                                     : Colors.black54,
                                               ),
                                             ),
                                           ),
                                         ),
-                                        if (selecttxt.contains(
-                                            wordsListWithoutDuplicates[j]))
+// ตรวจสอบว่าคำศัพท์ใน selecttxt ถูกเลือกหรือไม่
+                                        if (selecttxt.contains(wordsList[j]))
+
+                                          // หากคำศัพท์ถูกเลือก จะสร้าง Widget Container เพื่อแสดงหมายเลขลำดับที่คำศัพท์ถูกเลือกอยู่
                                           Container(
                                             padding: EdgeInsets.all(4),
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
-                                              color: Colors.red,
+                                              color: Colors
+                                                  .red, // กำหนดสีของวงกลมเป็นสีแดง
                                             ),
                                             child: Text(
-                                              (selecttxt.indexOf(
-                                                          wordsListWithoutDuplicates[
-                                                              j]) +
+                                              (selecttxt.indexOf(wordsList[j]) +
                                                       1)
-                                                  .toString(),
+                                                  .toString(), // แสดงเลขลำดับที่คำศัพท์ถูกเลือก
                                               style: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors
+                                                    .white, // กำหนดสีของตัวอักษรเป็นสีขาว
                                               ),
                                             ),
                                           ),

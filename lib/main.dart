@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:reslate/controllers/notification.dart';
 import 'package:reslate/screens/bottomBar.dart';
 
 void main() async {
@@ -12,7 +13,6 @@ void main() async {
       //     messagingSenderId: '400328617499',
       //     projectId: 'reslate-7d93b')
       );
-
   runApp(MyApp());
 }
 

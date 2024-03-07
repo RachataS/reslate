@@ -53,7 +53,7 @@ class _reviewPageState extends State<reviewPage> {
     int wordsLength = widget.profile.data?['wordLength'];
     int aids = widget.profile.data?["aids"];
     if (wordsLength < 10) {
-      numberOfQuestion = 0;
+      numberOfQuestion = 10;
     }
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -215,7 +215,6 @@ class _reviewPageState extends State<reviewPage> {
                         child: ElevatedButton(
                           onPressed: () async {
                             // SystemSound.play(SystemSoundType.click);
-
                             showDialog(
                               context: context,
                               barrierDismissible: false,
@@ -242,10 +241,6 @@ class _reviewPageState extends State<reviewPage> {
                                     ),
                                     transition: Transition.topLevel);
                               }
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "คุณมีคำศัพท์ไม่ถึง 10 คำ",
-                                  gravity: ToastGravity.TOP);
                             }
                           },
                           child: Text(
@@ -300,7 +295,7 @@ class _reviewPageState extends State<reviewPage> {
                   top: 20, left: 20, right: 20, bottom: 10),
               child: Text(
                 "Note : This mode takes the user's recorded words and turns them into questions.",
-                style: TextStyle(color: Colors.blue[600]!, fontSize: 13),
+                style: TextStyle(color: Colors.blue[600]!, fontSize: 12),
               ),
             ),
             Padding(
@@ -519,10 +514,6 @@ class _reviewPageState extends State<reviewPage> {
                                     ),
                                     transition: Transition.topLevel);
                               }
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "คุณมีคำศัพท์ไม่ถึง 10 คำ",
-                                  gravity: ToastGravity.TOP);
                             }
                           },
                           child: Text(
@@ -577,7 +568,7 @@ class _reviewPageState extends State<reviewPage> {
                   top: 20, left: 20, right: 20, bottom: 10),
               child: Text(
                 "Note : This mode takes the words that the user answered incorrectly and turns them into questions.",
-                style: TextStyle(color: Colors.blue[600]!, fontSize: 13),
+                style: TextStyle(color: Colors.blue[600]!, fontSize: 12),
               ),
             ),
             Padding(

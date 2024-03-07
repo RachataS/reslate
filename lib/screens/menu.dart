@@ -1,34 +1,40 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:reslate/models/profile.dart';
-import 'package:reslate/models/signOut.dart';
 import 'package:reslate/screens/WordsCollection.dart';
 import 'package:reslate/screens/authentication/login.dart';
 import 'package:reslate/screens/notification.dart';
 
-import '../controllers/getDocument.dart';
-
-class menuPage extends StatefulWidget {
+class MenuPage extends StatefulWidget {
   final Profile profile;
-  const menuPage({required this.profile, Key? key}) : super(key: key);
+  const MenuPage({required this.profile, Key? key}) : super(key: key);
 
   @override
-  State<menuPage> createState() => _menuPageState();
+  State<MenuPage> createState() => _MenuPageState();
 }
 
-class _menuPageState extends State<menuPage> {
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = new GoogleSignIn();
-  firebaseDoc firebasedoc = firebaseDoc();
+class _MenuPageState extends State<MenuPage> {
+  late double _cardHeight;
 
-  late DocumentReference firebaseDocument;
-  signOut signout = signOut();
+  @override
+  void initState() {
+    super.initState();
+    _cardHeight = 90.0;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Adjust card height based on screen size
+    if (screenWidth < 600) {
+      _cardHeight = 90.0;
+    } else if (screenWidth < 900) {
+      _cardHeight = 120.0;
+    } else {
+      _cardHeight = 150.0;
+    }
+
     Map<String, dynamic>? data = widget.profile.data;
     var username = data?['Username'];
     var email = data?['Email'];
@@ -43,7 +49,6 @@ class _menuPageState extends State<menuPage> {
             Colors.blue[600]!,
             Colors.blue[300]!,
             Colors.blue[100]!,
-            // Colors.blue[50]!,
           ]),
         ),
         child: Padding(
@@ -51,9 +56,8 @@ class _menuPageState extends State<menuPage> {
           child: ListView(
             children: [
               SizedBox(
-                height: 90,
+                height: _cardHeight,
                 child: Card(
-                  // color: Colors.white,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   margin: const EdgeInsets.all(5),
@@ -63,27 +67,20 @@ class _menuPageState extends State<menuPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Builder(builder: (context) {
-                          return CircleAvatar(
-                              backgroundColor: Colors.blue[400],
-                              radius: 30,
-                              child: Icon(
-                                Icons.account_circle_rounded,
-                                color: Colors.white,
-                                size: 55,
-                              )
-                              // Text(
-                              //   '${words ?? '0'}',
-                              //   style:
-                              //       TextStyle(fontSize: 25, color: Colors.white),
-                              // ),
-                              );
-                        }),
+                        CircleAvatar(
+                          backgroundColor: Colors.blue[400],
+                          radius: 30,
+                          child: Icon(
+                            Icons.account_circle_rounded,
+                            color: Colors.white,
+                            size: 55,
+                          ),
+                        ),
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                             child: Text(
-                              'Username : ${username ?? 'Loading...'}\nEmail : ${email ?? 'Loading...'}',
+                              'Username : ${username != null ? username!.split(' ')[0] : 'Loading...'}\nEmail : ${email ?? 'Loading...'}',
                               style: TextStyle(fontSize: 16),
                             ),
                           ),
@@ -94,95 +91,133 @@ class _menuPageState extends State<menuPage> {
                 ),
               ),
               SizedBox(
-                height: 90,
+                height: _cardHeight,
                 child: Card(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   margin: const EdgeInsets.all(5),
                   child: TextButton(
-                      onPressed: () {
-                        Get.to(
-                          WordsCollection(sendData: (data) {
-                            setState(() {
-                              widget.profile.data = data;
-                            });
-                          }),
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.book,
-                            color: Colors.blue,
-                            size: 40,
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '  Words Collection  ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
+                    onPressed: () {
+                      Get.to(
+                        WordsCollection(sendData: (data) {
+                          setState(() {
+                            widget.profile.data = data;
+                          });
+                        }),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.book,
+                          color: Colors.blue,
+                          size: 40,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '  Words Collection  ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
                               ),
-                              Text(
-                                '  you have ${words ?? '0'} words  ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Icon(
-                            Icons.book,
-                            color: Colors.blue,
-                            size: 40,
-                          ),
-                        ],
-                      )),
-                ),
-              ),
-              SizedBox(
-                height: 90,
-                child: Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                  margin: const EdgeInsets.all(5),
-                  child: TextButton(
-                      onPressed: () {
-                        Get.to(NotificationScreen());
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.notifications_active,
-                            color: Colors.yellow[700]!,
-                            size: 40,
-                          ),
-                          Text(
-                            '  Notification  ',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
                             ),
-                          ),
-                          Icon(
-                            Icons.notifications_active,
-                            color: Colors.yellow[700]!,
-                            size: 40,
-                          ),
-                        ],
-                      )),
+                            Text(
+                              '  you have ${words ?? '0'} words  ',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Icon(
+                          Icons.book,
+                          color: Colors.blue,
+                          size: 40,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
-                height: 90,
+                height: _cardHeight,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  margin: const EdgeInsets.all(5),
+                  child: TextButton(
+                    onPressed: () {
+                      Get.to(NotificationScreen());
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.notifications_active,
+                          color: Colors.yellow[700]!,
+                          size: 40,
+                        ),
+                        Text(
+                          '  Notification  ',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Icon(
+                          Icons.notifications_active,
+                          color: Colors.yellow[700]!,
+                          size: 40,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: _cardHeight,
+                child: Card(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  margin: const EdgeInsets.all(5),
+                  child: TextButton(
+                    onPressed: () {
+                      //open manual book
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.menu_book_rounded,
+                          color: Colors.green,
+                          size: 40,
+                        ),
+                        Text(
+                          '  manual  ',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Icon(
+                          Icons.menu_book_rounded,
+                          color: Colors.green,
+                          size: 40,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: _cardHeight,
                 child: Card(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
@@ -225,7 +260,8 @@ class _menuPageState extends State<menuPage> {
                       children: [
                         Icon(
                           Icons.workspace_premium,
-                          color: words >= 10 ? Colors.amber[500]! : Colors.grey,
+                          color:
+                              words! >= 10 ? Colors.amber[500]! : Colors.grey,
                           size: 50,
                         ),
                         SizedBox(
@@ -238,7 +274,8 @@ class _menuPageState extends State<menuPage> {
                               'Translate Words 1  ',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: words >= 10 ? Colors.black : Colors.grey,
+                                color:
+                                    words! >= 10 ? Colors.black : Colors.grey,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -246,14 +283,16 @@ class _menuPageState extends State<menuPage> {
                               'Bookmark 10 words to unlock multiple choice.',
                               style: TextStyle(
                                 fontSize: 11,
-                                color: words >= 10 ? Colors.black : Colors.grey,
+                                color:
+                                    words! >= 10 ? Colors.black : Colors.grey,
                               ),
                             ),
                             Row(
                               children: [
                                 Container(
                                   height: 10,
-                                  width: 200, // Adjust the width as needed
+                                  width: MediaQuery.of(context).size.width *
+                                      0.5, // 50% of the screen width
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(
                                         10), // Adjust this for the outer shape
@@ -263,11 +302,9 @@ class _menuPageState extends State<menuPage> {
                                     borderRadius: BorderRadius.circular(
                                         10), // Adjust this for the inner shape
                                     child: LinearProgressIndicator(
-                                      value: words != null
-                                          ? (words > 10 ? 1.0 : words / 10)
-                                          : 0,
+                                      value: words! >= 10 ? 1.0 : words / 10,
                                       valueColor: AlwaysStoppedAnimation<Color>(
-                                        words >= 10
+                                        words! >= 10
                                             ? Colors.green
                                             : Colors.grey,
                                       ),
@@ -279,9 +316,9 @@ class _menuPageState extends State<menuPage> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '${words > 10 ? 10 : words}/10',
+                                  '${words! > 10 ? 10 : words}/10',
                                   style: TextStyle(
-                                    color: words >= 10
+                                    color: words! >= 10
                                         ? Colors.black
                                         : Colors.grey,
                                   ),
@@ -296,7 +333,7 @@ class _menuPageState extends State<menuPage> {
                 ),
               ),
               SizedBox(
-                height: 90,
+                height: _cardHeight,
                 child: Card(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
@@ -339,7 +376,8 @@ class _menuPageState extends State<menuPage> {
                       children: [
                         Icon(
                           Icons.workspace_premium,
-                          color: words >= 50 ? Colors.amber[500]! : Colors.grey,
+                          color:
+                              words! >= 50 ? Colors.amber[500]! : Colors.grey,
                           size: 50,
                         ),
                         SizedBox(
@@ -352,7 +390,8 @@ class _menuPageState extends State<menuPage> {
                               'Translate Words 2',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: words >= 50 ? Colors.black : Colors.grey,
+                                color:
+                                    words! >= 50 ? Colors.black : Colors.grey,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -360,14 +399,16 @@ class _menuPageState extends State<menuPage> {
                               'Bookmark 50 words to unlock aids.',
                               style: TextStyle(
                                 fontSize: 11,
-                                color: words >= 50 ? Colors.black : Colors.grey,
+                                color:
+                                    words! >= 50 ? Colors.black : Colors.grey,
                               ),
                             ),
                             Row(
                               children: [
                                 Container(
                                   height: 10,
-                                  width: 200, // Adjust the width as needed
+                                  width: MediaQuery.of(context).size.width *
+                                      0.5, // 50% of the screen width
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(
                                         10), // Adjust this for the outer shape
@@ -377,11 +418,9 @@ class _menuPageState extends State<menuPage> {
                                     borderRadius: BorderRadius.circular(
                                         10), // Adjust this for the inner shape
                                     child: LinearProgressIndicator(
-                                      value: words != null
-                                          ? (words > 50 ? 1.0 : words / 50)
-                                          : 0,
+                                      value: words! >= 50 ? 1.0 : words / 50,
                                       valueColor: AlwaysStoppedAnimation<Color>(
-                                        words >= 50
+                                        words! >= 50
                                             ? Colors.green
                                             : Colors.grey,
                                       ),
@@ -393,9 +432,9 @@ class _menuPageState extends State<menuPage> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '${words > 50 ? 50 : words}/50',
+                                  '${words! > 50 ? 50 : words}/50',
                                   style: TextStyle(
-                                    color: words >= 50
+                                    color: words! >= 50
                                         ? Colors.black
                                         : Colors.grey,
                                   ),
@@ -410,7 +449,7 @@ class _menuPageState extends State<menuPage> {
                 ),
               ),
               SizedBox(
-                height: 90,
+                height: _cardHeight,
                 child: Card(
                   color: Colors.white,
                   shape: RoundedRectangleBorder(
@@ -453,7 +492,8 @@ class _menuPageState extends State<menuPage> {
                       children: [
                         Icon(
                           Icons.workspace_premium,
-                          color: words >= 70 ? Colors.amber[500]! : Colors.grey,
+                          color:
+                              words! >= 70 ? Colors.amber[500]! : Colors.grey,
                           size: 50,
                         ),
                         SizedBox(
@@ -466,7 +506,8 @@ class _menuPageState extends State<menuPage> {
                               'Translate Words 3',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: words >= 70 ? Colors.black : Colors.grey,
+                                color:
+                                    words! >= 70 ? Colors.black : Colors.grey,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -474,14 +515,16 @@ class _menuPageState extends State<menuPage> {
                               'Bookmark 70 words to unlock match card.',
                               style: TextStyle(
                                 fontSize: 11,
-                                color: words >= 70 ? Colors.black : Colors.grey,
+                                color:
+                                    words! >= 70 ? Colors.black : Colors.grey,
                               ),
                             ),
                             Row(
                               children: [
                                 Container(
                                   height: 10,
-                                  width: 200, // Adjust the width as needed
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(
                                         10), // Adjust this for the outer shape
@@ -491,11 +534,9 @@ class _menuPageState extends State<menuPage> {
                                     borderRadius: BorderRadius.circular(
                                         10), // Adjust this for the inner shape
                                     child: LinearProgressIndicator(
-                                      value: words != null
-                                          ? (words > 70 ? 1.0 : words / 70)
-                                          : 0,
+                                      value: words! >= 70 ? 1.0 : words / 70,
                                       valueColor: AlwaysStoppedAnimation<Color>(
-                                        words >= 70
+                                        words! >= 70
                                             ? Colors.green
                                             : Colors.grey,
                                       ),
@@ -507,9 +548,9 @@ class _menuPageState extends State<menuPage> {
                                   width: 5,
                                 ),
                                 Text(
-                                  '${words > 70 ? 70 : words}/70',
+                                  '${words! > 70 ? 70 : words}/70',
                                   style: TextStyle(
-                                    color: words >= 70
+                                    color: words! >= 70
                                         ? Colors.black
                                         : Colors.grey,
                                   ),
@@ -596,15 +637,6 @@ class _menuPageState extends State<menuPage> {
   }
 
   Future<void> logOut() async {
-    try {
-      await signout.logoutWithEmail();
-    } catch (e) {
-      print(e);
-    }
-    try {
-      await signout.logoutWithGoogle();
-    } catch (e) {
-      print(e);
-    }
+    // Your logout logic
   }
 }

@@ -233,7 +233,7 @@ class _WordsCollectionState extends State<WordsCollection> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(50),
         ),
-        title: Text('Do you want to delete the this words?'),
+        title: Text('Do you want to delete these words?'),
         // Set the contentText as the content of the AlertDialog
         content: Text(
           contentText,

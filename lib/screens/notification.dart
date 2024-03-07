@@ -168,7 +168,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 title: "It's time to review.",
                                 body:
                                     "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
-                                payload: "This is periodic data",
+                                payload: "review",
                                 scheduledTime: selectedTime,
                               );
                               savePreferences();
@@ -190,7 +190,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 title: "It's time to review.",
                                 body:
                                     "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
-                                payload: "This is periodic data",
+                                payload: "review",
                                 scheduledTime: selectedTime,
                               );
                               savePreferences();
@@ -233,7 +233,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       title: "It's time to review.",
                                       body:
                                           "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
-                                      payload: "This is periodic data",
+                                      payload: "review",
                                       scheduledTime: selectedTime,
                                     );
                                     savePreferences();
@@ -280,7 +280,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 title: "It's time to review.",
                                 body:
                                     "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
-                                payload: "This is periodic data",
+                                payload: "review",
                                 scheduledTime: selectedTime,
                               );
                               savePreferences();
@@ -301,7 +301,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 title: "It's time to review.",
                                 body:
                                     "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
-                                payload: "This is periodic data",
+                                payload: "review",
                                 scheduledTime: selectedTime,
                               );
                               savePreferences();
@@ -344,7 +344,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       title: "It's time to review.",
                                       body:
                                           "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
-                                      payload: "This is periodic data",
+                                      payload: "review",
                                       scheduledTime: selectedTime,
                                     );
                                     savePreferences();
@@ -391,7 +391,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 title: "It's time to review.",
                                 body:
                                     "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
-                                payload: "This is periodic data",
+                                payload: "review",
                                 scheduledTime: selectedTime,
                               );
                               savePreferences();
@@ -412,7 +412,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                 title: "It's time to review.",
                                 body:
                                     "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
-                                payload: "This is periodic data",
+                                payload: "review",
                                 scheduledTime: selectedTime,
                               );
                               savePreferences();
@@ -455,7 +455,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       title: "It's time to review.",
                                       body:
                                           "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
-                                      payload: "This is periodic data",
+                                      payload: "review",
                                       scheduledTime: selectedTime,
                                     );
                                     savePreferences();

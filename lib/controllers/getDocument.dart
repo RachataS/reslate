@@ -197,12 +197,12 @@ class firebaseDoc {
         await batch.commit();
       } else {
         Fluttertoast.showToast(
-            msg: "คุณมีคำศัพท์ไม่ถึง ${numberOfQuestion} คำ",
+            msg: "โปรดบันทึกคำศัพท์ ${numberOfQuestion} คำ",
             gravity: ToastGravity.TOP);
       }
     } else {
       Fluttertoast.showToast(
-          msg: "คุณมีคำศัพท์ไม่ถึง ${numberOfQuestion} คำ",
+          msg: "โปรดบันทึกคำศัพท์ ${numberOfQuestion} คำ",
           gravity: ToastGravity.TOP);
     }
     return savedWords.length;

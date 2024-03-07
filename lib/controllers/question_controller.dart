@@ -113,9 +113,11 @@ class QuestionController extends GetxController
             .get();
     // because once user press any option then it will run
     _isAnswered = true;
+    //กำหนดให้ _correctAns มีค่าเป็น index ของข้อที่ถูกต้อง
     _correctAns = question.answer;
+    //เก็บ index ที่ผู้ใช้เลือกหรือเก็บคำตอบที่ผู้ใข้ตอบ
     _selectedAns = selectedIndex;
-
+    //ตรวจสอบว่าผู้ใช้ตอบถูกต้องหรือไม่
     if (_correctAns == _selectedAns) {
       _numOfCorrectAns++;
       correctAnswer++;
