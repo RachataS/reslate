@@ -63,7 +63,7 @@ class _reviewPageState extends State<reviewPage> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 55, 20, 20),
               child: Text(
-                "Saved Words",
+                "Saved Vocabulary",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,

@@ -119,7 +119,7 @@ class _MenuPageState extends State<MenuPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '  Words Collection  ',
+                              '  Vocabulary Collection  ',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,

@@ -30,6 +30,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
   late QuestionController _qnController;
   var maxQuestion;
   int? aids;
+  var wordsLength;
 
   @override
   void initState() {
@@ -38,6 +39,17 @@ class _ScoreScreenState extends State<ScoreScreen> {
     fetchTopScore();
     _updateButtonText();
     updateAids();
+    wordsLength = getWordsColLength();
+    print(wordsLength);
+  }
+
+  Future<int> getWordsColLength() async {
+    DocumentReference<Map<String, dynamic>> userDocumentRef =
+        FirebaseFirestore.instance.collection("Profile").doc(widget.docID);
+    QuerySnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
+        await userDocumentRef.collection("savedWords").get();
+
+    return savedWordsQuerySnapshot.docs.length;
   }
 
   Future<void> updateAids() async {
@@ -75,7 +87,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
     }
   }
 
-  void _updateButtonText() {
+  Future<void> _updateButtonText() async {
     buttonText = (_qnController.correctAnswer >= (widget.numberOfQuestion ?? 0))
         ? "Next Level"
         : "Play again";
@@ -220,80 +232,106 @@ class _ScoreScreenState extends State<ScoreScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: constraints.maxWidth * 0.05),
-                          SizedBox(
-                            width: constraints.maxWidth * 0.35,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    (_qnController.correctAnswer < maxQuestion)
-                                        ? Colors.red[400]!
-                                        : Colors.blue[400]!,
-                                fixedSize: Size(
-                                  constraints.maxWidth * 0.7,
-                                  constraints.maxHeight * 0.06,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                              ),
-                              onPressed: () async {
-                                widget.docID =
-                                    await firebasedoc.getDocumentId();
-                                var savedWordsLength =
-                                    await firebasedoc.getSavedWords(
-                                  widget.numberOfQuestion,
-                                  widget.savedWordsData,
-                                  widget.docID,
-                                );
-
-                                if (widget.numberOfQuestion! >
-                                    _qnController.correctAnswer) {
-                                  _qnController.correctAnswer = 0;
-
-                                  if (savedWordsLength >=
-                                      (widget.numberOfQuestion ?? 0)) {
-                                    Get.to(
-                                      multipleChoice(
-                                        savedWordsData: widget.savedWordsData,
-                                        docID: widget.docID,
-                                        numberOfQuestion:
-                                            widget.numberOfQuestion,
-                                        aids: aids,
-                                      ),
-                                      transition: Transition.topLevel,
-                                    );
-                                  } else {
-                                    Get.to(
-                                      bottombar(),
-                                      transition: Transition.topLevel,
-                                    );
-                                  }
+                          // SizedBox(width: constraints.maxWidth * 0.05),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 7),
+                            child: FutureBuilder<int>(
+                              future: wordsLength,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return SizedBox(); // Return an empty SizedBox while waiting for the future to complete
+                                } else if (snapshot.hasError) {
+                                  // Handle error
+                                  return Text("Error: ${snapshot.error}");
                                 } else {
-                                  if (savedWordsLength >=
-                                      (widget.numberOfQuestion ?? 0)) {
-                                    Get.to(
-                                      multipleChoice(
-                                        savedWordsData: widget.savedWordsData,
-                                        docID: widget.docID,
-                                        numberOfQuestion:
-                                            widget.numberOfQuestion! * 2,
-                                        aids: aids,
+                                  // Check the length
+                                  if (snapshot.data! >
+                                      ((widget.numberOfQuestion! * 2) ?? 0)) {
+                                    return SizedBox(
+                                      width: constraints.maxWidth * 0.35,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              (_qnController.correctAnswer <
+                                                      maxQuestion)
+                                                  ? Colors.red[400]!
+                                                  : Colors.blue[400]!,
+                                          fixedSize: Size(
+                                            constraints.maxWidth * 0.7,
+                                            constraints.maxHeight * 0.06,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                          ),
+                                        ),
+                                        onPressed: () async {
+                                          widget.docID =
+                                              await firebasedoc.getDocumentId();
+                                          var savedWordsLength =
+                                              await firebasedoc.getSavedWords(
+                                            widget.numberOfQuestion,
+                                            widget.savedWordsData,
+                                            widget.docID,
+                                          );
+
+                                          if (widget.numberOfQuestion! >
+                                              _qnController.correctAnswer) {
+                                            _qnController.correctAnswer = 0;
+
+                                            if (savedWordsLength >=
+                                                (widget.numberOfQuestion ??
+                                                    0)) {
+                                              Get.to(
+                                                multipleChoice(
+                                                  savedWordsData:
+                                                      widget.savedWordsData,
+                                                  docID: widget.docID,
+                                                  numberOfQuestion:
+                                                      widget.numberOfQuestion,
+                                                  aids: aids,
+                                                ),
+                                                transition: Transition.topLevel,
+                                              );
+                                            } else {
+                                              Get.to(
+                                                bottombar(),
+                                                transition: Transition.topLevel,
+                                              );
+                                            }
+                                          } else if (savedWordsLength >=
+                                              (widget.numberOfQuestion ?? 0)) {
+                                            Get.to(
+                                              multipleChoice(
+                                                savedWordsData:
+                                                    widget.savedWordsData,
+                                                docID: widget.docID,
+                                                numberOfQuestion:
+                                                    widget.numberOfQuestion! *
+                                                        2,
+                                                aids: aids,
+                                              ),
+                                              transition: Transition.topLevel,
+                                            );
+                                          } else {
+                                            Get.to(
+                                              bottombar(),
+                                              transition: Transition.topLevel,
+                                            );
+                                          }
+                                        },
+                                        child: Text(
+                                          buttonText,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
                                       ),
-                                      transition: Transition.topLevel,
                                     );
                                   } else {
-                                    Get.to(
-                                      bottombar(),
-                                      transition: Transition.topLevel,
-                                    );
+                                    return Container();
                                   }
                                 }
                               },
-                              child: Text(
-                                buttonText,
-                                style: TextStyle(color: Colors.white),
-                              ),
                             ),
                           ),
                         ],

@@ -79,97 +79,93 @@ class _WordsCollectionState extends State<WordsCollection> {
                   child: ListView.builder(
                     itemCount: filteredWords.length,
                     itemBuilder: (context, index) {
-                      return SizedBox(
-                        height: 135,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          margin: const EdgeInsets.all(5),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        '${index + 1} : ${filteredWords[index]['question']}',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        margin: const EdgeInsets.all(5),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '${index + 1} : ${filteredWords[index]['question']}',
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            '${filteredWords[index]['thai']}',
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          Spacer(),
-                                          IconButton(
-                                            onPressed: () {
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          '${filteredWords[index]['thai']}',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Spacer(),
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              toggleSelectWord(index);
+                                            });
+                                          },
+                                          icon: Icon(Icons
+                                              .check_circle_outline_outlined),
+                                          color: isSelected(index)
+                                              ? Colors
+                                                  .green // Change to green when selected
+                                              : Colors.grey,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      'Correct: ${filteredWords[index]['answerCorrect']}',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'Wrong: ${filteredWords[index]['answerWrong']}',
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        Spacer(),
+                                        IconButton(
+                                          onPressed: () {
+                                            // If the word is selected, remove it from selectedWords
+                                            if (isSelected(index)) {
                                               setState(() {
-                                                toggleSelectWord(index);
+                                                selectedWords.removeWhere(
+                                                    (word) =>
+                                                        word['question'] ==
+                                                        filteredWords[index]
+                                                            ['question']);
                                               });
-                                            },
-                                            icon: Icon(Icons
-                                                .check_circle_outline_outlined),
-                                            color: isSelected(index)
-                                                ? Colors
-                                                    .green // Change to green when selected
-                                                : Colors.grey,
-                                          )
-                                        ],
-                                      ),
+                                            }
+                                            // Now, proceed with the deleteWord function
+                                            deleteWord(index);
+                                          },
+                                          icon: Icon(Icons.delete),
+                                          color: Colors.red,
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        'Correct: ${filteredWords[index]['answerCorrect']}',
-                                        style: TextStyle(fontSize: 16),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            'Wrong: ${filteredWords[index]['answerWrong']}',
-                                            style: TextStyle(fontSize: 16),
-                                          ),
-                                          Spacer(),
-                                          // if (selectedWords.isEmpty)
-                                          IconButton(
-                                            onPressed: () {
-                                              // If the word is selected, remove it from selectedWords
-                                              if (isSelected(index)) {
-                                                setState(() {
-                                                  selectedWords.removeWhere(
-                                                      (word) =>
-                                                          word['question'] ==
-                                                          filteredWords[index]
-                                                              ['question']);
-                                                });
-                                              }
-                                              // Now, proceed with the deleteWord function
-                                              deleteWord(index);
-                                            },
-                                            icon: Icon(Icons.delete),
-                                            color: Colors.red,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       );
