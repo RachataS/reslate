@@ -133,6 +133,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               enabled: false,
             ));
           });
+          savePreferences();
         },
         child: Icon(
           Icons.add,
@@ -208,6 +209,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     notifications.removeAt(index);
                     notificationCount--;
                   });
+                  savePreferences();
                 },
               ),
             ],

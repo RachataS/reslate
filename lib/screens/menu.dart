@@ -180,42 +180,42 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: _cardHeight,
-                child: Card(
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                  margin: const EdgeInsets.all(5),
-                  child: TextButton(
-                    onPressed: () {
-                      //open manual book
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.menu_book_rounded,
-                          color: Colors.green,
-                          size: 40,
-                        ),
-                        Text(
-                          '  manual  ',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Icon(
-                          Icons.menu_book_rounded,
-                          color: Colors.green,
-                          size: 40,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              // SizedBox(
+              //   height: _cardHeight,
+              //   child: Card(
+              //     color: Colors.white,
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(15)),
+              //     margin: const EdgeInsets.all(5),
+              //     child: TextButton(
+              //       onPressed: () {
+              //         //open manual book
+              //       },
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: [
+              //           Icon(
+              //             Icons.menu_book_rounded,
+              //             color: Colors.green,
+              //             size: 40,
+              //           ),
+              //           Text(
+              //             '  manual  ',
+              //             style: TextStyle(
+              //               fontSize: 16,
+              //               color: Colors.black,
+              //             ),
+              //           ),
+              //           Icon(
+              //             Icons.menu_book_rounded,
+              //             color: Colors.green,
+              //             size: 40,
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: _cardHeight,
                 child: Card(

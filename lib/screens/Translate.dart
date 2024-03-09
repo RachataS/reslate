@@ -162,7 +162,7 @@ class _translate_screenState extends State<translate_screen> {
                     onChanged: (rawtxt) {
                       if (_debounce?.isActive ?? false) _debounce!.cancel();
                       _debounce =
-                          Timer(const Duration(milliseconds: 300), () async {
+                          Timer(const Duration(milliseconds: 500), () async {
                         if (rawtxt == null || rawtxt.isEmpty) {
                           setState(() {
                             translated = outputbox;
