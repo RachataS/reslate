@@ -40,7 +40,6 @@ class _ScoreScreenState extends State<ScoreScreen> {
     _updateButtonText();
     updateAids();
     wordsLength = getWordsColLength();
-    print(wordsLength);
   }
 
   Future<int> getWordsColLength() async {
@@ -328,7 +327,93 @@ class _ScoreScreenState extends State<ScoreScreen> {
                                       ),
                                     );
                                   } else {
-                                    return Container();
+                                    if (buttonText == "Next Level") {
+                                      return SizedBox(); // Don't show the button
+                                    } else {
+                                      return SizedBox(
+                                        width: constraints.maxWidth * 0.35,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                (_qnController.correctAnswer <
+                                                        maxQuestion)
+                                                    ? Colors.red[400]!
+                                                    : Colors.blue[400]!,
+                                            fixedSize: Size(
+                                              constraints.maxWidth * 0.7,
+                                              constraints.maxHeight * 0.06,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            widget.docID = await firebasedoc
+                                                .getDocumentId();
+                                            var savedWordsLength =
+                                                await firebasedoc.getSavedWords(
+                                              widget.numberOfQuestion,
+                                              widget.savedWordsData,
+                                              widget.docID,
+                                            );
+
+                                            if (widget.numberOfQuestion! >
+                                                _qnController.correctAnswer) {
+                                              _qnController.correctAnswer = 0;
+
+                                              if (savedWordsLength >=
+                                                  (widget.numberOfQuestion ??
+                                                      0)) {
+                                                Get.to(
+                                                  multipleChoice(
+                                                    savedWordsData:
+                                                        widget.savedWordsData,
+                                                    docID: widget.docID,
+                                                    numberOfQuestion:
+                                                        widget.numberOfQuestion,
+                                                    aids: aids,
+                                                  ),
+                                                  transition:
+                                                      Transition.topLevel,
+                                                );
+                                              } else {
+                                                Get.to(
+                                                  bottombar(),
+                                                  transition:
+                                                      Transition.topLevel,
+                                                );
+                                              }
+                                            } else if (savedWordsLength >=
+                                                (widget.numberOfQuestion ??
+                                                    0)) {
+                                              Get.to(
+                                                multipleChoice(
+                                                  savedWordsData:
+                                                      widget.savedWordsData,
+                                                  docID: widget.docID,
+                                                  numberOfQuestion:
+                                                      widget.numberOfQuestion! *
+                                                          2,
+                                                  aids: aids,
+                                                ),
+                                                transition: Transition.topLevel,
+                                              );
+                                            } else {
+                                              Get.to(
+                                                bottombar(),
+                                                transition: Transition.topLevel,
+                                              );
+                                            }
+                                          },
+                                          child: Text(
+                                            buttonText,
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                      );
+                                    }
                                   }
                                 }
                               },
