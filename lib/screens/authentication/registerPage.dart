@@ -137,13 +137,13 @@ class _registerPageState extends State<registerPage> {
                                           child: TextFormField(
                                               validator: RequiredValidator(
                                                   errorText:
-                                                      'กรุณากรอก Username'),
+                                                      'Please enter Username.'),
                                               onSaved: (var username) {
                                                 profile.username = username;
                                               },
                                               decoration: const InputDecoration(
                                                 border: InputBorder.none,
-                                                labelText: 'Enter Username',
+                                                labelText: 'Username',
                                               )),
                                         ),
                                         Container(
@@ -156,10 +156,10 @@ class _registerPageState extends State<registerPage> {
                                               validator: MultiValidator([
                                                 RequiredValidator(
                                                     errorText:
-                                                        'กรุณากรอก Email'),
+                                                        'Please enter Email.'),
                                                 EmailValidator(
                                                     errorText:
-                                                        'รูปแบบ Email ไม่ถูกต้อง กรุณากรอกอีกครั้ง')
+                                                        'Email format is incorrect.')
                                               ]),
                                               onSaved: (var email) {
                                                 profile.email = email;
@@ -168,7 +168,7 @@ class _registerPageState extends State<registerPage> {
                                                   TextInputType.emailAddress,
                                               decoration: const InputDecoration(
                                                 border: InputBorder.none,
-                                                labelText: 'Enter Email',
+                                                labelText: 'Email',
                                               )),
                                         ),
                                         Container(
@@ -180,10 +180,10 @@ class _registerPageState extends State<registerPage> {
                                           child: TextFormField(
                                               validator: ((password1) {
                                                 if (password1!.isEmpty) {
-                                                  return 'โปรดกรอกรหัสผ่าน';
+                                                  return 'Please enter password.';
                                                 } else if (password1.length <
                                                     8) {
-                                                  return 'รหัสผ่านต้องยาวกว่า 8 ตัวอักษร';
+                                                  return 'Password must be longer than 8 characters.';
                                                 }
                                               }),
                                               onSaved: (password1) {
@@ -200,10 +200,10 @@ class _registerPageState extends State<registerPage> {
                                               controller: password2,
                                               validator: ((password2) {
                                                 if (password2!.isEmpty) {
-                                                  return 'โปรดยืนยันรหัสผ่าน';
+                                                  return 'Please confirm your password.';
                                                 } else if (password2.length <
                                                     8) {
-                                                  return 'รหัสผ่านต้องยาวกว่า 8 ตัวอักษร';
+                                                  return 'Password must be longer than 8 characters.';
                                                 }
                                               }),
                                               onSaved: (password2) {
@@ -212,7 +212,7 @@ class _registerPageState extends State<registerPage> {
                                               obscureText: true,
                                               decoration: const InputDecoration(
                                                 border: InputBorder.none,
-                                                labelText: 'Confirm Password',
+                                                labelText: 'Confirm Password.',
                                               )),
                                         ),
                                       ],
@@ -236,7 +236,7 @@ class _registerPageState extends State<registerPage> {
                                             if (profile.password !=
                                                 profile.conpassword) {
                                               Fluttertoast.showToast(
-                                                  msg: 'รหัสผ่านไม่ตรงกัน',
+                                                  msg: "Passwords don't match.",
                                                   gravity: ToastGravity.TOP);
                                             } else {
                                               try {
@@ -257,7 +257,7 @@ class _registerPageState extends State<registerPage> {
                                                 });
                                                 Fluttertoast.showToast(
                                                     msg:
-                                                        "สร้างบัญชีผู้ใช้สำเร็จ",
+                                                        "create account successfully.",
                                                     gravity: ToastGravity.TOP);
                                                 Get.to(loginPage(),
                                                     transition:
@@ -268,11 +268,11 @@ class _registerPageState extends State<registerPage> {
                                                 if (e.code ==
                                                     "email-already-in-use") {
                                                   message =
-                                                      "อีเมลนี้เคยถูกใช้ลงทะเบียนแล้ว โปรดใช้อีเมลอื่นหรือเข้าสู่ระบบ";
+                                                      "Email already in use.";
                                                 } else if (e.code ==
                                                     "weak-password") {
                                                   message =
-                                                      "รหัสผ่านต้องมีความยาวมากกว่า 8 ตัวอักษร";
+                                                      "Password must be longer than 8 characters.";
                                                 } else {
                                                   message == e.code;
                                                 }

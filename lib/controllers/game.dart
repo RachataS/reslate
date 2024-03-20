@@ -97,6 +97,7 @@ class Game {
 
     for (int i = 0; i < (gridSize * gridSize / 2); i++) {
       final cardData = jsonData[i];
+      print(cardData['question']);
       final CardItem questionCard = CardItem(
         // language: 'eng',
         id: cardData['id'],
@@ -125,7 +126,7 @@ class Game {
   }
 
   void resetGame() {
-    generateCards(wordsList);
+    getWordsList();
     isGameOver = false;
     matching = 24;
     score = 0;
@@ -216,9 +217,7 @@ class Game {
   }
 
   void resetGameRandomly() {
-    // Shuffle the wordsList and generate new cards
-    wordsList.shuffle(Random());
-    generateCards(wordsList);
+    getWordsList();
 
     // Reset the game state
     isGameOver = false;

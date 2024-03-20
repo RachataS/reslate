@@ -107,7 +107,7 @@ class _bottombarState extends State<bottombar> {
                         screens.length, (index) => screens[index]),
                   )
                 : Container(),
-        extendBody: true,
+        // extendBody: true,
         bottomNavigationBar: isLoading || screens.isEmpty
             ? null
             : Theme(
@@ -119,7 +119,7 @@ class _bottombarState extends State<bottombar> {
                 child: BottomNavigationBar(
                   selectedItemColor:
                       Colors.blue[600], // Define the selected item color
-                  backgroundColor: Colors.transparent,
+                  backgroundColor: Colors.blue[100],
                   elevation: 0, // Set the elevation to 0 to remove the shadow
                   currentIndex: currentIndex,
                   onTap: (index) {

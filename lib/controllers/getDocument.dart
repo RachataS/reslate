@@ -99,18 +99,18 @@ class firebaseDoc {
   Future<int> getSavedWords(
       numberOfQuestion, bool savedWordsData, docID) async {
     List<Map<String, dynamic>> savedWords = [];
+    int questionCheck = 1;
 
     DocumentReference<Map<String, dynamic>> userDocumentRef =
         FirebaseFirestore.instance.collection("Profile").doc(docID);
     QuerySnapshot<Map<String, dynamic>> savedWordsQuerySnapshot =
         await userDocumentRef.collection("savedWords").get();
 
-    savedWordsQuerySnapshot.docs
-        .forEach((QueryDocumentSnapshot<Map<String, dynamic>> doc) {
-      Map<String, dynamic> data = doc.data();
-      savedWords.add(data);
+    savedWordsQuerySnapshot.docs.forEach((doc) {
+      savedWords.add(doc.data());
     });
-    savedWords.shuffle(Random());
+
+    savedWords.shuffle(); // Shuffle the list of saved words
 
     if (savedWords.isNotEmpty) {
       // Sort the savedWords list based on the chosen field and order
@@ -123,83 +123,71 @@ class firebaseDoc {
 
       Random random = Random();
 
-      if (numberOfQuestion <= savedWords.length) {
-        List<int> randomIndices = [];
+      for (int a = 0; a < numberOfQuestion && a < savedWords.length; a++) {
+        Map<String, dynamic> randomWord = savedWords[a];
+        String thaiKey = randomWord['thai'];
+        String engKey = randomWord['question'];
+        List<dynamic> reviewList = randomWord['options'];
 
-        for (int a = 0; a < numberOfQuestion && a < savedWords.length; a++) {
-          Map<String, dynamic> randomWord = savedWords[a];
-          String thaiKey = randomWord['thai'];
-          String engKey = randomWord['question'];
-          String thaiKey1, thaiKey2, thaiKey3;
-          List<dynamic> reviewList = randomWord['options'];
+        try {
+          if (reviewList.length < 5) {
+            // Update the "beQuestion" field to true for the selected word
+            savedWords[a]['beQuestion'] = true;
 
-          try {
-            if (reviewList.length < 5) {
-              // Update the "beQuestion" field to true for the selected word
-              savedWords[a]['beQuestion'] = true;
-
-              while (randomIndices.length < 3) {
-                int randomIndex;
-                do {
-                  randomIndex = random.nextInt(savedWords.length);
-                } while (randomIndex == a ||
-                    randomIndices.contains(randomIndex)); // Avoid duplicates
+            // Generate unique random indices for each question
+            List<int> randomIndices = [];
+            while (randomIndices.length < 3) {
+              int randomIndex = random.nextInt(savedWords.length);
+              if (randomIndex != a && !randomIndices.contains(randomIndex)) {
                 randomIndices.add(randomIndex);
               }
+            }
 
-              // Get the Thai keys for the randomly selected incorrect answers
-              List randomThaiKeys = randomIndices
-                  .map((index) {
-                    if (index < savedWords.length) {
-                      return savedWords[index]['thai'];
-                    } else {
-                      return null;
-                    }
-                  })
-                  .where((key) => key != null)
-                  .toList();
+            // Get the Thai keys for the randomly selected incorrect answers
+            List randomThaiKeys = randomIndices
+                .map((index) => savedWords[index]['thai'])
+                .toList();
 
-              // Ensure that the correct answer is not in the list of incorrect answers
-              randomThaiKeys.remove(thaiKey);
+            // Ensure that the correct answer is not in the list of incorrect answers
+            randomThaiKeys.remove(thaiKey);
 
-              if (randomThaiKeys.length >= 3) {
-                thaiKey1 = randomThaiKeys[0];
-                thaiKey2 = randomThaiKeys[1];
-                thaiKey3 = randomThaiKeys[2];
-
-                await saveChoice(
-                    engKey, thaiKey, thaiKey1, thaiKey2, thaiKey3, docID);
+            if (randomThaiKeys.length == 3) {
+              if (reviewList.length == 0) {
+                // print(questionCheck);
+                await saveChoice(engKey, thaiKey, randomThaiKeys[0],
+                    randomThaiKeys[1], randomThaiKeys[2], docID);
+              } else if (questionCheck <= (numberOfQuestion * 0.3) &&
+                  questionCheck <= 10) {
+                // print(questionCheck);
+                await saveChoice(engKey, thaiKey, randomThaiKeys[0],
+                    randomThaiKeys[1], randomThaiKeys[2], docID);
               }
             }
-          } catch (e) {
-            print('random choice error ${e}');
           }
-          // print('${a} = ${engKey}');
-        }
 
-        // Update the Firestore documents to set "beQuestion" to false for the remaining words
-        for (int i = numberOfQuestion; i < savedWords.length; i++) {
-          savedWords[i]['beQuestion'] = false;
+          questionCheck++;
+        } catch (e) {
+          print('random choice error: $e');
         }
-
-        // Batch Firestore updates for "beQuestion" values
-        WriteBatch batch = FirebaseFirestore.instance.batch();
-        for (Map<String, dynamic> wordData in savedWords) {
-          DocumentReference docRef = userDocumentRef
-              .collection("savedWords")
-              .doc(wordData['question']);
-          batch.set(
-            docRef,
-            {'beQuestion': wordData['beQuestion']},
-            SetOptions(merge: true),
-          );
-        }
-        await batch.commit();
-      } else {
-        Fluttertoast.showToast(
-            msg: "โปรดบันทึกคำศัพท์ ${numberOfQuestion} คำ",
-            gravity: ToastGravity.TOP);
       }
+
+      // Update the Firestore documents to set "beQuestion" to false for the remaining words
+      for (int i = numberOfQuestion; i < savedWords.length; i++) {
+        savedWords[i]['beQuestion'] = false;
+      }
+
+      // Batch Firestore updates for "beQuestion" values
+      WriteBatch batch = FirebaseFirestore.instance.batch();
+      for (Map<String, dynamic> wordData in savedWords) {
+        DocumentReference docRef =
+            userDocumentRef.collection("savedWords").doc(wordData['question']);
+        batch.set(
+          docRef,
+          {'beQuestion': wordData['beQuestion']},
+          SetOptions(merge: true),
+        );
+      }
+      await batch.commit();
     } else {
       Fluttertoast.showToast(
           msg: "โปรดบันทึกคำศัพท์ ${numberOfQuestion} คำ",
@@ -210,7 +198,7 @@ class firebaseDoc {
 
   Future<void> saveChoice(
       question, correctAnswer, answer1, answer2, answer3, docID) async {
-    // print('${question} ${correctAnswer} ${answer1} ${answer2} ${answer3}');
+    // print('${question} ${correctAnswer} ${answer1} ${answer2} ${answer3}\n');
 
     try {
       DocumentReference<Map<String, dynamic>> newDocumentRef =
@@ -277,6 +265,7 @@ class firebaseDoc {
       //       numberOfQuestion, widget.savedWordsData ?? true, widget.docID);
       // }
       firestoreData.shuffle();
+      // print("question : ${firestoreData}");
       return firestoreData;
     } catch (e) {
       print("Error fetching data: $e");

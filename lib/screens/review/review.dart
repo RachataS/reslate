@@ -290,13 +290,13 @@ class _reviewPageState extends State<reviewPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, left: 20, right: 20, bottom: 10),
+              padding: const EdgeInsets.only(top: 30, right: 20, bottom: 10),
               child: Text(
-                "Note : This mode takes the user's recorded words and turns them into questions.",
+                "Note : โหมดนี้จะนำคำศัพท์ที่ผู้ใช้บันทึกมาใช้เป็นคำถาม",
                 style: TextStyle(color: Colors.blue[600]!, fontSize: 12),
               ),
             ),
+            Spacer(),
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: Row(
@@ -563,13 +563,13 @@ class _reviewPageState extends State<reviewPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, left: 20, right: 20, bottom: 10),
+              padding: const EdgeInsets.only(top: 30, right: 20, bottom: 10),
               child: Text(
-                "Note : This mode takes the words that the user answered incorrectly and turns them into questions.",
+                "Note : โหมดนี้จะนำคำศัพท์ที่ผู้ใช้ตอบผิดมาใช้เป็นคำถาม",
                 style: TextStyle(color: Colors.blue[600]!, fontSize: 12),
               ),
             ),
+            Spacer(),
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: Row(

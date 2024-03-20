@@ -80,7 +80,7 @@ class _MenuPageState extends State<MenuPage> {
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                             child: Text(
-                              'Username : ${username != null ? username!.split(' ')[0] : 'Loading...'}\nEmail : ${email ?? 'Loading...'}',
+                              '${username != null ? username!.split(' ')[0] : 'Loading...'}\n${email ?? 'Loading...'}',
                               style: TextStyle(fontSize: 16),
                             ),
                           ),
@@ -238,7 +238,7 @@ class _MenuPageState extends State<MenuPage> {
                             textAlign: TextAlign.center,
                           ),
                           content: Text(
-                              'Bookmark 10 words to unlock multiple choice mode.'),
+                              'บันทึกคำศัพท์ 10 คำเพื่อปลดล็อคแบบทดสอบแบบเลือกตอบ'),
                           actions: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -354,7 +354,7 @@ class _MenuPageState extends State<MenuPage> {
                             textAlign: TextAlign.center,
                           ),
                           content: Text(
-                              'bookmark 50 words to unlock review aids. When unlocked, You will receive aid 1 time. If you want more aids, you must answer 10 questions in a row correctly in the multiple choice mode.'),
+                              '- บันทึกคำศัพท์ 50 คำเพื่อปลดล็อคตัวช่วย\n- รับตัวช่วยเพิ่ม 1 ครั้งทุกๆการตอบคำถามถูกติดกัน 10 ข้อในแบบทดสอบเลือกตอบ\n- รับตัวช่วยเพิ่ม 1 ครั้งทุกๆการจับคู่การ์ด 8 คู่'),
                           actions: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -470,7 +470,7 @@ class _MenuPageState extends State<MenuPage> {
                             textAlign: TextAlign.center,
                           ),
                           content: Text(
-                              'Bookmark 70 words to unlock match card mode.'),
+                              'บันทึกคำศัพท์ 70 คำเพื่อปลดล็อคแบบทดสอบจับคู่การ์ด'),
                           actions: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -568,69 +568,66 @@ class _MenuPageState extends State<MenuPage> {
           ),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 0, 80),
-        child: FloatingActionButton(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50.0),
-          ),
-          backgroundColor: Colors.blue,
-          onPressed: () async {
-            // Show a dialog to confirm logout
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  backgroundColor: Colors.blue[100]!,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        40), // Adjust the radius as needed
-                  ),
-                  title: Text(
-                    "Logout",
-                    textAlign: TextAlign.center,
-                  ),
-                  content: Text("Are you sure you want to logout?"),
-                  actions: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop(); // Close the dialog
-                          },
-                          child: Text(
-                            "Cancel",
-                            style: TextStyle(color: Colors.blue),
-                          ),
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(50.0),
+        ),
+        backgroundColor: Colors.blue,
+        onPressed: () async {
+          // Show a dialog to confirm logout
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                backgroundColor: Colors.blue[100]!,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(40), // Adjust the radius as needed
+                ),
+                title: Text(
+                  "Logout",
+                  textAlign: TextAlign.center,
+                ),
+                content: Text("Are you sure you want to logout?"),
+                actions: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text(
+                          "Cancel",
+                          style: TextStyle(color: Colors.blue),
                         ),
-                        TextButton(
-                          onPressed: () async {
-                            Navigator.of(context).pop(); // Close the dialog
-                            try {
-                              await logOut();
-                              Get.to(loginPage(),
-                                  transition: Transition.topLevel);
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                          child: Text(
-                            "Logout",
-                            style: TextStyle(color: Colors.red),
-                          ),
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          Navigator.of(context).pop(); // Close the dialog
+                          try {
+                            await logOut();
+                            Get.to(loginPage(),
+                                transition: Transition.topLevel);
+                          } catch (e) {
+                            print(e);
+                          }
+                        },
+                        child: Text(
+                          "Logout",
+                          style: TextStyle(color: Colors.red),
                         ),
-                      ],
-                    )
-                  ],
-                );
-              },
-            );
-          },
-          child: Icon(
-            Icons.logout,
-            color: Colors.white,
-          ),
+                      ),
+                    ],
+                  )
+                ],
+              );
+            },
+          );
+        },
+        child: Icon(
+          Icons.logout,
+          color: Colors.white,
         ),
       ),
     );

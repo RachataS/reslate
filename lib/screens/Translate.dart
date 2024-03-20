@@ -53,297 +53,295 @@ class _translate_screenState extends State<translate_screen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          title: Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    width: screenSize.width / 4,
-                    child: Text(
-                      appbarInput,
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 19,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(shape: CircleBorder()),
-                    child: CircleAvatar(
-                      radius: 25,
-                      backgroundColor: Colors.blue[400]!,
-                      child:
-                          Icon(Icons.swap_horiz_outlined, color: Colors.white),
-                    ),
-                    onPressed: () {
-                      // SystemSound.play(SystemSoundType.click);
-                      if (inputLanguage == 'en' || inputLanguage == null) {
-                        language.input = 'th';
-                        language.output = 'en';
-                        language.label = "ภาษาไทย";
-                        language.inbox = "โปรดป้อนข้อความ";
-                        language.outbox = 'Translated';
-                        language.appbarInput = "Thai";
-                        language.appberOutput = "English";
-                      } else {
-                        language.input = 'en';
-                        language.output = 'th';
-                        language.label = "English";
-                        language.inbox = "Enter text";
-                        language.outbox = 'คำแปล';
-                        language.appbarInput = "English";
-                        language.appberOutput = "Thai";
-                      }
-                      changeLanguage();
-                      wordsList.clear();
-                    },
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    width: screenSize.width / 4,
-                    child: Text(
-                      appbarOutput,
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 19,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ],
-              )),
-        ),
-        body: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-              Colors.blue[600]!,
-              Colors.blue[300]!,
-              Colors.blue[100]!,
-              // Colors.blue[50]!,
-            ]),
-          ),
-          child: Padding(
-            padding:
-                EdgeInsets.only(top: screenSize.height * 0.10), //for ios 0.12
-            child: Card(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              key: formKey,
-              margin: const EdgeInsets.fromLTRB(12, 12, 12, 110),
-              child: ListView(
-                padding: const EdgeInsets.all(20),
-                children: [
-                  Text(label),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                    style: const TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: inputbox,
-                    ),
-                    controller: rawtxt,
-                    maxLines: null,
-                    onChanged: (rawtxt) {
-                      if (_debounce?.isActive ?? false) _debounce!.cancel();
-                      _debounce =
-                          Timer(const Duration(milliseconds: 500), () async {
-                        if (rawtxt == null || rawtxt.isEmpty) {
-                          setState(() {
-                            translated = outputbox;
-                          });
-                          wordsList.clear();
-                          wordsList.clear();
-                        } else {
-                          try {
-                            formKey.currentState?.save();
-                            await translator
-                                .translate(rawtxt,
-                                    from: inputLanguage, to: outputLanguage)
-                                .then((translation) {
-                              setState(() {
-                                translated = translation.toString();
-                                //หากเจอการเว้นวรรคในประโยคจะเพิ่มลงใน WordsList
-                                if (rawtxt.contains(' ')) {
-                                  wordsList = rawtxt.toLowerCase().split(' ');
-                                }
-                              });
-                            });
-                          } catch (e) {
-                            print(e);
-                          }
-                        }
-                        // แยกตัวอักษรพิเศษออกจากคำศัพท์ใน wordsList
-                        wordsList = splitSpecialChars(wordsList);
-                        // ลบคำศัพท์ที่ซ้ำกันใน wordsList โดยการแปลง wordsList เป็น Set เพื่อลบคำที่ซ้ำกัน แล้วแปลงกลับเป็น List
-                        wordsList = List<String>.from(wordsList.toSet());
-                        // เรียงลำดับคำศัพท์ใน wordsList ตามลำดับอักขระ
-                        wordsList.sort();
-                      });
-                    },
-                  ),
-                  const Divider(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    translated,
-                    style: const TextStyle(
-                        fontSize: 25,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          for (int i = 0; i < wordsList.length; i += 3)
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // ใช้ loop เพื่อสร้างปุ่ม TextButton สำหรับแสดงคำศัพท์
-                                for (int j = i;
-                                    j < i + 3 && j < wordsList.length;
-                                    j++)
-                                  Flexible(
-                                    child: Stack(
-                                      alignment: Alignment.topRight,
-                                      children: [
-                                        SizedBox(
-                                          width: 120,
-                                          child: TextButton(
-                                            onPressed: () async {
-                                              setState(() {
-                                                if (selecttxt
-                                                    .contains(wordsList[j])) {
-                                                  // หรือถ้าคำศัพท์ถูกยกเลิกการเลือก จะลบออกจาก selecttxt และลดจำนวนคำที่ถูกเลือก
-                                                  selecttxt
-                                                      .remove(wordsList[j]);
-                                                  checkWords--;
-                                                } else {
-                                                  // เมื่อคำศัพท์ถูกเลือก จะทำการเพิ่มลงใน selecttxt และเพิ่มจำนวนคำที่ถูกเลือก
-                                                  selecttxt.add(wordsList[j]);
-                                                  checkWords++;
-                                                }
-                                              });
-                                            },
-                                            //แสดงคำศัพท์บนปุ่ม
-                                            child: Text(
-                                              wordsList[j],
-                                              style: TextStyle(
-                                                fontSize:
-                                                    wordsList[j].length > 5
-                                                        ? 14
-                                                        : 15,
-                                                color: selecttxt
-                                                        .contains(wordsList[j])
-                                                    ? Colors.blue[400]
-                                                    : Colors.black54,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-// ตรวจสอบว่าคำศัพท์ใน selecttxt ถูกเลือกหรือไม่
-                                        if (selecttxt.contains(wordsList[j]))
-
-                                          // หากคำศัพท์ถูกเลือก จะสร้าง Widget Container เพื่อแสดงหมายเลขลำดับที่คำศัพท์ถูกเลือกอยู่
-                                          Container(
-                                            padding: EdgeInsets.all(4),
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors
-                                                  .red, // กำหนดสีของวงกลมเป็นสีแดง
-                                            ),
-                                            child: Text(
-                                              (selecttxt.indexOf(wordsList[j]) +
-                                                      1)
-                                                  .toString(), // แสดงเลขลำดับที่คำศัพท์ถูกเลือก
-                                              style: TextStyle(
-                                                color: Colors
-                                                    .white, // กำหนดสีของตัวอักษรเป็นสีขาว
-                                              ),
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                              ],
-                            ),
-                        ],
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            title: Card(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      width: screenSize.width / 4,
+                      child: Text(
+                        appbarInput,
+                        style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
-                  ),
-                ],
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(shape: CircleBorder()),
+                      child: CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Colors.blue[400]!,
+                        child: Icon(Icons.swap_horiz_outlined,
+                            color: Colors.white),
+                      ),
+                      onPressed: () {
+                        // SystemSound.play(SystemSoundType.click);
+                        if (inputLanguage == 'en' || inputLanguage == null) {
+                          language.input = 'th';
+                          language.output = 'en';
+                          language.label = "ภาษาไทย";
+                          language.inbox = "โปรดป้อนข้อความ";
+                          language.outbox = 'Translated';
+                          language.appbarInput = "Thai";
+                          language.appberOutput = "English";
+                        } else {
+                          language.input = 'en';
+                          language.output = 'th';
+                          language.label = "English";
+                          language.inbox = "Enter text";
+                          language.outbox = 'คำแปล';
+                          language.appbarInput = "English";
+                          language.appberOutput = "Thai";
+                        }
+                        changeLanguage();
+                        wordsList.clear();
+                      },
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      width: screenSize.width / 4,
+                      child: Text(
+                        appbarOutput,
+                        style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 19,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ],
+                )),
+          ),
+          body: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+                Colors.blue[600]!,
+                Colors.blue[300]!,
+                Colors.blue[100]!,
+                // Colors.blue[50]!,
+              ]),
+            ),
+            child: Padding(
+              padding:
+                  EdgeInsets.only(top: screenSize.height * 0.10), //for ios 0.12
+              child: Card(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                key: formKey,
+                margin: const EdgeInsets.all(12),
+                child: ListView(
+                  padding: const EdgeInsets.all(20),
+                  children: [
+                    Text(label),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TextFormField(
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: inputbox,
+                      ),
+                      controller: rawtxt,
+                      maxLines: null,
+                      onChanged: (rawtxt) {
+                        if (_debounce?.isActive ?? false) _debounce!.cancel();
+                        _debounce =
+                            Timer(const Duration(milliseconds: 500), () async {
+                          if (rawtxt == null || rawtxt.isEmpty) {
+                            setState(() {
+                              translated = outputbox;
+                            });
+                            wordsList.clear();
+                            wordsList.clear();
+                          } else {
+                            try {
+                              formKey.currentState?.save();
+                              await translator
+                                  .translate(rawtxt,
+                                      from: inputLanguage, to: outputLanguage)
+                                  .then((translation) {
+                                setState(() {
+                                  translated = translation.toString();
+                                  //หากเจอการเว้นวรรคในประโยคจะเพิ่มลงใน WordsList
+                                  if (rawtxt.contains(' ')) {
+                                    wordsList = rawtxt.toLowerCase().split(' ');
+                                  }
+                                });
+                              });
+                            } catch (e) {
+                              print(e);
+                            }
+                          }
+                          // แยกตัวอักษรพิเศษออกจากคำศัพท์ใน wordsList
+                          wordsList = splitSpecialChars(wordsList);
+                          // ลบคำศัพท์ที่ซ้ำกันใน wordsList โดยการแปลง wordsList เป็น Set เพื่อลบคำที่ซ้ำกัน แล้วแปลงกลับเป็น List
+                          wordsList = List<String>.from(wordsList.toSet());
+                          // เรียงลำดับคำศัพท์ใน wordsList ตามลำดับอักขระ
+                          wordsList.sort();
+                        });
+                      },
+                    ),
+                    const Divider(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      translated,
+                      style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            for (int i = 0; i < wordsList.length; i += 3)
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // ใช้ loop เพื่อสร้างปุ่ม TextButton สำหรับแสดงคำศัพท์
+                                  for (int j = i;
+                                      j < i + 3 && j < wordsList.length;
+                                      j++)
+                                    Flexible(
+                                      child: Stack(
+                                        alignment: Alignment.topRight,
+                                        children: [
+                                          SizedBox(
+                                            width: 120,
+                                            child: TextButton(
+                                              onPressed: () async {
+                                                setState(() {
+                                                  if (selecttxt
+                                                      .contains(wordsList[j])) {
+                                                    // หรือถ้าคำศัพท์ถูกยกเลิกการเลือก จะลบออกจาก selecttxt และลดจำนวนคำที่ถูกเลือก
+                                                    selecttxt
+                                                        .remove(wordsList[j]);
+                                                    checkWords--;
+                                                  } else {
+                                                    // เมื่อคำศัพท์ถูกเลือก จะทำการเพิ่มลงใน selecttxt และเพิ่มจำนวนคำที่ถูกเลือก
+                                                    selecttxt.add(wordsList[j]);
+                                                    checkWords++;
+                                                  }
+                                                });
+                                              },
+                                              //แสดงคำศัพท์บนปุ่ม
+                                              child: Text(
+                                                wordsList[j],
+                                                style: TextStyle(
+                                                  fontSize:
+                                                      wordsList[j].length > 5
+                                                          ? 14
+                                                          : 15,
+                                                  color: selecttxt.contains(
+                                                          wordsList[j])
+                                                      ? Colors.blue[400]
+                                                      : Colors.black54,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+// ตรวจสอบว่าคำศัพท์ใน selecttxt ถูกเลือกหรือไม่
+                                          if (selecttxt.contains(wordsList[j]))
+
+                                            // หากคำศัพท์ถูกเลือก จะสร้าง Widget Container เพื่อแสดงหมายเลขลำดับที่คำศัพท์ถูกเลือกอยู่
+                                            Container(
+                                              padding: EdgeInsets.all(4),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors
+                                                    .red, // กำหนดสีของวงกลมเป็นสีแดง
+                                              ),
+                                              child: Text(
+                                                (selecttxt.indexOf(
+                                                            wordsList[j]) +
+                                                        1)
+                                                    .toString(), // แสดงเลขลำดับที่คำศัพท์ถูกเลือก
+                                                style: TextStyle(
+                                                  color: Colors
+                                                      .white, // กำหนดสีของตัวอักษรเป็นสีขาว
+                                                ),
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        floatingActionButton: Padding(
-            padding: const EdgeInsets.only(bottom: 80),
-            child: FloatingActionButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50.0),
-              ),
-              backgroundColor: Colors.blue,
-              onPressed: () async {
-                if (!isButtonDisabled) {
-                  // Disable the button
-                  setState(() {
-                    isButtonDisabled = true;
-                  });
+          floatingActionButton: FloatingActionButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50.0),
+            ),
+            backgroundColor: Colors.blue,
+            onPressed: () async {
+              if (!isButtonDisabled) {
+                // Disable the button
+                setState(() {
+                  isButtonDisabled = true;
+                });
 
-                  if (selecttxt.length > 0) {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                    );
-                    await dialogTranslate();
-                  } else {
-                    QuerySnapshot<Map<String, dynamic>> oldWordLengthQury =
-                        await FirebaseFirestore.instance
-                            .collection("Profile")
-                            .doc(widget.docID)
-                            .collection("savedWords")
-                            .get();
-                    var oldWordLength = oldWordLengthQury.size;
-                    await saveWords(rawtxt.text, translated, oldWordLength);
-                  }
-
-                  setState(() {
-                    isButtonDisabled = false;
-                  });
+                if (selecttxt.length > 0) {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  );
+                  await dialogTranslate();
+                } else {
+                  QuerySnapshot<Map<String, dynamic>> oldWordLengthQury =
+                      await FirebaseFirestore.instance
+                          .collection("Profile")
+                          .doc(widget.docID)
+                          .collection("savedWords")
+                          .get();
+                  var oldWordLength = oldWordLengthQury.size;
+                  await saveWords(rawtxt.text, translated, oldWordLength);
                 }
-              },
-              child: Icon(
-                selecttxt.isNotEmpty ? Icons.translate : Icons.bookmark,
-                color: Colors.white,
-              ),
-            )),
-      ),
+
+                setState(() {
+                  isButtonDisabled = false;
+                });
+              }
+            },
+            child: Icon(
+              selecttxt.isNotEmpty ? Icons.translate : Icons.bookmark,
+              color: Colors.white,
+            ),
+          )),
     );
   }
 

@@ -132,10 +132,11 @@ class _loginPageState extends State<loginPage> {
                                         child: TextFormField(
                                             validator: MultiValidator([
                                               RequiredValidator(
-                                                  errorText: 'โปรดกรอกอีเมล'),
+                                                  errorText:
+                                                      'Please enter email.'),
                                               EmailValidator(
                                                   errorText:
-                                                      'รูปแบบ Email ไม่ถูกต้อง กรุณากรอกอีกครั้ง')
+                                                      'Email format is incorrect.')
                                             ]),
                                             onSaved: (var email) {
                                               profile.email = email;
@@ -151,9 +152,9 @@ class _loginPageState extends State<loginPage> {
                                         child: TextFormField(
                                             validator: ((password1) {
                                               if (password1!.isEmpty) {
-                                                return 'โปรดกรอกรหัสผ่าน';
+                                                return 'Please enter password.';
                                               } else if (password1.length < 8) {
-                                                return 'รหัสผ่านต้องยาวกว่า 8 ตัวอักษร';
+                                                return 'Password must be longer than 8 characters.';
                                               }
                                             }),
                                             onSaved: (password1) {
@@ -226,7 +227,7 @@ class _loginPageState extends State<loginPage> {
                                             } catch (e) {
                                               Fluttertoast.showToast(
                                                   msg:
-                                                      "ไม่สามารถเข้าสู่ระบบได้ โปรดเข้าสู่ระบบด้วยวิธีอื่น",
+                                                      "Please login using another method.",
                                                   gravity: ToastGravity.TOP);
                                             }
 
@@ -236,8 +237,7 @@ class _loginPageState extends State<loginPage> {
                                           });
                                         } catch (e) {
                                           Fluttertoast.showToast(
-                                              msg:
-                                                  "เข้าสู่ระบบด้วย google ไม่สำเร็จ",
+                                              msg: "Google login failed.",
                                               gravity: ToastGravity.TOP);
                                         }
                                       },
@@ -312,16 +312,16 @@ class _loginPageState extends State<loginPage> {
           //แสดงข้อความเข้าสุ่ระบบสำเร็ตจและรีเซ็ตฟอร์ม
           formKey.currentState?.reset();
           Fluttertoast.showToast(
-              msg: "เข้าสู่ระบบสำเร็จ", gravity: ToastGravity.TOP);
+              msg: "Login successful.", gravity: ToastGravity.TOP);
           Get.to(bottombar(), transition: Transition.topLevel);
         });
         //แสดง error กรณีที่ไม่สามารถเข้าสู่ระบบได้
       } on FirebaseAuthException catch (e) {
         var message;
         if (e.code == "user-not-found") {
-          message = "ไม่พบบัญชีผู้ใช้";
+          message = "User not found.";
         } else if (e.code == "wrong-password") {
-          message = "โปรดป้อนรหัสผ่านอีกครั้ง";
+          message = "Password incorrect.";
         } else {
           message = e.code;
         }
