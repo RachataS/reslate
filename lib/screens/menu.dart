@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reslate/models/profile.dart';
+import 'package:reslate/models/signOut.dart';
 import 'package:reslate/screens/WordsCollection.dart';
 import 'package:reslate/screens/authentication/login.dart';
 import 'package:reslate/screens/notification.dart';
@@ -15,6 +16,7 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
   late double _cardHeight;
+  signOut signout = signOut();
 
   @override
   void initState() {
@@ -634,6 +636,15 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   Future<void> logOut() async {
-    // Your logout logic
+    try {
+      await signout.logoutWithEmail();
+    } catch (e) {
+      print(e);
+    }
+    try {
+      await signout.logoutWithGoogle();
+    } catch (e) {
+      print(e);
+    }
   }
 }
