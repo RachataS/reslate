@@ -182,42 +182,6 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
               ),
-              // SizedBox(
-              //   height: _cardHeight,
-              //   child: Card(
-              //     color: Colors.white,
-              //     shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(15)),
-              //     margin: const EdgeInsets.all(5),
-              //     child: TextButton(
-              //       onPressed: () {
-              //         //open manual book
-              //       },
-              //       child: Row(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           Icon(
-              //             Icons.menu_book_rounded,
-              //             color: Colors.green,
-              //             size: 40,
-              //           ),
-              //           Text(
-              //             '  manual  ',
-              //             style: TextStyle(
-              //               fontSize: 16,
-              //               color: Colors.black,
-              //             ),
-              //           ),
-              //           Icon(
-              //             Icons.menu_book_rounded,
-              //             color: Colors.green,
-              //             size: 40,
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
               SizedBox(
                 height: _cardHeight,
                 child: Card(
@@ -262,8 +226,9 @@ class _MenuPageState extends State<MenuPage> {
                       children: [
                         Icon(
                           Icons.workspace_premium,
-                          color:
-                              words! >= 10 ? Colors.amber[500]! : Colors.grey,
+                          color: words! >= 10
+                              ? const Color.fromARGB(255, 204, 102, 51)!
+                              : Colors.grey,
                           size: 50,
                         ),
                         SizedBox(
@@ -378,8 +343,9 @@ class _MenuPageState extends State<MenuPage> {
                       children: [
                         Icon(
                           Icons.workspace_premium,
-                          color:
-                              words! >= 50 ? Colors.amber[500]! : Colors.grey,
+                          color: words! >= 50
+                              ? Color.fromARGB(255, 192, 192, 192)!
+                              : Colors.grey,
                           size: 50,
                         ),
                         SizedBox(
@@ -494,8 +460,9 @@ class _MenuPageState extends State<MenuPage> {
                       children: [
                         Icon(
                           Icons.workspace_premium,
-                          color:
-                              words! >= 70 ? Colors.amber[500]! : Colors.grey,
+                          color: words! >= 70
+                              ? Color.fromARGB(255, 255, 215, 0)
+                              : Colors.grey,
                           size: 50,
                         ),
                         SizedBox(

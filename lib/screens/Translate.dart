@@ -180,7 +180,8 @@ class _translate_screenState extends State<translate_screen> {
                                   translated = translation.toString();
                                   //หากเจอการเว้นวรรคในประโยคจะเพิ่มลงใน WordsList
                                   if (rawtxt.contains(' ')) {
-                                    wordsList = rawtxt.toLowerCase().split(' ');
+                                    wordsList = rawtxt.split(' ');
+                                    // wordsList = rawtxt.toLowerCase().split(' ');
                                   }
                                 });
                               });
@@ -379,8 +380,8 @@ class _translate_screenState extends State<translate_screen> {
         if (!eng.contains(" ") && !thai.contains(" ")) {
           if (!containsSpecialChars(eng) && !containsSpecialChars(thai)) {
             try {
-              eng = eng.toLowerCase();
-              thai = thai.toLowerCase();
+              // eng = eng.toLowerCase();
+              // thai = thai.toLowerCase();
 
               if (RegExp(r'[^a-zA-Z]').hasMatch(eng)) {
                 //save from thai translate

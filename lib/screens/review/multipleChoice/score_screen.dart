@@ -155,13 +155,13 @@ class _ScoreScreenState extends State<ScoreScreen> {
                   ),
                   margin: EdgeInsets.symmetric(
                     horizontal: constraints.maxWidth * 0.1,
-                    vertical: constraints.maxHeight * 0.25,
+                    vertical: constraints.maxHeight * 0.26,
                   ),
                   child: Column(
                     children: [
                       Spacer(flex: 3),
                       Text(
-                        "Top Score",
+                        "Score",
                         style: TextStyle(
                           fontSize: constraints.maxWidth * 0.08,
                           color: (_qnController.correctAnswer < maxQuestion)
@@ -171,18 +171,20 @@ class _ScoreScreenState extends State<ScoreScreen> {
                       ),
                       SizedBox(height: constraints.maxHeight * 0.02),
                       Text(
-                        "$topScore",
+                        "${_qnController.correctAnswer}/$maxQuestion",
                         style: Theme.of(context).textTheme.headline4?.copyWith(
-                              color: (_qnController.correctAnswer < maxQuestion)
-                                  ? Colors.red
-                                  : Colors.blue,
-                            ),
+                            color: (_qnController.correctAnswer < maxQuestion)
+                                ? Colors.red
+                                : Colors.blue,
+                            fontSize: constraints.maxWidth * 0.07),
                       ),
-                      Spacer(),
+                      Spacer(
+                        flex: 1,
+                      ),
                       Text(
-                        "Score",
+                        "Top Score",
                         style: TextStyle(
-                          fontSize: constraints.maxWidth * 0.06,
+                          fontSize: constraints.maxWidth * 0.05,
                           color: (_qnController.correctAnswer < maxQuestion)
                               ? Colors.red
                               : Colors.blue,
@@ -190,12 +192,12 @@ class _ScoreScreenState extends State<ScoreScreen> {
                       ),
                       SizedBox(height: constraints.maxHeight * 0.02),
                       Text(
-                        "${_qnController.correctAnswer}/$maxQuestion",
+                        "$topScore",
                         style: Theme.of(context).textTheme.headline4?.copyWith(
-                              color: (_qnController.correctAnswer < maxQuestion)
-                                  ? Colors.red
-                                  : Colors.blue,
-                            ),
+                            color: (_qnController.correctAnswer < maxQuestion)
+                                ? Colors.red
+                                : Colors.blue,
+                            fontSize: constraints.maxWidth * 0.06),
                       ),
                       Spacer(),
                       Row(

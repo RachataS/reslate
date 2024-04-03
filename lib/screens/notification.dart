@@ -183,8 +183,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       LocalNotifications.dailyNotifications(
                         id: index + 1,
                         title: "It's time to review.",
-                        body:
-                            "Let's review vocabulary. It only takes 2 minutes.\nมาทบทวนคำศัพท์กันเถอะ ใช้เวลาแค่ 2 นาทีเท่านั้น",
+                        body: "พอจะมีเวลาว่างไหม มาทบทวนคำศัพท์ภาษาอังกฤษกัน",
                         payload: "review",
                         scheduledTime: selectedTime,
                       );

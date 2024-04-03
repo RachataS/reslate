@@ -245,13 +245,13 @@ class Game {
             child: Column(
               children: [
                 Text(
-                  'Top Score\n${topScore}',
+                  'Your score is\n${score}',
                   style: TextStyle(fontSize: 30),
                   textAlign: TextAlign.center,
                 ),
                 Spacer(),
                 Text(
-                  'Your score is ${score}',
+                  'Top Score\n${topScore}',
                   style: TextStyle(fontSize: 22),
                   textAlign: TextAlign.center,
                 ),
